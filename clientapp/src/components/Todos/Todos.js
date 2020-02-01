@@ -28,8 +28,8 @@ function Todos() {
     fetchTodos();
   }, []);
 
-  const addTodo = description => {
-    const newTodos = [...todos, { description, isDone: false }];
+  const addTodo = (description, isDone) => {
+    const newTodos = [...todos, { description, isDone }];
     setTodos(newTodos);
   };
 

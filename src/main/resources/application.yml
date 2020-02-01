@@ -1,2 +1,12 @@
 server:
   port: 5000
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://aaxneycpfi2um7.cswyter5kliy.us-west-2.rds.amazonaws.com:3306/EPS
+    username: admin
+    password: epsipv111
+
+mybatis:
+  mapper-locations: mappers/*

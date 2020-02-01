@@ -22,7 +22,7 @@ function AddTodoForm({ addTodo }) {
     if (!value) {
       return;
     }
-    addTodo(value);
+    addTodo(value, false);
     setValue('');
   };
 

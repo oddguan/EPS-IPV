@@ -1,5 +1,6 @@
 package com.epsspring2020.EPSIPV.controllers;
 
+import com.epsspring2020.EPSIPV.entities.Todo;
 import com.epsspring2020.EPSIPV.services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +34,8 @@ public class TodoController {
     }
 
     @GetMapping("/todos")
-    public ResponseEntity<List<Map<String, Object>>> getTodos() {
-        List<Map<String, Object>> result = this.todoService.getTodos();
+    public ResponseEntity<List<Todo>> getTodos() {
+        List<Todo> result = this.todoService.getTodos();
         return ResponseEntity.status(200).body(result);
     }
 }
