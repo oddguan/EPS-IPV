@@ -4,4 +4,20 @@
     <select id="queryTodos" resultType="com.epsspring2020.EPSIPV.entities.Todo">
         SELECT * FROM Todos;
     </select>
+
+    <insert id="insertTodo" parameterType="com.epsspring2020.EPSIPV.entities.Todo" useGeneratedKeys="true" keyProperty="todoId" keyColumn="todoId">
+        INSERT INTO Todos (Description, IsDone)
+        VALUE (#{description}, #{isDone})
+    </insert>
+
+    <update id="updateTodoIsDone" parameterType="com.epsspring2020.EPSIPV.entities.Todo">
+        UPDATE Todos
+        SET isDone = #{isDone}
+        WHERE TodoId = #{todoId}
+    </update>
+
+    <delete id="removeTodo" parameterType="com.epsspring2020.EPSIPV.entities.Todo">
+        DELETE FROM Todos
+        WHERE TodoId = #{todoId}
+    </delete>
 </mapper>

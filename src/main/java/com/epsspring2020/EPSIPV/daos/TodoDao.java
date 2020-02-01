@@ -11,4 +11,10 @@ import java.util.List;
 public interface TodoDao {
 
     public List<Todo> queryTodos();
+
+    public int insertTodo(Todo todo);
+
+    public int updateTodoIsDone(Todo todo);
+
+    public int removeTodo(Todo todo);
 }

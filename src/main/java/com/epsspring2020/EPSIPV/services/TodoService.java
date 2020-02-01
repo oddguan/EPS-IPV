@@ -4,6 +4,7 @@ import com.epsspring2020.EPSIPV.daos.TodoDao;
 import com.epsspring2020.EPSIPV.entities.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,15 +33,26 @@ public class TodoService {
 
     public List<Todo> getTodos() {
         return todoDao.queryTodos();
-//        List<Map<String, Object>> result = new ArrayList<>(2);
-//        Map<String, Object> todo1 = new HashMap<>();
-//        todo1.put("description", "wash dishes");
-//        todo1.put("isDone", false);
-//        result.add(todo1);
-//        Map<String, Object> todo2 = new HashMap<>();
-//        todo2.put("description", "finish homework");
-//        todo2.put("isDone", true);
-//        result.add(todo2);
-//        return result;
+    }
+
+    public String insertTodo(Todo todo) {
+        todoDao.insertTodo(todo);
+        return todo.getTodoId();
+    }
+
+    public int updateIsDone(Todo todo) {
+        if (todo.getTodoId() == null || todo.getTodoId().isEmpty()) {
+            return 1;
+        }
+        todoDao.updateTodoIsDone(todo);
+        return 0;
+    }
+
+    public int removeTodo(Todo todo) {
+        if (todo.getTodoId() == null) {
+            return 1;
+        }
+        todoDao.removeTodo(todo);
+        return 0;
     }
 }

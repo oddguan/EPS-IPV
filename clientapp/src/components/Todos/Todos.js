@@ -28,21 +28,53 @@ function Todos() {
     fetchTodos();
   }, []);
 
-  const addTodo = (description, isDone) => {
-    const newTodos = [...todos, { description, isDone }];
-    setTodos(newTodos);
+  const addTodo = async (description, isDone) => {
+    try {
+      const result = await axios.post('/api/addtodo', {
+        description,
+        isDone
+      });
+      if (!result.data) {
+        throw new Error('add todo failed');
+      }
+      const newTodos = [...todos, { todoId: result.data, description, isDone }];
+      setTodos(newTodos);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const completeTodo = index => {
-    const newTodos = [...todos];
-    newTodos[index].isDone = !todos[index].isDone;
-    setTodos(newTodos);
+  const completeTodo = async index => {
+    try {
+      const result = await axios.post('/api/completetodo', {
+        todoId: todos[index].todoId,
+        isDone: !todos[index].isDone
+      });
+      if (result.data !== 0) {
+        throw new Error('update isDone status failed');
+      }
+      const newTodos = [...todos];
+      newTodos[index].isDone = !todos[index].isDone;
+      setTodos(newTodos);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const removeTodo = index => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+  const removeTodo = async index => {
+    try {
+      const result = await axios.post('/api/removetodo', {
+        todoId: todos[index].todoId
+      });
+      if (result.data !== 0) {
+        throw new Error('remove todo failed');
+      }
+      const newTodos = [...todos];
+      newTodos.splice(index, 1);
+      setTodos(newTodos);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (

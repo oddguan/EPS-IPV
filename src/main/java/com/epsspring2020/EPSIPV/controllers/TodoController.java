@@ -4,9 +4,7 @@ import com.epsspring2020.EPSIPV.entities.Todo;
 import com.epsspring2020.EPSIPV.services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -37,5 +35,23 @@ public class TodoController {
     public ResponseEntity<List<Todo>> getTodos() {
         List<Todo> result = this.todoService.getTodos();
         return ResponseEntity.status(200).body(result);
+    }
+
+    @PostMapping("/addtodo")
+    public ResponseEntity<String> addTodo(@RequestBody Todo todo) {
+        String result = this.todoService.insertTodo(todo);
+        return ResponseEntity.status(result != null ? 200 : 400).body(result);
+    }
+
+    @PostMapping("/completetodo")
+    public ResponseEntity<Integer> updateTodoIsDone(@RequestBody Todo todo) {
+        int result = this.todoService.updateIsDone(todo);
+        return ResponseEntity.status(result == 0 ? 200 : 400).body(result);
+    }
+
+    @PostMapping("/removetodo")
+    public ResponseEntity<Integer> postRemoveTodo(@RequestBody Todo todo) {
+        int result = this.todoService.removeTodo(todo);
+        return ResponseEntity.status(result == 0 ? 200 : 400).body(result);
     }
 }
