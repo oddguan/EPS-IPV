@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
+import React from 'react';
+import Todos from './components/Todos/Todos';
+import './App.css';
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("/api/test")
-      .then(response => response.json())
-      .then(({ message }) => {
-        setMessage(message);
-      });
-  }, []);
-
   return (
-    <div className="App">
-      <p>{message}</p>
+    <div className='AppContainer'>
+      <h1>My Todo List</h1>
+      <h3>Engineering Privacy in Software - IPV</h3>
+      <Todos />
     </div>
   );
 }

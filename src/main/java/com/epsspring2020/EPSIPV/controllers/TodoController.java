@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,6 +29,12 @@ public class TodoController {
     @GetMapping("/test")
     public ResponseEntity<Map<String, Object>> getTest() {
         Map<String, Object> result = this.todoService.getTest();
-        return ResponseEntity.status(201).body(result);
+        return ResponseEntity.status(200).body(result);
+    }
+
+    @GetMapping("/todos")
+    public ResponseEntity<List<Map<String, Object>>> getTodos() {
+        List<Map<String, Object>> result = this.todoService.getTodos();
+        return ResponseEntity.status(200).body(result);
     }
 }
