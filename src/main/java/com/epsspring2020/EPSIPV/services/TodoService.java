@@ -14,7 +14,7 @@ public class TodoService {
 
     public Map<String, Object> getTest() {
         Map<String, Object> result = new HashMap<>();
-        result.put("message", "json returned successfully");
+        result.put("message", "Hello from the backend!");
         return result;
     }
 }
