@@ -5,6 +5,7 @@ import List from '@material-ui/core/List';
 
 import AddTodoForm from './AddTodoForm/AddTodoForm';
 import Todo from './Todo/Todo';
+import EditModal from './EditModal/EditModal';
 
 function Todos() {
   const useStyles = makeStyles(theme => ({
@@ -27,6 +28,21 @@ function Todos() {
     };
     fetchTodos();
   }, []);
+
+  const [toBeEditted, setToBeEditted] = useState('');
+  const [editIndex, setEditIndex] = useState(-1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleModalOpen = index => {
+    setToBeEditted(todos[index].description);
+    setEditIndex(index);
+    setIsModalOpen(true);
+  };
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+  const changeToBeEditted = e => {
+    setToBeEditted(e.target.value);
+  };
 
   const addTodo = async (description, isDone) => {
     try {
@@ -61,6 +77,23 @@ function Todos() {
     }
   };
 
+  const editTodo = async (index, newDescription) => {
+    try {
+      const result = await axios.post('/api/edittodo', {
+        todoId: todos[index].todoId,
+        description: newDescription
+      });
+      if (result.data !== 0) {
+        throw new Error('edit todo failed');
+      }
+      const newTodos = [...todos];
+      newTodos[index].description = newDescription;
+      setTodos(newTodos);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const removeTodo = async index => {
     try {
       const result = await axios.post('/api/removetodo', {
@@ -79,6 +112,14 @@ function Todos() {
 
   return (
     <>
+      <EditModal
+        isModalOpen={isModalOpen}
+        handleModalClose={handleModalClose}
+        toBeEditted={toBeEditted}
+        editIndex={editIndex}
+        changeToBeEditted={changeToBeEditted}
+        editTodo={editTodo}
+      />
       <AddTodoForm addTodo={addTodo} />
       <List className={classes.root}>
         {todos.map((todo, i) => (
@@ -90,7 +131,9 @@ function Todos() {
             dense
             button
             completeTodo={completeTodo}
+            editTodo={editTodo}
             removeTodo={removeTodo}
+            handleModalOpen={handleModalOpen}
           />
         ))}
       </List>

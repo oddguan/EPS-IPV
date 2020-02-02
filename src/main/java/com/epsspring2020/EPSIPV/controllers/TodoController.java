@@ -2,6 +2,7 @@ package com.epsspring2020.EPSIPV.controllers;
 
 import com.epsspring2020.EPSIPV.entities.Todo;
 import com.epsspring2020.EPSIPV.services.TodoService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,12 @@ public class TodoController {
     @PostMapping("/completetodo")
     public ResponseEntity<Integer> updateTodoIsDone(@RequestBody Todo todo) {
         int result = this.todoService.updateIsDone(todo);
+        return ResponseEntity.status(result == 0 ? 200 : 400).body(result);
+    }
+
+    @PostMapping("/edittodo")
+    public ResponseEntity<Integer> editDescriptionOfTodo(@RequestBody Todo todo) {
+        int result = this.todoService.editDescriptionOfTodo(todo);
         return ResponseEntity.status(result == 0 ? 200 : 400).body(result);
     }
 

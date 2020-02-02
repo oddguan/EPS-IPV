@@ -16,6 +16,12 @@
         WHERE TodoId = #{todoId}
     </update>
 
+    <update id="editDescriptionOfTodo" parameterType="com.epsspring2020.EPSIPV.entities.Todo">
+        UPDATE Todos
+        SET Description = #{description}
+        WHERE TodoId = #{todoId}
+    </update>
+
     <delete id="removeTodo" parameterType="com.epsspring2020.EPSIPV.entities.Todo">
         DELETE FROM Todos
         WHERE TodoId = #{todoId}

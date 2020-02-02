@@ -48,6 +48,17 @@ public class TodoService {
         return 0;
     }
 
+    public int editDescriptionOfTodo(Todo todo) {
+        if (todo.getTodoId() == null || todo.getTodoId().isEmpty()) {
+            return 1;
+        }
+        if (todo.getDescription() == null || todo.getDescription().isEmpty()) {
+            return 1;
+        }
+        todoDao.editDescriptionOfTodo(todo);
+        return 0;
+    }
+
     public int removeTodo(Todo todo) {
         if (todo.getTodoId() == null) {
             return 1;
