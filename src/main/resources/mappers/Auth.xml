@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.epsspring2020.EPSIPV.daos.AuthDao">
+    <select id="findUserByEmail" parameterType="string" resultType="com.epsspring2020.EPSIPV.entities.User">
+        SELECT * FROM Users
+        WHERE email = #{email}
+    </select>
+
+    <insert id="saveUserInfo" parameterType="com.epsspring2020.EPSIPV.entities.User">
+        INSERT INTO Users (email, firstName, lastName, username, password, RoleId)
+        VALUE (#{email}, #{firstName}, #{lastName}, #{username}, #{password}, #{roleId})
+    </insert>
+
+    <select id="findById" parameterType="int" resultType="com.epsspring2020.EPSIPV.entities.User">
+        SELECT * FROM Users WHERE id = #{id}
+    </select>
+
+    <select id="findRoleByRoleName" parameterType="com.epsspring2020.EPSIPV.entities.RoleName"
+            resultType="com.epsspring2020.EPSIPV.entities.Role">
+        SELECT * FROM Roles WHERE RoleName = #{RoleName}
+    </select>
+</mapper>

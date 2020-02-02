@@ -7,6 +7,15 @@ spring:
     url: jdbc:mysql://aaxneycpfi2um7.cswyter5kliy.us-west-2.rds.amazonaws.com:3306/EPS
     username: admin
     password: epsipv111
+  session:
+    store-type: jdbc
+    jdbc:
+      table-name: SPRING_SESSION
+      initialize-schema: always
+  app:
+    jwtSecret: JWTSuperSecretKey
+    jwtExpirationInMs: 604800000
+
 
 mybatis:
   mapper-locations: mappers/*

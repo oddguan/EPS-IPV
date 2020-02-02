@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import AddTodoForm from './AddTodoForm/AddTodoForm';
 import Todo from './Todo/Todo';
@@ -111,7 +113,8 @@ function Todos() {
   };
 
   return (
-    <>
+    <Container component='main' maxWidth='xs'>
+      <CssBaseline />
       <EditModal
         isModalOpen={isModalOpen}
         handleModalClose={handleModalClose}
@@ -137,7 +140,7 @@ function Todos() {
           />
         ))}
       </List>
-    </>
+    </Container>
   );
 }
 
