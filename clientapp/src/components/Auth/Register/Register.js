@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { connect } from 'react-redux';
+import { register } from '../../../actions/authActions';
 
 import Copyright from '../../Copyright/Copyright';
 
@@ -36,6 +38,31 @@ const useStyles = makeStyles(theme => ({
 function Register() {
   const classes = useStyles();
 
+  const initialState = {
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: '',
+    msg: null
+  };
+
+  const [data, setData] = useState(initialState);
+
+  const handleInputChange = event => {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    const { firstName, lastName, username, email, password } = data;
+    this.props.register({ firstName, lastName, username, email, password });
+  };
+
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -46,7 +73,7 @@ function Register() {
         <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -58,6 +85,7 @@ function Register() {
                 id='firstName'
                 label='First Name'
                 autoFocus
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -69,6 +97,7 @@ function Register() {
                 label='Last Name'
                 name='lastName'
                 autoComplete='lname'
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -80,6 +109,7 @@ function Register() {
                 label='Email Address'
                 name='email'
                 autoComplete='email'
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,6 +121,7 @@ function Register() {
                 label='username'
                 name='username'
                 autoComplete='username'
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -103,6 +134,7 @@ function Register() {
                 type='password'
                 id='password'
                 autoComplete='current-password'
+                onChange={handleInputChange}
               />
             </Grid>
           </Grid>
@@ -131,4 +163,9 @@ function Register() {
   );
 }
 
-export default Register;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.error
+});
+
+export default connect(mapStateToProps, { register })(Register);

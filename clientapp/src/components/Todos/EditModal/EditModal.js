@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
@@ -9,13 +10,15 @@ import Button from '@material-ui/core/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { editTodo } from '../../../actions/todoActions';
+
 function EditModal({
   isModalOpen,
   handleModalClose,
   toBeEditted,
   changeToBeEditted,
-  editTodo,
-  editIndex
+  editIndex,
+  editTodo
 }) {
   const useStyles = makeStyles(theme => ({
     modal: {
@@ -79,4 +82,6 @@ function EditModal({
   );
 }
 
-export default EditModal;
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps, { editTodo })(EditModal);

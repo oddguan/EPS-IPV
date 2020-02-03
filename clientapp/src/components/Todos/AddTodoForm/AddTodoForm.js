@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
+import { addTodo } from '../../../actions/todoActions';
 
 function AddTodoForm({ addTodo }) {
   const useStyles = makeStyles(theme => ({
@@ -42,4 +45,6 @@ function AddTodoForm({ addTodo }) {
   );
 }
 
-export default AddTodoForm;
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps, { addTodo })(AddTodoForm);

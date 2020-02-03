@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,8 +11,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from 'react-router-dom';
 
 import Copyright from '../../Copyright/Copyright';
+import { login } from '../../../actions/authActions';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -33,11 +36,38 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Login() {
+function Login(props) {
+  const history = useHistory();
+
+  const initialState = {
+    email: '',
+    password: '',
+    isSubmitting: false
+  };
+
+  const [data, setData] = useState(initialState);
+  const handleInputChange = event => {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value
+    });
+  };
+  const handleFormSubmit = event => {
+    event.preventDefault();
+    setData({
+      ...data,
+      isSubmitting: true
+    });
+    const { email, password } = data;
+    email && password && props.login({ email, password });
+    history.push('/');
+  };
+
   const classes = useStyles();
 
   return (
     <Container component='main' maxWidth='xs'>
+      {/* <ToastContainer position='top-center' /> */}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -46,7 +76,7 @@ function Login() {
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleFormSubmit}>
           <TextField
             variant='outlined'
             margin='normal'
@@ -57,6 +87,7 @@ function Login() {
             name='email'
             autoComplete='email'
             autoFocus
+            onChange={handleInputChange}
           />
           <TextField
             variant='outlined'
@@ -68,6 +99,7 @@ function Login() {
             type='password'
             id='password'
             autoComplete='current-password'
+            onChange={handleInputChange}
           />
           <Button
             type='submit'
@@ -94,4 +126,9 @@ function Login() {
   );
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.error
+});
+
+export default connect(mapStateToProps, { login })(Login);

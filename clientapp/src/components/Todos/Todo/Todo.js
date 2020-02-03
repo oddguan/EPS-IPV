@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -10,11 +11,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import Checkbox from '../../Checkbox/Checkbox';
 import './Todo.css';
 
-function Todo({ todo, index, completeTodo, removeTodo, handleModalOpen }) {
+import { completeTodo, removeTodo } from '../../../actions/todoActions';
+
+function Todo({ todo, index, handleModalOpen, completeTodo, removeTodo }) {
   const useStyles = makeStyles(theme => ({
-    text: {
-      maxWidth: 250
-    },
+    text: {},
     button: {
       '& > *': {
         marginRight: theme.spacing(3)
@@ -55,4 +56,6 @@ function Todo({ todo, index, completeTodo, removeTodo, handleModalOpen }) {
   );
 }
 
-export default Todo;
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps, { removeTodo, completeTodo })(Todo);
