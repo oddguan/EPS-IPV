@@ -38,6 +38,9 @@ const useStyles = makeStyles(theme => ({
 
 function Login(props) {
   const history = useHistory();
+  if (props.isAuthenticated) {
+    history.push('/');
+  }
 
   const initialState = {
     email: '',

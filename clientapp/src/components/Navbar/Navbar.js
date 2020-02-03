@@ -1,27 +1,29 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
-  appBar: {
-    borderBottom: `1px solid ${theme.palette.divider}`
-  },
-  toolbar: {
-    flexWrap: 'wrap'
-  },
-  toolbarTitle: {
-    flexGrow: 1
-  },
-  link: {
-    margin: theme.spacing(1, 1.5)
-  }
-}));
+import LoginButton from './LoginButton/LoginButton';
+import LogoutButton from './LogoutButton/LogoutButton';
 
-function Navbar() {
+function Navbar({ isAuthenticated }) {
+  const useStyles = makeStyles(theme => ({
+    appBar: {
+      borderBottom: `1px solid ${theme.palette.divider}`
+    },
+    toolbar: {
+      flexWrap: 'wrap'
+    },
+    toolbarTitle: {
+      flexGrow: 1
+    },
+    link: {
+      margin: theme.spacing(1, 1.5)
+    }
+  }));
   const classes = useStyles();
   return (
     <AppBar
@@ -49,17 +51,14 @@ function Navbar() {
             My Todos
           </Link>
         </nav>
-        <Button
-          href='/login'
-          color='primary'
-          variant='outlined'
-          className={classes.link}
-        >
-          Login
-        </Button>
+        {!isAuthenticated ? <LoginButton /> : <LogoutButton />}
       </Toolbar>
     </AppBar>
   );
 }
 
-export default Navbar;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps)(Navbar);

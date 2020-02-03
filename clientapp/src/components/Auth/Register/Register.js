@@ -11,8 +11,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
-import { register } from '../../../actions/authActions';
+import { useHistory } from 'react-router-dom';
 
+import { register } from '../../../actions/authActions';
 import Copyright from '../../Copyright/Copyright';
 
 const useStyles = makeStyles(theme => ({
@@ -38,6 +39,8 @@ const useStyles = makeStyles(theme => ({
 function Register() {
   const classes = useStyles();
 
+  const history = useHistory();
+
   const initialState = {
     firstName: '',
     lastName: '',
@@ -61,6 +64,7 @@ function Register() {
 
     const { firstName, lastName, username, email, password } = data;
     this.props.register({ firstName, lastName, username, email, password });
+    history.push('/');
   };
 
   return (

@@ -6,7 +6,8 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGIN_SUCCESS,
-  LOGIN_FAIL
+  LOGIN_FAIL,
+  LOGOUT_SUCCESS
 } from './types';
 import { returnErrors } from './errorActions';
 
@@ -99,6 +100,12 @@ export const login = ({ email, password }) => dispatch => {
         type: LOGIN_FAIL
       });
     });
+};
+
+export const logout = () => dispatch => {
+  dispatch({
+    type: LOGOUT_SUCCESS
+  });
 };
 
 export const authTokenConfig = getState => {

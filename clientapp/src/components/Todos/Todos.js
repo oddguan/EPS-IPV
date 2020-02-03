@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Container from '@material-ui/core/Container';
@@ -8,9 +9,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AddTodoForm from './AddTodoForm/AddTodoForm';
 import Todo from './Todo/Todo';
 import EditModal from './EditModal/EditModal';
-import { getTodos, addTodo, completeTodo } from '../../actions/todoActions';
+import { getTodos } from '../../actions/todoActions';
 
-function Todos({ todos, getTodos, addTodo, completeTodo }) {
+function Todos({ todos, getTodos, isAuthenticated }) {
   const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
@@ -18,6 +19,12 @@ function Todos({ todos, getTodos, addTodo, completeTodo }) {
     }
   }));
   const classes = useStyles();
+
+  const history = useHistory();
+
+  if (!isAuthenticated) {
+    history.push('login');
+  }
 
   // When the whole component mounts, fetch all todos
   useEffect(() => {
@@ -68,9 +75,8 @@ function Todos({ todos, getTodos, addTodo, completeTodo }) {
 }
 
 const mapStateToProps = state => ({
-  todos: state.todo.todos
+  todos: state.todo.todos,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { getTodos, addTodo, completeTodo })(
-  Todos
-);
+export default connect(mapStateToProps, { getTodos })(Todos);
