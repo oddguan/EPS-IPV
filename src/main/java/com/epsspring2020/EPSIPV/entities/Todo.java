@@ -4,7 +4,8 @@ public class Todo {
 
     private String todoId;
     private String description;
-    private boolean isDone;
+    private Boolean isDone;
+    private Long userId;
 
     public String getTodoId() { return this.todoId; }
 
@@ -18,11 +19,19 @@ public class Todo {
         this.description = description;
     }
 
-    public boolean getIsDone() {
+    public Boolean getIsDone() {
         return this.isDone;
     }
 
-    public void setIsDone(boolean isDone) {
+    public void setIsDone(Boolean isDone) {
         this.isDone = isDone;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

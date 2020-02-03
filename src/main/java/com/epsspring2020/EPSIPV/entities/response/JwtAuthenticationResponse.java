@@ -1,11 +1,15 @@
 package com.epsspring2020.EPSIPV.entities.response;
 
+import com.epsspring2020.EPSIPV.entities.User;
+
 public class JwtAuthenticationResponse {
     private String accessToken;
     private String tokenType = "Bearer";
+    private UserDetailResponse user;
 
-    public JwtAuthenticationResponse(String accessToken) {
+    public JwtAuthenticationResponse(String accessToken, UserDetailResponse user) {
         this.accessToken = accessToken;
+        this.user = user;
     }
 
     public String getAccessToken() {
@@ -22,5 +26,13 @@ public class JwtAuthenticationResponse {
 
     public void setTokenType(String tokenType) {
         this.tokenType = tokenType;
+    }
+
+    public UserDetailResponse getUser() {
+        return user;
+    }
+
+    public void setUser(UserDetailResponse user) {
+        this.user = user;
     }
 }

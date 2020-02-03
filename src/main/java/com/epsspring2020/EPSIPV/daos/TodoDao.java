@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface TodoDao {
 
-    public List<Todo> queryTodos();
+    public List<Todo> queryTodosByUserId(Long id);
 
     public int insertTodo(Todo todo);
 

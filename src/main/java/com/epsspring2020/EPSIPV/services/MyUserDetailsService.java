@@ -34,7 +34,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserById(Long id) {
         User user;
         try {
-            user = authDao.findById(id);
+            user = authDao.findUserById(id);
         } catch (Exception e) {
             throw new UsernameNotFoundException("User not found with id : " + id);
         }

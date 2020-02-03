@@ -1,8 +1,10 @@
 package com.epsspring2020.EPSIPV.services;
 
 import com.epsspring2020.EPSIPV.daos.AuthDao;
+import com.epsspring2020.EPSIPV.entities.RoleName;
 import com.epsspring2020.EPSIPV.entities.User;
 import com.epsspring2020.EPSIPV.entities.response.ApiResponse;
+import com.epsspring2020.EPSIPV.entities.response.UserDetailResponse;
 import com.epsspring2020.EPSIPV.exceptions.CustomException;
 import com.epsspring2020.EPSIPV.utils.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +59,22 @@ public class AuthService {
         authDao.saveUserInfo(user);
 
         return user;
+    }
+
+    public UserDetailResponse queryUserDetailByEmail(String email) {
+        UserDetailResponse result;
+        try {
+            User user = authDao.findUserByEmail(email);
+            result = new UserDetailResponse(
+                    user.getId(),
+                    user.getUsername(),
+                    user.getRoleId() == 1 ? RoleName.ROLE_USER.name() : RoleName.ROLE_ADMIN.name(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getEmail());
+        } catch (Exception e) {
+            result = null;
+        }
+        return result;
     }
 }

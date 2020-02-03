@@ -31,8 +31,11 @@ public class TodoService {
         return result;
     }
 
-    public List<Todo> getTodos() {
-        return todoDao.queryTodos();
+    public List<Todo> getTodosByUserId(Long id) {
+        if (id == null) {
+            return new ArrayList<>();
+        }
+        return todoDao.queryTodosByUserId(id);
     }
 
     public String insertTodo(Todo todo) {

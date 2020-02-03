@@ -5,16 +5,14 @@ import com.epsspring2020.EPSIPV.entities.requests.LoginRequest;
 import com.epsspring2020.EPSIPV.entities.requests.SignUpRequest;
 import com.epsspring2020.EPSIPV.entities.response.ApiResponse;
 import com.epsspring2020.EPSIPV.entities.response.JwtAuthenticationResponse;
+import com.epsspring2020.EPSIPV.entities.response.UserDetailResponse;
 import com.epsspring2020.EPSIPV.exceptions.CustomException;
 import com.epsspring2020.EPSIPV.services.AuthService;
+import com.epsspring2020.EPSIPV.utils.annotations.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -25,20 +23,17 @@ import java.net.URI;
 public class AuthController {
 
     private AuthService authService;
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthController(
-            AuthService authService,
-            PasswordEncoder passwordEncoder) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> signIn(@Valid @RequestBody LoginRequest loginRequest) {
         String jwt = authService.signIn(loginRequest.getEmail(), loginRequest.getPassword());
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        UserDetailResponse user = authService.queryUserDetailByEmail(loginRequest.getEmail());
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, user));
     }
 
     @PostMapping("/register")
@@ -58,6 +53,16 @@ public class AuthController {
             return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
         } catch (CustomException e) {
             return new ResponseEntity<>(e.getBody(), e.getStatus());
+        }
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<UserDetailResponse> getUserDetailFromAuthenticationToken(@CurrentUser UserPrincipal currentUser) {
+        try {
+            UserDetailResponse user = authService.queryUserDetailByEmail(currentUser.getEmail());
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

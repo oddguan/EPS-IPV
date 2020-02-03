@@ -11,8 +11,8 @@
         VALUE (#{email}, #{firstName}, #{lastName}, #{username}, #{password}, #{roleId})
     </insert>
 
-    <select id="findById" parameterType="int" resultType="com.epsspring2020.EPSIPV.entities.User">
-        SELECT * FROM Users WHERE id = #{id}
+    <select id="findUserById" parameterType="map" resultType="com.epsspring2020.EPSIPV.entities.User">
+        SELECT * FROM Users WHERE id = #{param1, jdbcType=INTEGER}
     </select>
 
     <select id="findRoleByRoleName" parameterType="com.epsspring2020.EPSIPV.entities.RoleName"

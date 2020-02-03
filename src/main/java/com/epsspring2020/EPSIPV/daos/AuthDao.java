@@ -6,8 +6,6 @@ import com.epsspring2020.EPSIPV.entities.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Mapper
 @Repository
 public interface AuthDao {
@@ -16,7 +14,7 @@ public interface AuthDao {
 
     public int saveUserInfo(User user);
 
-    public User findById(Long id);
+    public User findUserById(Long id);
 
     public Role findRoleByRoleName(RoleName roleName);
 }

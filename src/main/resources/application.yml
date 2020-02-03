@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://aaxneycpfi2um7.cswyter5kliy.us-west-2.rds.amazonaws.com:3306/EPS
+    url: jdbc:mysql://aaxneycpfi2um7.cswyter5kliy.us-west-2.rds.amazonaws.com:3306/EPS?useSSL=false
     username: admin
     password: epsipv111
   session:
