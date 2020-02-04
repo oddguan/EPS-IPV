@@ -33,7 +33,6 @@ export const getTodos = () => (dispatch, getState) => {
 export const addTodo = (description, isDone) => (dispatch, getState) => {
   const config = authTokenConfig(getState);
   const body = { description, isDone, userId: getState().auth.user.id };
-  console.log(config);
   axios
     .post('/api/addtodo', body, config)
     .then(res => {
