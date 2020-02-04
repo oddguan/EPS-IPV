@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link as RouteLink } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -148,9 +149,9 @@ function Register(props) {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link href='/login' variant='body2'>
+              <RouteLink to={'/login'}>
                 Already have an account? Sign in
-              </Link>
+              </RouteLink>
             </Grid>
           </Grid>
         </form>
