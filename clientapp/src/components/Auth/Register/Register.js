@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 import { register } from '../../../actions/authActions';
 import Copyright from '../../Copyright/Copyright';
@@ -36,10 +35,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Register() {
+function Register(props) {
   const classes = useStyles();
-
-  const history = useHistory();
 
   const initialState = {
     firstName: '',
@@ -61,10 +58,8 @@ function Register() {
 
   const handleSubmit = event => {
     event.preventDefault();
-
-    const { firstName, lastName, username, email, password } = data;
-    this.props.register({ firstName, lastName, username, email, password });
-    history.push('/');
+    // register action will redirect user to home page if registered successfully
+    props.register(data);
   };
 
   return (

@@ -10,6 +10,7 @@ import {
   LOGOUT_SUCCESS
 } from './types';
 import { returnErrors } from './errorActions';
+import { push } from 'connected-react-router';
 
 // check token & load user
 export const loadUser = () => (dispatch, getState) => {
@@ -56,12 +57,13 @@ export const register = ({
 
   axios
     .post('/api/auth/register', body, config)
-    .then(res =>
+    .then(res => {
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
-      })
-    )
+      });
+      dispatch(push('/'));
+    })
     .catch(err => {
       dispatch(
         returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL')
@@ -91,6 +93,7 @@ export const login = ({ email, password }) => dispatch => {
         type: LOGIN_SUCCESS,
         payload: res.data
       });
+      return res;
     })
     .catch(err => {
       dispatch(

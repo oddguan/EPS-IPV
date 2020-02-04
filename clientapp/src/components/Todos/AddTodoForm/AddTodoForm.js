@@ -45,6 +45,4 @@ function AddTodoForm({ addTodo }) {
   );
 }
 
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, { addTodo })(AddTodoForm);
+export default connect(null, { addTodo })(AddTodoForm);

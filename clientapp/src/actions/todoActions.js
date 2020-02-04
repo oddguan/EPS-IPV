@@ -11,28 +11,29 @@ import { returnErrors } from './errorActions';
 import { authTokenConfig } from './authActions';
 
 export const getTodos = () => (dispatch, getState) => {
-  axios
-    .get('/api/todos', authTokenConfig(getState))
-    .then(res => {
-      dispatch({
-        type: GET_TODOS,
-        payload: res.data
+  getState().auth.isAuthenticated &&
+    axios
+      .get('/api/todos', authTokenConfig(getState))
+      .then(res => {
+        dispatch({
+          type: GET_TODOS,
+          payload: res.data
+        });
+      })
+      .catch(err => {
+        dispatch(
+          returnErrors(err.response.data, err.response.status, 'GET_TODO_FAIL')
+        );
+        dispatch({
+          type: TODO_FAIL
+        });
       });
-    })
-    .catch(err => {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, 'GET_TODO_FAIL')
-      );
-      dispatch({
-        type: TODO_FAIL
-      });
-    });
 };
 
 export const addTodo = (description, isDone) => (dispatch, getState) => {
   const config = authTokenConfig(getState);
   const body = { description, isDone, userId: getState().auth.user.id };
-  console.log(body);
+  console.log(config);
   axios
     .post('/api/addtodo', body, config)
     .then(res => {

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -11,7 +13,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useHistory } from 'react-router-dom';
 
 import Copyright from '../../Copyright/Copyright';
 import { login } from '../../../actions/authActions';
@@ -33,15 +34,17 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  buttonProgress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12
   }
 }));
 
 function Login(props) {
-  const history = useHistory();
-  if (props.isAuthenticated) {
-    history.push('/');
-  }
-
   const initialState = {
     email: '',
     password: '',
@@ -62,8 +65,12 @@ function Login(props) {
       isSubmitting: true
     });
     const { email, password } = data;
+    setData({
+      ...data,
+      isSubmitting: false
+    });
     email && password && props.login({ email, password });
-    history.push('/');
+    props.push('/');
   };
 
   const classes = useStyles();
@@ -104,15 +111,21 @@ function Login(props) {
             autoComplete='current-password'
             onChange={handleInputChange}
           />
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
+          <div className={classes.wrapper}>
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              color='primary'
+              className={classes.submit}
+              disabled={data.isSubmitting}
+            >
+              Sign In
+            </Button>
+            {data.isSubmitting && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
+          </div>
           <Grid container justify='flex-end'>
             <Grid item>
               <Link href='/register' variant='body2'>
@@ -134,4 +147,4 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, push })(Login);

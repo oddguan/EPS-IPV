@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import Login from './components/Auth/Login/Login';
 import Register from './components/Auth/Register/Register';
 import Navbar from './components/Navbar/Navbar';
@@ -7,8 +7,11 @@ import Todos from './components/Todos/Todos';
 import { Provider } from 'react-redux';
 import './App.css';
 
-import store from './store';
+import PublicRoute from './components/PublicRoute/PublicRoute';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import store, { history } from './store';
 import { loadUser } from './actions/authActions';
+import { ConnectedRouter } from 'connected-react-router';
 
 function App() {
   useEffect(() => {
@@ -16,24 +19,18 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
         <div className='AppContainer'>
           <Navbar />
           <Switch>
-            <Route path='/login'>
-              <Login />
-            </Route>
-            <Route path='/register'>
-              <Register />
-            </Route>
-            <Route path='/'>
-              <Todos />
-            </Route>
+            <PublicRoute path='/login' component={Login} />
+            <PublicRoute path='/register' component={Register} />
+            <PrivateRoute path='/' component={Todos} />
           </Switch>
         </div>
-      </Provider>
-    </Router>
+      </ConnectedRouter>
+    </Provider>
   );
 }
 

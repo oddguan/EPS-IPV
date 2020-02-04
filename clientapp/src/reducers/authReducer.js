@@ -37,6 +37,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ...action.payload,
+        token: action.payload.accessToken,
         isAuthenticated: true,
         isLoading: false
       };

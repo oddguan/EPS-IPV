@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -9,7 +10,7 @@ import { makeStyles } from '@material-ui/core';
 import LoginButton from './LoginButton/LoginButton';
 import LogoutButton from './LogoutButton/LogoutButton';
 
-function Navbar({ isAuthenticated }) {
+function Navbar({ isAuthenticated, gotoHome }) {
   const useStyles = makeStyles(theme => ({
     appBar: {
       borderBottom: `1px solid ${theme.palette.divider}`
@@ -45,8 +46,8 @@ function Navbar({ isAuthenticated }) {
           <Link
             variant='button'
             color='textPrimary'
-            href='/'
             className={classes.link}
+            onClick={gotoHome}
           >
             My Todos
           </Link>
@@ -61,4 +62,10 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps)(Navbar);
+const mapDispatchToProps = dispatch => ({
+  gotoHome: () => {
+    dispatch(push('/'));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

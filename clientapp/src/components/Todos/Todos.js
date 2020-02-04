@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Container from '@material-ui/core/Container';
@@ -11,7 +10,7 @@ import Todo from './Todo/Todo';
 import EditModal from './EditModal/EditModal';
 import { getTodos } from '../../actions/todoActions';
 
-function Todos({ todos, getTodos, isAuthenticated }) {
+function Todos({ todos, getTodos }) {
   const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
@@ -19,12 +18,6 @@ function Todos({ todos, getTodos, isAuthenticated }) {
     }
   }));
   const classes = useStyles();
-
-  const history = useHistory();
-
-  if (!isAuthenticated) {
-    history.push('login');
-  }
 
   // When the whole component mounts, fetch all todos
   useEffect(() => {
@@ -75,8 +68,7 @@ function Todos({ todos, getTodos, isAuthenticated }) {
 }
 
 const mapStateToProps = state => ({
-  todos: state.todo.todos,
-  isAuthenticated: state.auth.isAuthenticated
+  todos: state.todo.todos
 });
 
 export default connect(mapStateToProps, { getTodos })(Todos);
