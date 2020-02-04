@@ -19,6 +19,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * The Spring Security Configuration class. It has all security related configurations.
+ * The back-end secure all requests by using Json Web Token (JWT).
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -27,17 +31,26 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         prePostEnabled = true
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    MyUserDetailsService customUserDetailsService;
 
-    @Autowired
+    // UserDetailsService is required to implement by the Spring Security framework
+    private MyUserDetailsService customUserDetailsService;
+    // handle unauthorized users trying to access endpoints
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
+    @Autowired
+    public SecurityConfig(MyUserDetailsService customUserDetailsService,
+                          JwtAuthenticationEntryPoint unauthorizedHandler) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
+
+    // Configure the authentication filter Bean so that it is in the Spring Context
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
 
+    // Required by the security config, use Bcrypt to encode passwords
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
@@ -51,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    // Use Bcrypt to encrypt password in the database
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -59,14 +73,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors()
+                .cors() // cors protection
                 .and()
-                .csrf()
-                .disable()
+//                .csrf()
+//                .disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
                 .and()
-                .sessionManagement()
+                .sessionManagement() // use stateless session management
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
@@ -79,14 +93,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js")
-                .permitAll()
+                .permitAll() // permit all static files
                 .antMatchers("/api/auth/login", "/api/auth/register")
-                .permitAll()
-                .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
-                .permitAll()
-                .anyRequest()
+                .permitAll() // permit authentication routes
+                .anyRequest() // other routes need authentications
                 .authenticated();
 
         // Add our custom JWT security filter

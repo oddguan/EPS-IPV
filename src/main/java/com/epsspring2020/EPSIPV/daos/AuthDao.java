@@ -10,11 +10,34 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuthDao {
 
+    /**
+     * fetch the user detail from an email address.
+     * Email addresses are unique in the database, meaning that one email address
+     * can only be associated with one account, so this method is guaranteed to
+     * return only one user or none user.
+     * @param email The email address as a String.
+     * @return the fetched user detail.
+     */
     public User findUserByEmail(String email);
 
+    /**
+     * Save a new user into the database. This method is generally used by the registration pipeline.
+     * @param user User details to be registered.
+     * @return An integer indicating whether the operation was successful or not
+     */
     public int saveUserInfo(User user);
 
+    /**
+     * Fetch the user detail from a database id.
+     * @param id userid as a Long
+     * @return User details
+     */
     public User findUserById(Long id);
 
+    /**
+     * Fetch the Role object by providing a RoleName object. Used for relating two tables.
+     * @param roleName RoleName object defined in entities
+     * @return The role of the roleName
+     */
     public Role findRoleByRoleName(RoleName roleName);
 }
