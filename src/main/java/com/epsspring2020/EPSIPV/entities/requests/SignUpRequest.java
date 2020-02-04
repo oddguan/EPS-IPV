@@ -2,6 +2,9 @@ package com.epsspring2020.EPSIPV.entities.requests;
 
 import javax.validation.constraints.*;
 
+/**
+ * request from signing up (register)
+ */
 public class SignUpRequest {
     @NotBlank
     @Size(max = 40)

@@ -1,5 +1,8 @@
 package com.epsspring2020.EPSIPV.entities;
 
+/**
+ * Definition of roles of each user
+ */
 public class Role {
     private Long id;
     private RoleName name;

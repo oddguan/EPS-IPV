@@ -2,6 +2,9 @@ package com.epsspring2020.EPSIPV.entities.requests;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * The request from the login page, which includes email and password
+ */
 public class LoginRequest {
     @NotBlank
     private String email;

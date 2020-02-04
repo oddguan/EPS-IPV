@@ -1,5 +1,8 @@
-package com.epsspring2020.EPSIPV.entities.response;
+package com.epsspring2020.EPSIPV.entities.responses;
 
+/**
+ * An interface for all information needed for a user in the frontend
+ */
 public class UserDetailResponse {
 
     private Long id;

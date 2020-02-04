@@ -11,11 +11,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * A service required by Spring Security to configure
+ */
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired
     AuthDao authDao;
+
+    @Autowired
+    public MyUserDetailsService(AuthDao authDao) {
+        this.authDao = authDao; // need authDao to query user details
+    }
 
     @Override
     @Transactional

@@ -1,8 +1,10 @@
 package com.epsspring2020.EPSIPV.exceptions;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
+/**
+ * A generic class for handling exceptions
+ */
 public class CustomException extends RuntimeException {
     private Object body;
     private HttpStatus status;

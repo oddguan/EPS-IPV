@@ -2,16 +2,16 @@ package com.epsspring2020.EPSIPV.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
+/**
+ * A UserPrincipal object which is required by Spring Security
+ */
 public class UserPrincipal implements UserDetails {
     private Long id;
 

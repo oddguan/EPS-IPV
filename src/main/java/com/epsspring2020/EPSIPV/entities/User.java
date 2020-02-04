@@ -1,7 +1,8 @@
 package com.epsspring2020.EPSIPV.entities;
 
-import java.util.Set;
-
+/**
+ * generic user class
+ */
 public class User {
 
     private Long id;

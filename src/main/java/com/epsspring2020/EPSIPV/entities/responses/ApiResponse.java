@@ -1,5 +1,8 @@
-package com.epsspring2020.EPSIPV.entities.response;
+package com.epsspring2020.EPSIPV.entities.responses;
 
+/**
+ * A generic class for handling all api responses
+ */
 public class ApiResponse {
     private Boolean success;
     private String message;

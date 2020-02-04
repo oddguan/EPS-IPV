@@ -3,8 +3,8 @@ package com.epsspring2020.EPSIPV.controllers;
 import com.epsspring2020.EPSIPV.entities.*;
 import com.epsspring2020.EPSIPV.entities.requests.LoginRequest;
 import com.epsspring2020.EPSIPV.entities.requests.SignUpRequest;
-import com.epsspring2020.EPSIPV.entities.response.JwtAuthenticationResponse;
-import com.epsspring2020.EPSIPV.entities.response.UserDetailResponse;
+import com.epsspring2020.EPSIPV.entities.responses.JwtAuthenticationResponse;
+import com.epsspring2020.EPSIPV.entities.responses.UserDetailResponse;
 import com.epsspring2020.EPSIPV.exceptions.CustomException;
 import com.epsspring2020.EPSIPV.services.AuthService;
 import com.epsspring2020.EPSIPV.utils.annotations.CurrentUser;
@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/api/auth/")

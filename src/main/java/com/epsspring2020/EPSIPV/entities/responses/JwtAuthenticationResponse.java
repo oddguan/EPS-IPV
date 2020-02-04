@@ -1,7 +1,8 @@
-package com.epsspring2020.EPSIPV.entities.response;
+package com.epsspring2020.EPSIPV.entities.responses;
 
-import com.epsspring2020.EPSIPV.entities.User;
-
+/**
+ * A response for the jwt token and user details
+ */
 public class JwtAuthenticationResponse {
     private String accessToken;
     private String tokenType = "Bearer";

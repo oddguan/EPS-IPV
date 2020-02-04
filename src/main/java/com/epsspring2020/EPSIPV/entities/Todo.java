@@ -1,5 +1,8 @@
 package com.epsspring2020.EPSIPV.entities;
 
+/**
+ * All information needed for a todo item
+ */
 public class Todo {
 
     private String todoId;
