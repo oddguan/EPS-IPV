@@ -50,7 +50,9 @@ public class AuthController {
                     .fromCurrentContextPath().path("/api/users/{username}")
                     .buildAndExpand(user.getUsername()).toUri();
 
-            return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+            String jwt = authService.signIn(signUpRequest.getEmail(), signUpRequest.getPassword());
+            UserDetailResponse userResponse = authService.queryUserDetailByEmail(signUpRequest.getEmail());
+            return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, userResponse));
         } catch (CustomException e) {
             return new ResponseEntity<>(e.getBody(), e.getStatus());
         }
