@@ -14,18 +14,23 @@ import { loadUser } from './actions/authActions';
 import { ConnectedRouter } from 'connected-react-router';
 
 function App() {
+  // When the application starts, try to load user from using
+  // The localStorage's user information and JWT token
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
 
   return (
     <Provider store={store}>
+      {/* Wrap everything into a redux store */}
       <ConnectedRouter history={history}>
         <div className='AppContainer'>
           <Navbar />
           <Switch>
+            {/* Login and Register are public routes */}
             <PublicRoute path='/login' component={Login} />
             <PublicRoute path='/register' component={Register} />
+            {/* Todo list is a private route, requiring user to login before use */}
             <PrivateRoute path='/' component={Todos} />
           </Switch>
         </div>

@@ -17,29 +17,35 @@ import { register } from '../../../actions/authActions';
 import Copyright from '../../Copyright/Copyright';
 import isValidEmail from '../../../utils/isValidEmail';
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
-}));
-
+/**
+ * root component of the registration page
+ * @param {*} props
+ */
 function Register(props) {
+  // material ui styling
+  const useStyles = makeStyles(theme => ({
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(3)
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2)
+    }
+  }));
   const classes = useStyles();
 
+  // initial state of the component
+  // everything is set to empty initially until user input something
   const initialState = {
     firstName: '',
     lastName: '',
@@ -49,8 +55,10 @@ function Register(props) {
     msg: null
   };
 
+  // store state into the "data" variable
   const [data, setData] = useState(initialState);
 
+  // record input changes and save them to state
   const handleInputChange = event => {
     setData({
       ...data,
@@ -58,6 +66,7 @@ function Register(props) {
     });
   };
 
+  // check input validities before actually submit the post registration request to the backend
   const areInputsValid = () => {
     const { firstName, lastName, username, email, password } = data;
     if (!firstName || !lastName || !username || !email || !password) {
@@ -79,6 +88,7 @@ function Register(props) {
     return true;
   };
 
+  // post submission on-submit method
   const handleSubmit = event => {
     event.preventDefault();
     // register action will redirect user to home page if registered successfully
@@ -87,6 +97,7 @@ function Register(props) {
 
   return (
     <Container component='main' maxWidth='xs'>
+      {/* Notification wrapper component */}
       <ToastContainer position='top-center' />
       <CssBaseline />
       <div className={classes.paper}>
@@ -97,6 +108,7 @@ function Register(props) {
           Sign up
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          {/* Input fields are managed by a grid system */}
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -186,6 +198,7 @@ function Register(props) {
   );
 }
 
+// map redux state to props
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error

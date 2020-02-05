@@ -19,48 +19,56 @@ import isValidEmail from '../../../utils/isValidEmail';
 import Copyright from '../../Copyright/Copyright';
 import { login } from '../../../actions/authActions';
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  },
-  buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12
-  }
-}));
-
+/**
+ * Login component is the root component of the login page.
+ * @param {*} props
+ */
 function Login(props) {
+  // stying definitions (material-ui)
+  const useStyles = makeStyles(theme => ({
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1)
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2)
+    },
+    buttonProgress: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      marginTop: -12,
+      marginLeft: -12
+    }
+  }));
   const initialState = {
     email: '',
     password: '',
     isSubmitting: false
   };
 
+  // the root state of the component
   const [data, setData] = useState(initialState);
   const handleInputChange = event => {
+    // update state based on input changes
     setData({
       ...data,
       [event.target.name]: event.target.value
     });
   };
 
+  // valid inputs and push error messages to user
+  // returns a boolean indicating whether input validation was successful
   const areInputsValid = () => {
     const { email, password } = data;
     if (!email || !password) {
@@ -74,16 +82,20 @@ function Login(props) {
     return true;
   };
 
+  // when submit button was clicked, check input validities and
+  // post the login request
   const handleFormSubmit = event => {
     event.preventDefault();
     areInputsValid() && props.login(data);
     props.push('/');
   };
 
+  // use styles defined above
   const classes = useStyles();
 
   return (
     <Container component='main' maxWidth='xs'>
+      {/* Notification modal component  */}
       <ToastContainer position='top-center' />
       <CssBaseline />
       <div className={classes.paper}>
@@ -149,6 +161,7 @@ function Login(props) {
   );
 }
 
+// map useful states from redux to props
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error
