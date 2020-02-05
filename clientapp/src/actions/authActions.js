@@ -12,11 +12,14 @@ import {
 import { returnErrors } from './errorActions';
 import { push } from 'connected-react-router';
 
-// check token & load user
+/**
+ * fetch user details by userId
+ */
 export const loadUser = () => (dispatch, getState) => {
   // User loading
   dispatch({ type: USER_LOADING });
 
+  // get request to '/api/auth/user'
   axios
     .get('/api/auth/user', authTokenConfig(getState))
     .then(res =>
@@ -33,6 +36,11 @@ export const loadUser = () => (dispatch, getState) => {
     });
 };
 
+/**
+ * the registration action, which posts everything user entered to the backend and returns a
+ * new login session and user detail registered in the database
+ * @param { firstName, lastName, username, email, password } param0
+ */
 export const register = ({
   firstName,
   lastName,
@@ -40,6 +48,7 @@ export const register = ({
   email,
   password
 }) => dispatch => {
+  // everything will be posted using json format
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -55,6 +64,7 @@ export const register = ({
     password
   });
 
+  // post the registration details to the backend
   axios
     .post('/api/auth/register', body, config)
     .then(res => {
@@ -62,6 +72,7 @@ export const register = ({
         type: REGISTER_SUCCESS,
         payload: res.data
       });
+      // redirect user to the home page after successful registration
       dispatch(push('/'));
     })
     .catch(err => {
@@ -74,18 +85,25 @@ export const register = ({
     });
 };
 
+/**
+ * the login action, which logs user in, stores returned JWT token and user detail into localStorage
+ * @param { email, password } param0
+ */
 export const login = ({ email, password }) => dispatch => {
-  // Common Headers
+  // Common Headers, submitting everything as json
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
   };
+
   // The login body, "loginRequest" in the backend
   const body = JSON.stringify({
     email,
     password
   });
+
+  // submit a post request to '/api/auth/login'
   axios
     .post('/api/auth/login', body, config)
     .then(res => {
@@ -93,6 +111,7 @@ export const login = ({ email, password }) => dispatch => {
         type: LOGIN_SUCCESS,
         payload: res.data
       });
+      // return the res promise in case any other place needs it
       return res;
     })
     .catch(err => {
@@ -105,12 +124,23 @@ export const login = ({ email, password }) => dispatch => {
     });
 };
 
+/**
+ * the logout action, which essentially deletes everything in the localStorage and set
+ * the "isAuthenticated" status to false
+ */
 export const logout = () => dispatch => {
   dispatch({
     type: LOGOUT_SUCCESS
   });
 };
 
+/**
+ * A common utility function for setting the authentication header
+ * Since each requests other than login and register needs authentication,
+ * this function sets the "Authorization" header to the JWT value stored in
+ * the auth state
+ * @param {*} getState
+ */
 export const authTokenConfig = getState => {
   // Get token from localstorage
   const token = getState().auth.token;
