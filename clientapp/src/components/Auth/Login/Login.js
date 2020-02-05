@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link as RouteLink } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -14,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import isValidEmail from '../../../utils/isValidEmail';
 import Copyright from '../../Copyright/Copyright';
 import { login } from '../../../actions/authActions';
 
@@ -58,18 +60,23 @@ function Login(props) {
       [event.target.name]: event.target.value
     });
   };
+
+  const areInputsValid = () => {
+    const { email, password } = data;
+    if (!email || !password) {
+      toast.error('You must fill out all required fields!');
+      return false;
+    }
+    if (!isValidEmail(email)) {
+      toast.error('Email format is invalid!');
+      return false;
+    }
+    return true;
+  };
+
   const handleFormSubmit = event => {
     event.preventDefault();
-    setData({
-      ...data,
-      isSubmitting: true
-    });
-    const { email, password } = data;
-    setData({
-      ...data,
-      isSubmitting: false
-    });
-    email && password && props.login({ email, password });
+    areInputsValid() && props.login(data);
     props.push('/');
   };
 
@@ -77,7 +84,7 @@ function Login(props) {
 
   return (
     <Container component='main' maxWidth='xs'>
-      {/* <ToastContainer position='top-center' /> */}
+      <ToastContainer position='top-center' />
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

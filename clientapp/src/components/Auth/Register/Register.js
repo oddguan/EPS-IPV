@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 
 import { register } from '../../../actions/authActions';
 import Copyright from '../../Copyright/Copyright';
+import isValidEmail from '../../../utils/isValidEmail';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -57,14 +58,36 @@ function Register(props) {
     });
   };
 
+  const areInputsValid = () => {
+    const { firstName, lastName, username, email, password } = data;
+    if (!firstName || !lastName || !username || !email || !password) {
+      toast.error('You must fill out all required fields!');
+      return false;
+    }
+    if (firstName.length > 40 || lastName.length > 40) {
+      toast.error('First name or last name is too long');
+      return false;
+    }
+    if (password.length < 6) {
+      toast.error('Password has a minimum size of 6');
+      return false;
+    }
+    if (!isValidEmail(email)) {
+      toast.error('Email format is invalid!');
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = event => {
     event.preventDefault();
     // register action will redirect user to home page if registered successfully
-    props.register(data);
+    areInputsValid() && props.register(data);
   };
 
   return (
     <Container component='main' maxWidth='xs'>
+      <ToastContainer position='top-center' />
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
