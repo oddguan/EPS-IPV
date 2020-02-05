@@ -5,6 +5,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { logout } from '../../../actions/authActions';
 
+/**
+ * logout button in the navbar. Call logout action and log user out of the app
+ * @param { logout } props
+ */
 function LoginButton({ logout }) {
   const useStyles = makeStyles(theme => ({
     link: {

@@ -12,6 +12,16 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { editTodo } from '../../../actions/todoActions';
 
+/**
+ * The edit modal for editting todo descriptions
+ * @param {
+ * isModalOpen,
+ * handleModalClose,
+ * toBeEditted,
+ * changeToBeEditted,
+ * editIndex,
+ * editTodo } props
+ */
 function EditModal({
   isModalOpen,
   handleModalClose,
@@ -20,6 +30,7 @@ function EditModal({
   editIndex,
   editTodo
 }) {
+  // material ui styling
   const useStyles = makeStyles(theme => ({
     modal: {
       display: 'flex',
@@ -38,15 +49,19 @@ function EditModal({
   }));
   const classes = useStyles();
 
+  // a onClick to notify user when todo was successfully editted
   const notify = () => toast.success('Todo editted successfully');
 
+  // When user clicks edit, dispatch the editTodo redux action and notify user
+  // that the action was successful
   const handleEdit = () => {
     editTodo(editIndex, toBeEditted);
     notify();
-    handleModalClose();
+    handleModalClose(); // close the modal after edit was successful
   };
   return (
     <div>
+      {/* Notification wrapper */}
       <ToastContainer position='top-center' />
       <Modal
         className={classes.modal}
@@ -55,6 +70,7 @@ function EditModal({
         aria-labelledby='edit-modal-title'
         aria-describedby='edit-modal-description'
       >
+        {/* Modal is displayed as a Card component */}
         <Card>
           <CardContent>
             <TextField
@@ -82,6 +98,4 @@ function EditModal({
   );
 }
 
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, { editTodo })(EditModal);
+export default connect(null, { editTodo })(EditModal);

@@ -10,7 +10,12 @@ import { makeStyles } from '@material-ui/core';
 import LoginButton from './LoginButton/LoginButton';
 import LogoutButton from './LogoutButton/LogoutButton';
 
+/**
+ *  The navbar component
+ * @param { isAuthenticated, gotoHome } props
+ */
 function Navbar({ isAuthenticated, gotoHome }) {
+  // material ui styling
   const useStyles = makeStyles(theme => ({
     appBar: {
       borderBottom: `1px solid ${theme.palette.divider}`
@@ -26,6 +31,7 @@ function Navbar({ isAuthenticated, gotoHome }) {
     }
   }));
   const classes = useStyles();
+
   return (
     <AppBar
       position='static'
@@ -43,6 +49,7 @@ function Navbar({ isAuthenticated, gotoHome }) {
           EPS - Todo App
         </Typography>
         <nav>
+          {/* A button that directs user to the todo list page */}
           <Link
             variant='button'
             color='textPrimary'
@@ -52,6 +59,7 @@ function Navbar({ isAuthenticated, gotoHome }) {
             My Todos
           </Link>
         </nav>
+        {/* Check authentication status whether display login or logout button */}
         {!isAuthenticated ? <LoginButton /> : <LogoutButton />}
       </Toolbar>
     </AppBar>

@@ -13,7 +13,12 @@ import './Todo.css';
 
 import { completeTodo, removeTodo } from '../../../actions/todoActions';
 
+/**
+ * The single todo item component
+ * @param { todo, index, handleModalOpen, completeTodo, removeTodo } props
+ */
 function Todo({ todo, index, handleModalOpen, completeTodo, removeTodo }) {
+  // material ui styles
   const useStyles = makeStyles(theme => ({
     text: {},
     button: {
@@ -23,8 +28,11 @@ function Todo({ todo, index, handleModalOpen, completeTodo, removeTodo }) {
     }
   }));
   const classes = useStyles();
+
   return (
+    // Each todo is a list ListItem, single the HOC is a List component
     <ListItem>
+      {/* Each todo item has a checkbox indicating whether it is completed */}
       <ListItemIcon>
         <Checkbox
           edge='start'
@@ -35,6 +43,8 @@ function Todo({ todo, index, handleModalOpen, completeTodo, removeTodo }) {
           onClick={() => completeTodo(index)}
         />
       </ListItemIcon>
+      {/* The description of the item */}
+      {/* Check whether it is complete and add a line-through styling based on the state */}
       <div className={classes.text}>
         <ListItemText
           className={todo.isDone ? 'done' : ''}
@@ -42,12 +52,16 @@ function Todo({ todo, index, handleModalOpen, completeTodo, removeTodo }) {
           primary={todo.description}
         />
       </div>
+      {/* The edit functionality, displayed as a "pen" button */}
       <ListItemSecondaryAction className={classes.button}>
+        {/* onClick has the modalOpen action passed in from Todos component */}
         <IconButton onClick={() => handleModalOpen(index)}>
           <EditIcon />
         </IconButton>
       </ListItemSecondaryAction>
+      {/* The remove functionality, displayed as a "cross" button */}
       <ListItemSecondaryAction>
+        {/* onClick has the removeTodo redux action */}
         <IconButton edge='end' onClick={() => removeTodo(index)}>
           <CancelIcon />
         </IconButton>
@@ -56,6 +70,4 @@ function Todo({ todo, index, handleModalOpen, completeTodo, removeTodo }) {
   );
 }
 
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, { removeTodo, completeTodo })(Todo);
+export default connect(null, { removeTodo, completeTodo })(Todo);
