@@ -9,13 +9,20 @@ import {
   REGISTER_FAIL
 } from '../actions/types';
 
+// fetch JWT token and user object from localStorage as the initial state
+// isAuthenticated initially is set to false
 const initialState = {
   token: localStorage.getItem('token'),
   user: localStorage.getItem('user'),
-  isAuthenticated: null,
+  isAuthenticated: false,
   isLoading: false
 };
 
+/**
+ * handle authentication related redux actions
+ * @param {*} state
+ * @param {*} action
+ */
 export default function(state = initialState, action) {
   switch (action.type) {
     case USER_LOADING:
@@ -32,6 +39,7 @@ export default function(state = initialState, action) {
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
+      // when either login or register successed, save token and user to localStorage
       localStorage.setItem('token', action.payload.accessToken);
       localStorage.setItem('user', JSON.stringify(action.payload.user));
       return {
@@ -45,6 +53,7 @@ export default function(state = initialState, action) {
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
+      // when error occured or logout was requested, delete token and user from localStorage
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       return {

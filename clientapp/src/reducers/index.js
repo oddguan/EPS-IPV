@@ -5,6 +5,11 @@ import errorReducer from './errorReducer';
 import authReducer from './authReducer';
 import todoReducer from './todoReducer';
 
+/**
+ * The root reducer creation function.
+ * Combines all reducer defined and add react-router support as well
+ * @param {*} history
+ */
 const createRootReducer = history =>
   combineReducers({
     router: connectRouter(history),

@@ -7,10 +7,16 @@ import {
   TODO_FAIL
 } from '../actions/types';
 
+// todo reducer only has one initial state, which is an empty todo list
 const initialState = {
   todos: []
 };
 
+/**
+ * The todoReducer for dispatching todo related actions
+ * @param {*} state
+ * @param {*} action
+ */
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_TODOS:
