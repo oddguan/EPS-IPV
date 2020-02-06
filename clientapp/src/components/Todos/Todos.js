@@ -19,7 +19,7 @@ function Todos({ todos, getTodos }) {
   const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
-      backgroundColor: theme.palette.background.default
+      backgroundColor: theme.palette.background.paper
     }
   }));
   const classes = useStyles();
@@ -48,7 +48,7 @@ function Todos({ todos, getTodos }) {
   };
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component='main'>
       <CssBaseline />
       {/* The edit modal component, has all related functions and states passed down as props */}
       <EditModal
@@ -68,8 +68,6 @@ function Todos({ todos, getTodos }) {
             index={i}
             todo={todo}
             role={undefined}
-            dense
-            button
             // it needs the handleModalOpen prop because the edit button is in the todo component
             handleModalOpen={handleModalOpen}
           />

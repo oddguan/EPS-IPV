@@ -20,7 +20,6 @@ import { completeTodo, removeTodo } from '../../../actions/todoActions';
 function Todo({ todo, index, handleModalOpen, completeTodo, removeTodo }) {
   // material ui styles
   const useStyles = makeStyles(theme => ({
-    text: {},
     button: {
       '& > *': {
         marginRight: theme.spacing(3)
@@ -31,7 +30,7 @@ function Todo({ todo, index, handleModalOpen, completeTodo, removeTodo }) {
 
   return (
     // Each todo is a list ListItem, single the HOC is a List component
-    <ListItem>
+    <ListItem dense button>
       {/* Each todo item has a checkbox indicating whether it is completed */}
       <ListItemIcon>
         <Checkbox
@@ -45,13 +44,11 @@ function Todo({ todo, index, handleModalOpen, completeTodo, removeTodo }) {
       </ListItemIcon>
       {/* The description of the item */}
       {/* Check whether it is complete and add a line-through styling based on the state */}
-      <div className={classes.text}>
-        <ListItemText
-          className={todo.isDone ? 'done' : ''}
-          id={todo.id}
-          primary={todo.description}
-        />
-      </div>
+      <ListItemText
+        className={todo.isDone ? 'done' : ''}
+        id={todo.id}
+        primary={todo.description}
+      />
       {/* The edit functionality, displayed as a "pen" button */}
       <ListItemSecondaryAction className={classes.button}>
         {/* onClick has the modalOpen action passed in from Todos component */}

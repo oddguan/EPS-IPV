@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -15,10 +16,13 @@ function AddTodoForm({ addTodo }) {
   const useStyles = makeStyles(theme => ({
     root: {
       '& > *': {
+        display: 'flex',
         marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
-        width: '100%'
+        marginBottom: theme.spacing(1)
       }
+    },
+    addButton: {
+      marginTop: theme.spacing(1)
     }
   }));
   const classes = useStyles();
@@ -41,17 +45,29 @@ function AddTodoForm({ addTodo }) {
   };
 
   return (
-    <form className={classes.root} display='flex' onSubmit={handleSubmit}>
-      <TextField
-        id='filled-basic'
-        label='New Todo...'
-        variant='filled'
-        value={value}
-        onChange={e => setValue(e.target.value)}
-      />
-      <Button variant='contained' color='primary' type='submit'>
-        Add
-      </Button>
+    <form className={classes.root} onSubmit={handleSubmit}>
+      <Grid spacing={4}>
+        <Grid item xs={9} sm={9}>
+          <TextField
+            fullWidth
+            label='New Todo...'
+            // variant='filled'
+            value={value}
+            onChange={e => setValue(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={3} sm={3}>
+          <Button
+            className={classes.addButton}
+            fullWidth
+            variant='contained'
+            color='primary'
+            type='submit'
+          >
+            Add
+          </Button>
+        </Grid>
+      </Grid>
     </form>
   );
 }
