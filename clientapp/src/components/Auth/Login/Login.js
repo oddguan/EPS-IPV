@@ -18,6 +18,7 @@ import Container from '@material-ui/core/Container';
 import isValidEmail from '../../../utils/isValidEmail';
 import Copyright from '../../Copyright/Copyright';
 import { login } from '../../../actions/authActions';
+import { Link } from '@material-ui/core';
 
 /**
  * Login component is the root component of the login page.
@@ -147,9 +148,11 @@ function Login(props) {
           </div>
           <Grid container justify='flex-end'>
             <Grid item>
-              <RouteLink to={'/register'}>
-                {"Don't have an account? Sign up"}
-              </RouteLink>
+              <Link color='inherit'>
+                <RouteLink style={{ textDecoration: 'none' }} to={'/register'}>
+                  {"Don't have an account? Sign up"}
+                </RouteLink>
+              </Link>
             </Grid>
           </Grid>
         </form>
