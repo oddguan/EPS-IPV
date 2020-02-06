@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { editTodo } from '../../../actions/todoActions';
+import { Fade, Typography } from '@material-ui/core';
 
 /**
  * The edit modal for editting todo descriptions
@@ -37,11 +38,11 @@ function EditModal({
       alignItems: 'center',
       justifyContent: 'center'
     },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3)
+    card: {
+      width: '400px'
+    },
+    title: {
+      marginBottom: theme.spacing(2)
     },
     buttonGroup: {
       margin: theme.spacing(1)
@@ -67,32 +68,41 @@ function EditModal({
         className={classes.modal}
         open={isModalOpen}
         onClose={handleModalClose}
-        aria-labelledby='edit-modal-title'
         aria-describedby='edit-modal-description'
       >
-        {/* Modal is displayed as a Card component */}
-        <Card>
-          <CardContent>
-            <TextField
-              className={classes.paper}
-              id='edit-modal-description'
-              value={toBeEditted}
-              onChange={changeToBeEditted}
-            />
-          </CardContent>
-          <CardActions className={classes.buttonGroup}>
-            <Button variant='contained' color='primary' onClick={handleEdit}>
-              Edit
-            </Button>
-            <Button
-              variant='contained'
-              color='secondary'
-              onClick={handleModalClose}
-            >
-              Cancel
-            </Button>
-          </CardActions>
-        </Card>
+        <Fade in={isModalOpen}>
+          {/* Modal is displayed as a Card component */}
+          <Card className={classes.card}>
+            <CardContent>
+              <Typography
+                color='textSecondary'
+                className={classes.title}
+                variant='h5'
+                component='h2'
+              >
+                Edit description
+              </Typography>
+              <TextField
+                fullWidth
+                id='edit-modal-description'
+                value={toBeEditted}
+                onChange={changeToBeEditted}
+              />
+            </CardContent>
+            <CardActions className={classes.buttonGroup}>
+              <Button variant='contained' color='primary' onClick={handleEdit}>
+                Edit
+              </Button>
+              <Button
+                variant='contained'
+                color='secondary'
+                onClick={handleModalClose}
+              >
+                Cancel
+              </Button>
+            </CardActions>
+          </Card>
+        </Fade>
       </Modal>
     </div>
   );
