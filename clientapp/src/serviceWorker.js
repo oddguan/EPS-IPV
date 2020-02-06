@@ -54,6 +54,9 @@ export function register(config) {
   }
 }
 
+//Check whether the visitor had a valid registration. 
+//If so, the precached content will be fetched;
+//If not, return nothing
 function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
