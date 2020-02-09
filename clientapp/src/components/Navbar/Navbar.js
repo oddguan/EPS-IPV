@@ -50,7 +50,7 @@ function Navbar({ isAuthenticated, gotoHome }) {
           noWrap
           className={classes.title}
         >
-          <Link color='inherit' className={classes.pointer}>
+          <Link onClick={gotoHome} color='inherit' className={classes.pointer}>
             EPS - Todo App
           </Link>
         </Typography>
