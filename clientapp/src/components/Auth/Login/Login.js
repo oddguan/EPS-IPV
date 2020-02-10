@@ -148,7 +148,7 @@ function Login(props) {
           </div>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link color='inherit'>
+              <Link component='button' variant='body2' color='inherit'>
                 <RouteLink style={{ textDecoration: 'none' }} to={'/register'}>
                   {"Don't have an account? Sign up"}
                 </RouteLink>

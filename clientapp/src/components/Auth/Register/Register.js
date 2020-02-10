@@ -185,7 +185,7 @@ function Register(props) {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link color='inherit'>
+              <Link component='button' variant='body2' color='inherit'>
                 <RouteLink style={{ textDecoration: 'none' }} to={'/login'}>
                   {'Already have an account? Sign in'}
                 </RouteLink>

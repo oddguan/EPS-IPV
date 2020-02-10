@@ -46,7 +46,7 @@ function AddTodoForm({ addTodo }) {
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
-      <Grid spacing={4}>
+      <Grid container spacing={4}>
         <Grid item xs={9} sm={9}>
           <TextField
             fullWidth
