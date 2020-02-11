@@ -7,6 +7,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { logout } from '../../../actions/authActions';
 
+/**
+ * The profile button displayed on the navbar.
+ * Supports logout functionality for now, but will add more
+ * features in the future.
+ * @param {logout} props
+ */
 function ProfileButton({ logout }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
