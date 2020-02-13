@@ -92,7 +92,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.jpg",
                         "/**/*.html",
                         "/**/*.css",
-                        "/**/*.js")
+                        "/**/*.js",
+                        "/**/*.woff2",
+                        "/**/*.map",
+                        "/**/*.json")
                 .permitAll() // permit all static files
                 .antMatchers("/api/auth/login", "/api/auth/register")
                 .permitAll() // permit authentication routes

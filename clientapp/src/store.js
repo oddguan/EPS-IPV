@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import { createBrowserHistory } from 'history';
+import { createHashHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 
@@ -11,7 +11,7 @@ import createRootReducer from './reducers';
  * It utilizes the "history" package for browser history and react router support.
  */
 
-export const history = createBrowserHistory();
+export const history = createHashHistory();
 
 const initialState = {};
 

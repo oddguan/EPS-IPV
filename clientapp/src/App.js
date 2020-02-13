@@ -33,10 +33,10 @@ function App() {
           <Navbar />
           <Switch>
             {/* Login and Register are public routes */}
-            <PublicRoute path='/login' component={Login} />
-            <PublicRoute path='/register' component={Register} />
+            <PublicRoute exact path='/login' component={Login} />
+            <PublicRoute exact path='/register' component={Register} />
             {/* Todo list is a private route, requiring user to login before use */}
-            <PrivateRoute path='/' component={Todos} />
+            <PrivateRoute exact path='/' component={Todos} />
           </Switch>
         </div>
       </ConnectedRouter>
