@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { Link as RouteLink } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import Avatar from '@material-ui/core/Avatar';
@@ -72,12 +72,14 @@ function Login(props) {
     });
   };
 
+  const dispatch = useDispatch();
   useEffect(() => {
     if (props.error.msg) {
       toast.error(props.error.msg);
       setData(data => ({ ...data, isSubmitting: false }));
+      dispatch(clearErrors());
     }
-  }, [props.error]);
+  }, [props.error, dispatch]);
 
   // valid inputs and push error messages to user
   // returns a boolean indicating whether input validation was successful

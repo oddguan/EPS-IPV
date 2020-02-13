@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 import { register } from '../../../actions/authActions';
 import { returnErrors, clearErrors } from '../../../actions/errorActions';
@@ -72,12 +72,14 @@ function Register(props) {
   // store state into the "data" variable
   const [data, setData] = useState(initialState);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     if (props.error.msg) {
       toast.error(props.error.msg);
       setData(data => ({ ...data, isSubmitting: false }));
+      dispatch(clearErrors());
     }
-  }, [props.error]);
+  }, [props.error, dispatch]);
 
   // record input changes and save them to state
   const handleInputChange = event => {
