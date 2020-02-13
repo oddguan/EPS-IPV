@@ -3,7 +3,7 @@ import { GET_ERRORS, CLEAR_ERRORS } from '../actions/types';
 // the error state has a error message, a http status and an id for the error
 // initially there is no error
 const initialState = {
-  msg: {},
+  msg: null,
   status: null,
   id: null
 };
@@ -23,7 +23,7 @@ export default function(state = initialState, action) {
       };
     case CLEAR_ERRORS:
       return {
-        msg: {},
+        msg: null,
         status: null,
         id: null
       };

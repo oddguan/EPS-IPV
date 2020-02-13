@@ -22,7 +22,9 @@ function App() {
   // When the application starts, try to load user from using
   // The localStorage's user information and JWT token
   useEffect(() => {
-    store.dispatch(loadUser());
+    if (localStorage.getItem('token') || localStorage.getItem('user')) {
+      store.dispatch(loadUser());
+    }
   }, []);
 
   return (

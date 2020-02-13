@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -15,6 +16,7 @@ import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux';
 
 import { register } from '../../../actions/authActions';
+import { returnErrors, clearErrors } from '../../../actions/errorActions';
 import Copyright from '../../Copyright/Copyright';
 import isValidEmail from '../../../utils/isValidEmail';
 
@@ -41,6 +43,17 @@ function Register(props) {
     },
     submit: {
       margin: theme.spacing(3, 0, 2)
+    },
+    wrapper: {
+      margin: theme.spacing(1),
+      position: 'relative'
+    },
+    buttonProgress: {
+      position: 'absolute',
+      top: '55%',
+      left: '50%',
+      marginTop: -12,
+      marginLeft: -12
     }
   }));
   const classes = useStyles();
@@ -53,11 +66,18 @@ function Register(props) {
     username: '',
     email: '',
     password: '',
-    msg: null
+    isSubmitting: false
   };
 
   // store state into the "data" variable
   const [data, setData] = useState(initialState);
+
+  useEffect(() => {
+    if (props.error.msg) {
+      toast.error(props.error.msg);
+      setData(data => ({ ...data, isSubmitting: false }));
+    }
+  }, [props.error]);
 
   // record input changes and save them to state
   const handleInputChange = event => {
@@ -71,19 +91,31 @@ function Register(props) {
   const areInputsValid = () => {
     const { firstName, lastName, username, email, password } = data;
     if (!firstName || !lastName || !username || !email || !password) {
-      toast.error('You must fill out all required fields!');
+      props.returnErrors(
+        'You must fill out all required fields!',
+        null,
+        'REGISTER_FAIL'
+      );
       return false;
     }
     if (firstName.length > 40 || lastName.length > 40) {
-      toast.error('First name or last name is too long');
+      props.returnErrors(
+        'First name or last name is too long',
+        null,
+        'REGISTER_FAIL'
+      );
       return false;
     }
     if (password.length < 6) {
-      toast.error('Password has a minimum size of 6');
+      props.returnErrors(
+        'Password has a minimum size of 6',
+        null,
+        'REGISTER_FAIL'
+      );
       return false;
     }
     if (!isValidEmail(email)) {
-      toast.error('Email format is invalid!');
+      props.returnErrors('Email format is invalid!', null, 'REGISTER_FAIL');
       return false;
     }
     return true;
@@ -92,8 +124,13 @@ function Register(props) {
   // post submission on-submit method
   const handleSubmit = event => {
     event.preventDefault();
-    // register action will redirect user to home page if registered successfully
-    areInputsValid() && props.register(data);
+    setData({ ...data, isSubmitting: true });
+    if (areInputsValid()) {
+      props.register(data);
+      props.clearErrors();
+    } else {
+      setData({ ...data, isSubmitting: false });
+    }
   };
 
   return (
@@ -174,15 +211,21 @@ function Register(props) {
               />
             </Grid>
           </Grid>
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
+          <div className={classes.wrapper}>
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              color='primary'
+              className={classes.submit}
+              disabled={data.isSubmitting}
+            >
+              Sign Up
+            </Button>
+            {data.isSubmitting && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
+          </div>
           <Grid container justify='flex-end'>
             <Grid item>
               <Link component='button' variant='body2' color='inherit'>
@@ -207,4 +250,8 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, { register })(Register);
+export default connect(mapStateToProps, {
+  register,
+  returnErrors,
+  clearErrors
+})(Register);

@@ -72,16 +72,23 @@ public class AuthService {
             throw new CustomException(new ApiResponse(false, "Email is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
+        if (authDao.findUserByUsername(username) != null) {
+            throw new CustomException(new ApiResponse(false, "Username is already taken!"),
+                    HttpStatus.BAD_REQUEST);
+        }
 
         // Creating user's account
         User user = new User(firstName, lastName, username, email, password, roleId);
-
 
         user.setPassword(passwordEncoder.encode(password));
         user.setRoleId((long) 1); // Set the role of the user to "ROLE_USER"
 
         // Save user information to the database
-        authDao.saveUserInfo(user);
+        try {
+            authDao.saveUserInfo(user);
+        } catch (Exception e) {
+            throw new CustomException(new ApiResponse(false, "Unknown Database Error!"), HttpStatus.BAD_REQUEST);
+        }
 
         return user;
     }

@@ -6,6 +6,11 @@
         WHERE email = #{email}
     </select>
 
+    <select id="findUserByUsername" parameterType="string" resultType="com.epsspring2020.EPSIPV.entities.User">
+        SELECT * FROM Users
+        WHERE username = #{username}
+    </select>
+
     <insert id="saveUserInfo" parameterType="com.epsspring2020.EPSIPV.entities.User">
         INSERT INTO Users (email, firstName, lastName, username, password, RoleId)
         VALUE (#{email}, #{firstName}, #{lastName}, #{username}, #{password}, #{roleId})

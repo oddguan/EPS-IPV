@@ -21,6 +21,16 @@ public interface AuthDao {
     public User findUserByEmail(String email);
 
     /**
+     * fetch the use detail from username.
+     * Username is unique in the database just like email address.
+     * This method can be used to verify whether username is already taken so
+     * the front end can prompt user to change to a new username.
+     * @param username The username as a string.
+     * @return the fetched user detail.
+     */
+    public User findUserByUsername(String username);
+
+    /**
      * Save a new user into the database. This method is generally used by the registration pipeline.
      * @param user User details to be registered.
      * @return An integer indicating whether the operation was successful or not

@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 import { Link as RouteLink } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import Avatar from '@material-ui/core/Avatar';
@@ -18,6 +17,7 @@ import Container from '@material-ui/core/Container';
 import isValidEmail from '../../../utils/isValidEmail';
 import Copyright from '../../Copyright/Copyright';
 import { login } from '../../../actions/authActions';
+import { returnErrors, clearErrors } from '../../../actions/errorActions';
 import { Link } from '@material-ui/core';
 
 /**
@@ -33,6 +33,10 @@ function Login(props) {
       flexDirection: 'column',
       alignItems: 'center'
     },
+    wrapper: {
+      margin: theme.spacing(1),
+      position: 'relative'
+    },
     avatar: {
       margin: theme.spacing(1),
       backgroundColor: theme.palette.secondary.main
@@ -46,7 +50,7 @@ function Login(props) {
     },
     buttonProgress: {
       position: 'absolute',
-      top: '50%',
+      top: '55%',
       left: '50%',
       marginTop: -12,
       marginLeft: -12
@@ -68,16 +72,27 @@ function Login(props) {
     });
   };
 
+  useEffect(() => {
+    if (props.error.msg) {
+      toast.error(props.error.msg);
+      setData(data => ({ ...data, isSubmitting: false }));
+    }
+  }, [props.error]);
+
   // valid inputs and push error messages to user
   // returns a boolean indicating whether input validation was successful
   const areInputsValid = () => {
     const { email, password } = data;
     if (!email || !password) {
-      toast.error('You must fill out all required fields!');
+      props.returnErrors(
+        'You must fill out all required fields!',
+        401,
+        'LOGIN_FAIL'
+      );
       return false;
     }
     if (!isValidEmail(email)) {
-      toast.error('Email format is invalid!');
+      props.returnErrors('Email format is invalid!', 401, 'LOGIN_FAIL');
       return false;
     }
     return true;
@@ -87,8 +102,13 @@ function Login(props) {
   // post the login request
   const handleFormSubmit = event => {
     event.preventDefault();
-    areInputsValid() && props.login(data);
-    props.push('/');
+    setData({ ...data, isSubmitting: true });
+    if (areInputsValid()) {
+      props.login(data);
+      props.clearErrors();
+    } else {
+      setData({ ...data, isSubmitting: false });
+    }
   };
 
   // use styles defined above
@@ -106,7 +126,11 @@ function Login(props) {
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleFormSubmit}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={e => handleFormSubmit(e)}
+        >
           <TextField
             variant='outlined'
             margin='normal'
@@ -170,4 +194,6 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, { login, push })(Login);
+export default connect(mapStateToProps, { login, returnErrors, clearErrors })(
+  Login
+);
