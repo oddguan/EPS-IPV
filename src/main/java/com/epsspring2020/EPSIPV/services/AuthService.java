@@ -87,6 +87,7 @@ public class AuthService {
         try {
             authDao.saveUserInfo(user);
         } catch (Exception e) {
+            System.err.println(e);
             throw new CustomException(new ApiResponse(false, "Unknown Database Error!"), HttpStatus.BAD_REQUEST);
         }
 
