@@ -3,3 +3,4 @@ node_modules
 build
 .VSCodeCounter
 .DS_Store
+__pycache__
