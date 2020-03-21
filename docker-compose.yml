@@ -1,0 +1,15 @@
+# This is the devlopment environment
+version: '3'
+
+services:
+  django:
+    build: ./server
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./client
+    command: ["npm", "start"]
+    ports:
+      - "3000:3000"
