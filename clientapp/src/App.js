@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import Todos from './components/Todos/Todos';
 import { Provider } from 'react-redux';
 import './App.css';
+import 'typeface-roboto';
 
 import PublicRoute from './components/HOC/PublicRoute/PublicRoute';
 import PrivateRoute from './components/HOC/PrivateRoute/PrivateRoute';
