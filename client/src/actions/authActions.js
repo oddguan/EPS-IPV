@@ -66,7 +66,7 @@ export const register = ({
 
   // post the registration details to the backend
   axios
-    .post('/api/auth/register', body, config)
+    .post('/register', body, config)
     .then(res => {
       dispatch({
         type: REGISTER_SUCCESS,
