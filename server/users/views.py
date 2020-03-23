@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from users.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm
 
-from todo.models import Todos
+from todos.models import Todos
 
 def registration_view(request):
 	context = {}

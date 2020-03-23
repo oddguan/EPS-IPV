@@ -9,7 +9,7 @@ app_name = 'todos'
 
 urlpatterns = [
 	path('<email>/', api_detail_todo_view, name="email"),
-	path('<email>/', api_update_todo_view, name="email"),
-	path('<email>/', api_delete_todo_view, name="email"),
+	path('<email>/update', api_update_todo_view, name="update"),
+	path('<email>/delete', api_delete_todo_view, name="delete"),
 
 ]
