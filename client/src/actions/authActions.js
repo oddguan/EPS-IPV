@@ -66,14 +66,14 @@ export const register = ({
 
   // post the registration details to the backend
   axios
-    .post('/register', body, config)
+    .post('/register/', body, config)
     .then(res => {
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
       });
       // redirect user to the home page after successful registration
-      dispatch(push('/'));
+//      dispatch(push('/'));
     })
     .catch(err => {
       dispatch(
@@ -109,7 +109,7 @@ export const login = ({ email, password }) => dispatch => {
 
   // submit a post request to '/api/auth/login'
   axios
-    .post('/api/auth/login', body, config)
+    .post('/login/', body, config)
     .then(res => {
       dispatch({
         type: LOGIN_SUCCESS,

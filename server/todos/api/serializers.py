@@ -3,11 +3,14 @@ from todos import models
 
 
 class TodoSerializer(serializers.ModelSerializer):
+
+
 	class Meta:
 		fields = (
 			'id',
 			'title',
 			'complete',
 			'created',
+			'username'
 		)
-		model = models.Todo
+		model = models.Todos
