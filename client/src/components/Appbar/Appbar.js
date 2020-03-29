@@ -65,7 +65,7 @@ function Appbar({ isAuthenticated, gotoHome, handleDrawerToggle }) {
             EPS - IPV
           </Link>
         </Typography>
-        {isAuthenticated && <ProfileButton />}
+        {/* {isAuthenticated && <ProfileButton />} */}
       </Toolbar>
     </AppBar>
   );

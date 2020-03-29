@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import NavList from './NavList/NavList';
 
 const drawerWidth = 240;
 
@@ -53,7 +54,7 @@ const NavDrawer = ({ handleDrawerToggle, mobileOpen }) => {
             keepMounted: true // Better open performance on mobile.
           }}
         >
-          Hello World mobile
+          <NavList />
         </Drawer>
       </Hidden>
       <Hidden xsDown implementation='css'>
@@ -64,7 +65,7 @@ const NavDrawer = ({ handleDrawerToggle, mobileOpen }) => {
           variant='permanent'
           open
         >
-          Hello World desktop
+          <NavList />
         </Drawer>
       </Hidden>
     </nav>
