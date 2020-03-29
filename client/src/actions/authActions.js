@@ -2,11 +2,11 @@ import axios from 'axios';
 import {
   USER_LOADING,
   USER_LOADED,
-  AUTH_ERROR,
+  // AUTH_ERROR,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGIN_SUCCESS,
-  LOGIN_FAIL,
+  // LOGIN_FAIL,
   LOGOUT_SUCCESS
 } from './types';
 import { returnErrors } from './errorActions';
@@ -19,21 +19,40 @@ export const loadUser = () => (dispatch, getState) => {
   // User loading
   dispatch({ type: USER_LOADING });
 
-  // get request to '/api/auth/user'
-  axios
-    .get('/api/auth/user', authTokenConfig(getState))
-    .then(res =>
+  // ********* For dev purpose only
+  setTimeout(() => {
+    if (localStorage.token) {
       dispatch({
         type: USER_LOADED,
-        payload: res.data
-      })
-    )
-    .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({
-        type: AUTH_ERROR
+        payload: {
+          user: {
+            id: 12345678,
+            username: 'oddguan',
+            role: 'ADMIN',
+            firstName: 'Chenxiao',
+            lastName: 'Guan',
+            email: '1011zaozao@gmail.com'
+          }
+        }
       });
-    });
+    }
+  }, 200);
+
+  // get request to '/api/auth/user'
+  // axios
+  //   .get('/api/auth/user', authTokenConfig(getState))
+  //   .then(res =>
+  //     dispatch({
+  //       type: USER_LOADED,
+  //       payload: res.data
+  //     })
+  //   )
+  //   .catch(err => {
+  //     dispatch(returnErrors(err.response.data, err.response.status));
+  //     dispatch({
+  //       type: AUTH_ERROR
+  //     });
+  //   });
 };
 
 /**
@@ -111,7 +130,7 @@ export const login = ({ email, password }) => dispatch => {
   // Mock the login process as the backend is not devloped yet
   setTimeout(() => {
     const payload = {
-      accessToken: 'Bearer testtoken123',
+      accessToken: 'testtoken123',
       user: {
         id: 12345678,
         username: 'oddguan',

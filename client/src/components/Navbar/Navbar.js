@@ -19,10 +19,11 @@ function Navbar({ isAuthenticated, gotoHome }) {
   // material ui styling
   const useStyles = makeStyles(theme => ({
     root: {
+      width: '100%',
       flexGrow: 1
     },
     menuButton: {
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(1)
     },
     title: {
       flexGrow: 1
@@ -34,7 +35,7 @@ function Navbar({ isAuthenticated, gotoHome }) {
   const classes = useStyles();
 
   return (
-    <AppBar position='static'>
+    <AppBar position='static' className={classes.root}>
       <Toolbar>
         <IconButton
           edge='start'

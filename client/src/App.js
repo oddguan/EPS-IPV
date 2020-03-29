@@ -3,7 +3,7 @@ import { Switch } from 'react-router-dom';
 import Login from './components/Auth/Login/Login';
 import Register from './components/Auth/Register/Register';
 import Navbar from './components/Navbar/Navbar';
-import Todos from './components/Todos/Todos';
+import Education from './components/Education/Education';
 import { Provider } from 'react-redux';
 import './App.css';
 import 'typeface-roboto';
@@ -39,7 +39,7 @@ function App() {
             <PublicRoute exact path='/login' component={Login} />
             <PublicRoute exact path='/register' component={Register} />
             {/* Todo list is a private route, requiring user to login before use */}
-            <PrivateRoute exact path='/' component={Todos} />
+            <PrivateRoute exact path='/' component={Education} />
           </Switch>
         </div>
       </ConnectedRouter>
