@@ -8,6 +8,10 @@ import NavDrawer from '../NavDrawer/NavDrawer';
 import Login from '../Auth/Login/Login';
 import Register from '../Auth/Register/Register';
 import Education from '../Education/Education';
+import Logs from '../Logs/Logs';
+import Resources from '../Resources/Resources';
+import Messages from '../Messages/Messages';
+import Account from '../Account/Account';
 
 const Routes = ({ isAuthenticated }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -30,6 +34,10 @@ const Routes = ({ isAuthenticated }) => {
         <PublicRoute exact path='/register' component={Register} />
         <PublicRoute exact path='/' component={() => <></>} />
         <PrivateRoute exact path='/education' component={Education} />
+        <PrivateRoute exact path='/logs' component={Logs} />
+        <PrivateRoute exact path='/messages' component={Messages} />
+        <PrivateRoute exact path='/resources' component={Resources} />
+        <PrivateRoute exact path='/account' component={Account} />
       </Switch>
     </div>
   );
