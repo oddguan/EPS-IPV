@@ -95,42 +95,63 @@ export const register = ({
  */
 export const login = ({ email, password }) => dispatch => {
   // Common Headers, submitting everything as json
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
+  // const config = {
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   }
+  // };
 
   // The login body, "loginRequest" in the backend
-  const body = JSON.stringify({
-    email,
-    password
-  });
+  // const body = JSON.stringify({
+  //   email,
+  //   password
+  // });
+
+  // ******** For development purpose mock only
+  // Mock the login process as the backend is not devloped yet
+  setTimeout(() => {
+    const payload = {
+      accessToken: 'Bearer testtoken123',
+      user: {
+        id: 12345678,
+        username: 'oddguan',
+        role: 'ADMIN',
+        firstName: 'Chenxiao',
+        lastName: 'Guan',
+        email: '1011zaozao@gmail.com'
+      }
+    };
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload
+    });
+    dispatch(push('/'));
+  }, 1500);
 
   // submit a post request to '/api/auth/login'
-  axios
-    .post('/api/auth/login', body, config)
-    .then(res => {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
-      });
-      // return the res promise in case any other place needs it
-      dispatch(push('/'));
-      return res;
-    })
-    .catch(err => {
-      dispatch(
-        returnErrors(
-          err.response.data.message,
-          err.response.status,
-          'LOGIN_FAIL'
-        )
-      );
-      dispatch({
-        type: LOGIN_FAIL
-      });
-    });
+  // axios
+  //   .post('/api/auth/login', body, config)
+  //   .then(res => {
+  //     dispatch({
+  //       type: LOGIN_SUCCESS,
+  //       payload: res.data
+  //     });
+  //     // return the res promise in case any other place needs it
+  //     dispatch(push('/'));
+  //     return res;
+  //   })
+  //   .catch(err => {
+  //     dispatch(
+  //       returnErrors(
+  //         err.response.data.message,
+  //         err.response.status,
+  //         'LOGIN_FAIL'
+  //       )
+  //     );
+  //     dispatch({
+  //       type: LOGIN_FAIL
+  //     });
+  //   });
 };
 
 /**
