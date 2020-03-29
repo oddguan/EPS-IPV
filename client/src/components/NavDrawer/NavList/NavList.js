@@ -13,6 +13,8 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import { Typography } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
 
 const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
@@ -44,6 +46,15 @@ const DangerButton = withStyles(theme => ({
 
 const NavList = () => {
   const classes = useStyles();
+  const [selectedRoute, setSelectedRoute] = React.useState('education');
+  const dispatch = useDispatch();
+  const handleListItemClick = (event, route) => {
+    if (selectedRoute !== route) {
+      setSelectedRoute(route);
+      return dispatch(push(route));
+    }
+  };
+
   return (
     <div>
       <div className={classes.toolbar}>
@@ -57,25 +68,45 @@ const NavList = () => {
       </div>
       <Divider />
       <List>
-        <ListItem button key='Education'>
+        <ListItem
+          button
+          key='Education'
+          selected={selectedRoute === 'education'}
+          onClick={event => handleListItemClick(event, 'education')}
+        >
           <ListItemIcon>
             <LibraryBooksIcon />
           </ListItemIcon>
           <ListItemText primary='Education' />
         </ListItem>
-        <ListItem button key='Logs'>
+        <ListItem
+          button
+          key='Logs'
+          selected={selectedRoute === 'logs'}
+          onClick={event => handleListItemClick(event, 'logs')}
+        >
           <ListItemIcon>
             <CreateIcon />
           </ListItemIcon>
           <ListItemText primary='Logs' />
         </ListItem>
-        <ListItem button key='Messages'>
+        <ListItem
+          button
+          key='Messages'
+          selected={selectedRoute === 'messages'}
+          onClick={event => handleListItemClick(event, 'messages')}
+        >
           <ListItemIcon>
             <QuestionAnswerIcon />
           </ListItemIcon>
           <ListItemText primary='Messages' />
         </ListItem>
-        <ListItem button key='Resources'>
+        <ListItem
+          button
+          key='Resources'
+          selected={selectedRoute === 'resources'}
+          onClick={event => handleListItemClick(event, 'resources')}
+        >
           <ListItemIcon>
             <ArchiveIcon />
           </ListItemIcon>
@@ -85,7 +116,12 @@ const NavList = () => {
       <div className={classes.bottom}>
         <Divider />
         <List>
-          <ListItem button key='Account'>
+          <ListItem
+            button
+            key='Account'
+            selected={selectedRoute === 'account'}
+            onClick={event => handleListItemClick(event, 'account')}
+          >
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>
