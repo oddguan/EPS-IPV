@@ -11,7 +11,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { red, grey } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({

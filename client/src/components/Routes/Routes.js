@@ -26,7 +26,6 @@ const Routes = ({ isAuthenticated }) => {
         />
       )}
       <Switch>
-        {/* Login and Register are public routes */}
         <PublicRoute exact path='/login' component={Login} />
         <PublicRoute exact path='/register' component={Register} />
         <PrivateRoute exact path='/' component={Education} />
