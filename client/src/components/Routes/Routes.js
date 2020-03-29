@@ -28,6 +28,7 @@ const Routes = ({ isAuthenticated }) => {
       <Switch>
         <PublicRoute exact path='/login' component={Login} />
         <PublicRoute exact path='/register' component={Register} />
+        <PublicRoute exact path='/' component={() => <></>} />
         <PrivateRoute exact path='/education' component={Education} />
       </Switch>
     </div>
