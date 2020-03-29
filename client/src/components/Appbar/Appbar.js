@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,15 +16,21 @@ import ProfileButton from './ProfileButton/ProfileButton';
  *  The navbar component
  * @param { isAuthenticated, gotoHome } props
  */
-function Navbar({ isAuthenticated, gotoHome }) {
+function Appbar({ isAuthenticated, gotoHome, handleDrawerToggle }) {
   // material ui styling
   const useStyles = makeStyles(theme => ({
     root: {
-      width: '100%',
-      flexGrow: 1
+      flexGrow: 1,
+      [theme.breakpoints.up('sm')]: {
+        width: isAuthenticated ? 'calc(100% - 240px)' : '100%',
+        marginLeft: isAuthenticated ? 240 : 0
+      }
     },
     menuButton: {
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up('sm')]: {
+        display: 'none'
+      }
     },
     title: {
       flexGrow: 1
@@ -35,16 +42,19 @@ function Navbar({ isAuthenticated, gotoHome }) {
   const classes = useStyles();
 
   return (
-    <AppBar position='static' className={classes.root}>
+    <AppBar position='fixed' className={classes.root}>
       <Toolbar>
-        <IconButton
-          edge='start'
-          className={classes.menuButton}
-          color='inherit'
-          aria-label='menu'
-        >
-          <MenuIcon />
-        </IconButton>
+        {isAuthenticated && (
+          <IconButton
+            edge='start'
+            className={classes.menuButton}
+            color='inherit'
+            aria-label='menu'
+            onClick={handleDrawerToggle}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
         <Typography
           variant='h6'
           color='inherit'
@@ -52,7 +62,7 @@ function Navbar({ isAuthenticated, gotoHome }) {
           className={classes.title}
         >
           <Link onClick={gotoHome} color='inherit' className={classes.pointer}>
-            EPS - Todo App
+            EPS - IPV
           </Link>
         </Typography>
         {isAuthenticated && <ProfileButton />}
@@ -60,6 +70,12 @@ function Navbar({ isAuthenticated, gotoHome }) {
     </AppBar>
   );
 }
+
+Appbar.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  gotoHome: PropTypes.func,
+  handleDrawerToggle: PropTypes.func
+};
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
@@ -71,4 +87,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Appbar);

@@ -1,18 +1,13 @@
 import React, { useEffect } from 'react';
-import { Switch } from 'react-router-dom';
-import Login from './components/Auth/Login/Login';
-import Register from './components/Auth/Register/Register';
-import Navbar from './components/Navbar/Navbar';
-import Education from './components/Education/Education';
 import { Provider } from 'react-redux';
-import './App.css';
-import 'typeface-roboto';
+import { ConnectedRouter } from 'connected-react-router';
 
-import PublicRoute from './components/HOC/PublicRoute/PublicRoute';
-import PrivateRoute from './components/HOC/PrivateRoute/PrivateRoute';
 import store, { history } from './store';
 import { loadUser } from './actions/authActions';
-import { ConnectedRouter } from 'connected-react-router';
+import Routes from './components/Routes/Routes';
+
+import './App.css';
+import 'typeface-roboto';
 
 /**
  * The root component of the react project.
@@ -32,16 +27,7 @@ function App() {
     <Provider store={store}>
       {/* Wrap everything into a redux store */}
       <ConnectedRouter history={history}>
-        <div className='AppContainer'>
-          <Navbar />
-          <Switch>
-            {/* Login and Register are public routes */}
-            <PublicRoute exact path='/login' component={Login} />
-            <PublicRoute exact path='/register' component={Register} />
-            {/* Todo list is a private route, requiring user to login before use */}
-            <PrivateRoute exact path='/' component={Education} />
-          </Switch>
-        </div>
+        <Routes />
       </ConnectedRouter>
     </Provider>
   );

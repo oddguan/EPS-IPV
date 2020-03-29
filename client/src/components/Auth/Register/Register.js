@@ -28,7 +28,7 @@ function Register(props) {
   // material ui styling
   const useStyles = makeStyles(theme => ({
     paper: {
-      marginTop: theme.spacing(8),
+      marginTop: theme.spacing(18),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center'
