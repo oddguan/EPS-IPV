@@ -17,7 +17,9 @@ function PublicRoute({ component: Component, isAuthenticated, ...rest }) {
         // Check authentication status, if authenticated then redirect to home page
         // if not, stay at the component page
         isAuthenticated ? (
-          <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+          <Redirect
+            to={{ pathname: '/education', state: { from: props.location } }}
+          />
         ) : (
           <Component {...props} />
         )
