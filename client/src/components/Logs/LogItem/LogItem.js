@@ -43,7 +43,7 @@ const LogItem = ({ isImage }) => {
         {isImage ? (
           <CardMedia
             className={classes.media}
-            image='/placeholder-img.jpg'
+            image='/static/placeholder-img.jpg'
             title='Contemplative Reptile'
           />
         ) : (

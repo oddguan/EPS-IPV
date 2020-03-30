@@ -18,8 +18,8 @@ from django.urls import path, include
 from django.conf.urls import url
 from . import views
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('apis/', include('apis.urls')),
+    url(r'^', views.FrontendAppView.as_view())
 ]

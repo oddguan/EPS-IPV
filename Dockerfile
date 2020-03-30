@@ -1,11 +1,13 @@
 # This is the production build Dockerfile for the project
-FROM python:3
+FROM python:3.7
 
 WORKDIR /app/server
 
 # Install Python dependencies
-COPY ./server/requirements.txt /app/server/
-RUN pip install -r requirements.txt
+COPY ./server/Pipfile* /app/server/
+RUN pip install pipenv && \
+    pipenv lock --requirements > requirements.txt && \
+    pip install -r requirements.txt
 
 # Install JS dependencies
 WORKDIR /app/client

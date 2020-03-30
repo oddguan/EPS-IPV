@@ -1,14 +1,8 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
 import Divider from '@material-ui/core/Divider';
-import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
-
-import LogItem from './LogItem/LogItem';
-import { useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
 
 const useStyles = makeStyles(theme => ({
   content: {
@@ -33,34 +27,15 @@ const useStyles = makeStyles(theme => ({
 
 const Logs = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const handleFABClick = () => {
-    dispatch(push('/logs/new'));
-  };
 
   return (
     <React.Fragment>
       <div className={classes.toolbar} />
       <div className={classes.content}>
         <CssBaseline />
-        <Typography variant='h5'>Logs</Typography>
+        <Typography variant='h5'>Add New Log</Typography>
         <Divider />
-        <div className={classes.flex}>
-          {[true, false, true, true, false, true, false, false].map(
-            (isImage, i) => (
-              <LogItem key={i} isImage={isImage} />
-            )
-          )}
-        </div>
       </div>
-      <Fab
-        color='primary'
-        aria-label='add'
-        className={classes.fab}
-        onClick={handleFABClick}
-      >
-        <AddIcon />
-      </Fab>
     </React.Fragment>
   );
 };

@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -34,6 +35,7 @@ const Education = () => {
       <div className={classes.content}>
         <CssBaseline />
         <Typography variant='h5'>Education</Typography>
+        <Divider />
         {['1', '2', '3', '4', '5', '6'].map(key => (
           <Card variant='outlined' key={key} className={classes.article}>
             <CardActionArea>
@@ -41,7 +43,7 @@ const Education = () => {
                 component='img'
                 alt='Contemplative Reptile'
                 height='140'
-                image='/placeholder-img.jpg'
+                image='/static/placeholder-img.jpg'
                 title='Contemplative Reptile'
               />
             </CardActionArea>

@@ -49,10 +49,8 @@ const NavList = () => {
   const [selectedRoute, setSelectedRoute] = React.useState('education');
   const dispatch = useDispatch();
   const handleListItemClick = (event, route) => {
-    if (selectedRoute !== route) {
-      setSelectedRoute(route);
-      return dispatch(push(route));
-    }
+    setSelectedRoute(route);
+    return dispatch(push(`/${route}`));
   };
 
   return (
