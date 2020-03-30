@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'apis.apps.ApisConfig',
-    'todos',
+    'app',
 ]
 
 REST_FRAMEWORK = {
@@ -90,8 +90,12 @@ WSGI_APPLICATION = 'eps_ipv_server.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'IPV', 
+        'USER': 'admin', 
+        'PASSWORD': 'epsipv111', 
+        'HOST': 'epsipv-db-1.crqc87xrjcos.us-east-2.rds.amazonaws.com', 
+        'PORT': '3306', 
     }
 }
 
