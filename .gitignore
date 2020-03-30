@@ -4,3 +4,4 @@ build
 .VSCodeCounter
 .DS_Store
 __pycache__
+aws
