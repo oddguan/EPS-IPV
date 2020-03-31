@@ -30,7 +30,7 @@ SECRET_KEY = '823$lwg4s8avu2ib%7kl&f$ze!i$rcc_d$lidgmv%)z5sh&)3$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['protect-ipv-victims.xyz', '18.223.244.40', 'localhost:8000']
+ALLOWED_HOSTS = ['protect-ipv-victims.xyz', '18.223.244.40', 'localhost']
 
 
 # Application definition
