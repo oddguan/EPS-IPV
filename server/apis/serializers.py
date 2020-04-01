@@ -2,6 +2,12 @@ from rest_framework import serializers
 from app import models
 from app.models import Users
 
+# User Serializer
+class UsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Users
+        fields = '__all__'
+
 class TodoSerializer(serializers.ModelSerializer):
 
 

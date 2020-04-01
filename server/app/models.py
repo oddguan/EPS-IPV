@@ -15,8 +15,6 @@ class Users(models.Model):
 	def __str__(self):
 		return self.Username
 
-
-
 class Providers(models.Model):
 	Providerid = models.CharField(max_length=10, null=False, primary_key=True)
 	Username = models.CharField(max_length=255,null=False)
