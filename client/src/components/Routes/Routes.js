@@ -9,6 +9,7 @@ import NavDrawer from '../NavDrawer/NavDrawer';
 import Login from '../Auth/Login/Login';
 import Register from '../Auth/Register/Register';
 import Education from '../Education/Education';
+import Post from '../Education/Post/Post';
 import Logs from '../Logs/Logs';
 import NewLog from '../Logs/NewLog/NewLog';
 import Resources from '../Resources/Resources';
@@ -36,6 +37,7 @@ const Routes = ({ isAuthenticated }) => {
         <PublicRoute exact path='/register' component={Register} />
         <RedirectRoute exact path='/' component={() => <></>} />
         <PrivateRoute exact path='/education' component={Education} />
+        <PrivateRoute path='/education/:postId' component={Post} />
         <PrivateRoute exact path='/logs' component={Logs} />
         <PrivateRoute exact path='/logs/new' component={NewLog} />
         <PrivateRoute exact path='/messages' component={Messages} />
