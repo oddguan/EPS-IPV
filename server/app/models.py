@@ -15,10 +15,9 @@ class Users(models.Model):
 	def __str__(self):
 		return self.Username
 
-
-
 class Providers(models.Model):
 	Providerid = models.CharField(max_length=10, null=False, primary_key=True)
+	Fullname = models.CharField(max_length=255,null=False)
 	Username = models.CharField(max_length=255,null=False)
 	Password = models.CharField(max_length=255,null=False)
 	Hint = models.CharField(max_length=255)
@@ -29,7 +28,8 @@ class Providers(models.Model):
 
 class Posts(models.Model):
 	Postid = models.CharField(max_length=10, null=False, primary_key=True)
-	Userid = models.CharField(max_length=10, null=False)
+	Fullname = models.CharField(max_length=255,null=False)
+	Providerid = models.CharField(max_length=10, null=False)
 	Title = models.CharField(max_length=255,null=False)
 	Content = models.CharField(max_length=255,null=False)
 	Createtime = models.DateTimeField(auto_now_add=True)
