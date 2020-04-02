@@ -10,6 +10,7 @@ autopep8 = "*"
 [packages]
 djangorestframework = "==3.11"
 pymysql = "*"
+djangorestframework-simplejwt = "*"
 
 [requires]
 python_version = "3.7"
