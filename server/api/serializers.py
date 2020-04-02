@@ -44,5 +44,16 @@ class VictimRegisterResponseSerializer(serializers.Serializer):
     id = serializers.IntegerField()
 
 
-class JWTTokenSerializer():
-    pass
+class LoginRequestSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+
+class LoginResponseSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    id = serializers.IntegerField()
+    is_victim = serializers.BooleanField()
+
+
+class ErrorResponseSerializer(serializers.Serializer):
+    message = serializers.CharField()

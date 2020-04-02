@@ -20,6 +20,7 @@ class VictimRegisterAPI(generics.GenericAPIView):
             serializer.data['hint'],
             'a random pk'
         )
+        account.is_victim = True
         account.save()
 
         victim = Victim(account=account)
