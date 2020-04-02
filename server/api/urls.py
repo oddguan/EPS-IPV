@@ -1,10 +1,16 @@
+from django.urls import path
 from rest_framework import routers
-from .api import UserViewSet, PostViewSet
+from .api import VictimViewSet, PostViewSet
+from api.api.auth import VictimRegisterAPI
 
 
 router = routers.DefaultRouter()
 
-router.register(r'user', UserViewSet)
+router.register(r'user', VictimViewSet)
 router.register(r'post', PostViewSet)
 
-urlpatterns = router.urls
+urlpatterns = [
+    path(r'auth/register/victim', VictimRegisterAPI.as_view(), name='register victim account')
+]
+
+urlpatterns += router.urls

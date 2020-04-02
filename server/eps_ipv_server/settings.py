@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+from datetime import timedelta
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../'))
+BASE_DIR = os.path.dirname(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), '../../'))
 
 REACT_APP_DIR = os.path.join(BASE_DIR, 'client')
 
@@ -43,20 +46,22 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'api'
+    'api',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -89,11 +94,11 @@ WSGI_APPLICATION = 'eps_ipv_server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'IPV', 
-        'USER': 'admin', 
-        'PASSWORD': 'epsipv111', 
-        'HOST': 'epsipv-db-1.crqc87xrjcos.us-east-2.rds.amazonaws.com', 
-        'PORT': '3306', 
+        'NAME': 'IPV',
+        'USER': 'admin',
+        'PASSWORD': 'epsipv111',
+        'HOST': 'epsipv-db-1.crqc87xrjcos.us-east-2.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
@@ -135,3 +140,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTH_USER_MODEL = 'api.Account'
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}

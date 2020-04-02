@@ -1,16 +1,14 @@
 from django.db import models
+from .Account import Account
+from .managers import ProviderManager
 
 
 class Provider(models.Model):
-    '''
+    """
     The provider(shelter worker) database model
-    '''
-    first_name = models.CharField(max_length=100, null=False)
-    last_name = models.CharField(max_length=100, null=False)
-    username = models.CharField(max_length=255, null=False)
-    password = models.CharField(max_length=255, null=False)
-    hint = models.CharField(max_length=255)
-    encrypt_pk = models.CharField(max_length=255, null=False)
+    """
+    account = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key=True)
+    first_name = models.CharField(max_length=30, null=False)
+    last_name = models.CharField(max_length=30, null=False)
 
-    def __str__(self):
-        return "{} {}".format(self.first_name, self.last_name)
+    objects = ProviderManager()

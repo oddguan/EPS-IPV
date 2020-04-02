@@ -1,6 +1,6 @@
 from django.contrib import admin
 from api.models import (
-    User,
+    Victim,
     Provider,
     Post,
     Log,
@@ -8,7 +8,7 @@ from api.models import (
     Location
 )
 
-admin.site.register(User)
+admin.site.register(Victim)
 admin.site.register(Provider)
 admin.site.register(Post)
 admin.site.register(Log)
