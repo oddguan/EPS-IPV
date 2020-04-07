@@ -11,6 +11,7 @@ autopep8 = "*"
 djangorestframework = "==3.11"
 pymysql = "*"
 djangorestframework-simplejwt = "*"
+drf-yasg = "*"
 
 [requires]
 python_version = "3.7"
