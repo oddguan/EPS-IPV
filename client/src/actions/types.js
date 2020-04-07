@@ -11,11 +11,3 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 // Error related actions
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
-
-// Todo related actions
-export const GET_TODOS = 'GET_TODOS';
-export const ADD_TODO = 'ADD_TODO';
-export const COMPLETE_TODO = 'COMPLETE_TODO';
-export const EDIT_TODO = 'EDIT_TODO';
-export const REMOVE_TODO = 'REMOVE_TODO';
-export const TODO_FAIL = 'TODO_FAIL';
