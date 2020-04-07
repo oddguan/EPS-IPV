@@ -7,11 +7,12 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
+import Fade from '@material-ui/core/Fade';
+import Typography from '@material-ui/core/Typography';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { editTodo } from '../../../actions/todoActions';
-import { Fade, Typography } from '@material-ui/core';
 
 /**
  * The edit modal for editting todo descriptions
@@ -29,24 +30,24 @@ function EditModal({
   toBeEditted,
   changeToBeEditted,
   editIndex,
-  editTodo
+  editTodo,
 }) {
   // material ui styling
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     modal: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     card: {
-      width: '400px'
+      width: '400px',
     },
     title: {
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     buttonGroup: {
-      margin: theme.spacing(1)
-    }
+      margin: theme.spacing(1),
+    },
   }));
   const classes = useStyles();
 

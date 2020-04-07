@@ -11,6 +11,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
@@ -18,7 +19,6 @@ import isValidEmail from '../../../utils/isValidEmail';
 import Copyright from '../../Copyright/Copyright';
 import { login } from '../../../actions/authActions';
 import { returnErrors, clearErrors } from '../../../actions/errorActions';
-import { Link } from '@material-ui/core';
 
 /**
  * Login component is the root component of the login page.
@@ -26,49 +26,49 @@ import { Link } from '@material-ui/core';
  */
 function Login(props) {
   // stying definitions (material-ui)
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(18),
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     wrapper: {
       margin: theme.spacing(1),
-      position: 'relative'
+      position: 'relative',
     },
     avatar: {
       margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main
+      backgroundColor: theme.palette.secondary.main,
     },
     form: {
       width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(1),
     },
     submit: {
-      margin: theme.spacing(3, 0, 2)
+      margin: theme.spacing(3, 0, 2),
     },
     buttonProgress: {
       position: 'absolute',
       top: '55%',
       left: '50%',
       marginTop: -12,
-      marginLeft: -12
-    }
+      marginLeft: -12,
+    },
   }));
   const initialState = {
     email: '',
     password: '',
-    isSubmitting: false
+    isSubmitting: false,
   };
 
   // the root state of the component
   const [data, setData] = useState(initialState);
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     // update state based on input changes
     setData({
       ...data,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -76,7 +76,7 @@ function Login(props) {
   useEffect(() => {
     if (props.error.msg) {
       toast.error(props.error.msg);
-      setData(data => ({ ...data, isSubmitting: false }));
+      setData((data) => ({ ...data, isSubmitting: false }));
       dispatch(clearErrors());
     }
   }, [props.error, dispatch]);
@@ -102,7 +102,7 @@ function Login(props) {
 
   // when submit button was clicked, check input validities and
   // post the login request
-  const handleFormSubmit = event => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
     setData({ ...data, isSubmitting: true });
     if (areInputsValid()) {
@@ -131,7 +131,7 @@ function Login(props) {
         <form
           className={classes.form}
           noValidate
-          onSubmit={e => handleFormSubmit(e)}
+          onSubmit={(e) => handleFormSubmit(e)}
         >
           <TextField
             variant='outlined'
@@ -191,9 +191,9 @@ function Login(props) {
 }
 
 // map useful states from redux to props
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  error: state.error
+  error: state.error,
 });
 
 export default connect(mapStateToProps, { login, returnErrors, clearErrors })(
