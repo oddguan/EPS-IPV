@@ -13,6 +13,23 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 from datetime import timedelta
+import environ
+
+env = environ.Env(
+    AWS_ACCESS_KEY_ID=str,
+    AWS_SECRET_ACCESS_KEY=str,
+    AWS_STORAGE_BUCKET_NAME=str,
+    DB_USERNAME=str,
+    DB_PASSWORD=str,
+    DB_URL=str,
+    DB_PORT=str,
+    SECRET_KEY=str,
+)
+environ.Env.read_env()
+
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.join(
@@ -28,10 +45,10 @@ STATICFILES_DIRS = [
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '823$lwg4s8avu2ib%7kl&f$ze!i$rcc_d$lidgmv%)z5sh&)3$'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['protect-ipv-victims.xyz', '18.223.244.40', 'localhost']
 
@@ -91,15 +108,14 @@ WSGI_APPLICATION = 'eps_ipv_server.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'IPV',
-        'USER': 'admin',
-        'PASSWORD': 'epsipv111',
-        'HOST': 'epsipv-db-1.crqc87xrjcos.us-east-2.rds.amazonaws.com',
-        'PORT': '3306',
+        'USER': env('DB_USERNAME'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_URL'),
+        'PORT': env('DB_PORT'),
     }
 }
 

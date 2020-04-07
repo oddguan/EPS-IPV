@@ -12,6 +12,8 @@ djangorestframework = "==3.11"
 pymysql = "*"
 djangorestframework-simplejwt = "*"
 drf-yasg = "*"
+boto3 = "*"
+django-environ = "*"
 
 [requires]
 python_version = "3.7"

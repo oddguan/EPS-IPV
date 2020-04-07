@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -11,38 +14,38 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
-import { Typography } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
 
-const useStyles = makeStyles(theme => ({
+import { logout } from '../../../actions/authActions';
+
+const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   dangerButton: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
   },
   bottom: {
     position: 'fixed',
     bottom: theme.spacing(1),
-    width: '240px'
+    width: '240px',
   },
   footer: {
-    fontSize: '0.1em'
+    fontSize: '0.1em',
   },
   bottomButton: {
-    flex: '1 1 0px'
-  }
+    flex: '1 1 0px',
+  },
 }));
 
-const DangerButton = withStyles(theme => ({
+const DangerButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText(red[500]),
     backgroundColor: red[500],
     '&:hover': {
-      backgroundColor: red[700]
-    }
-  }
+      backgroundColor: red[700],
+    },
+  },
 }))(Button);
 
 const NavList = ({ handleDrawerToggle }) => {
@@ -53,6 +56,10 @@ const NavList = ({ handleDrawerToggle }) => {
     setSelectedRoute(route);
     handleDrawerToggle && handleDrawerToggle();
     return dispatch(push(`/${route}`));
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -72,7 +79,7 @@ const NavList = ({ handleDrawerToggle }) => {
           button
           key='Education'
           selected={selectedRoute === 'education'}
-          onClick={event => handleListItemClick(event, 'education')}
+          onClick={(event) => handleListItemClick(event, 'education')}
         >
           <ListItemIcon>
             <LibraryBooksIcon />
@@ -83,7 +90,7 @@ const NavList = ({ handleDrawerToggle }) => {
           button
           key='Logs'
           selected={selectedRoute === 'logs'}
-          onClick={event => handleListItemClick(event, 'logs')}
+          onClick={(event) => handleListItemClick(event, 'logs')}
         >
           <ListItemIcon>
             <CreateIcon />
@@ -94,7 +101,7 @@ const NavList = ({ handleDrawerToggle }) => {
           button
           key='Messages'
           selected={selectedRoute === 'messages'}
-          onClick={event => handleListItemClick(event, 'messages')}
+          onClick={(event) => handleListItemClick(event, 'messages')}
         >
           <ListItemIcon>
             <QuestionAnswerIcon />
@@ -105,7 +112,7 @@ const NavList = ({ handleDrawerToggle }) => {
           button
           key='Resources'
           selected={selectedRoute === 'resources'}
-          onClick={event => handleListItemClick(event, 'resources')}
+          onClick={(event) => handleListItemClick(event, 'resources')}
         >
           <ListItemIcon>
             <ArchiveIcon />
@@ -120,7 +127,8 @@ const NavList = ({ handleDrawerToggle }) => {
             button
             key='Account'
             selected={selectedRoute === 'account'}
-            onClick={event => handleListItemClick(event, 'account')}
+            // onClick={(event) => handleListItemClick(event, 'account')}
+            onClick={handleLogout}
           >
             <ListItemIcon>
               <AccountCircleIcon />
@@ -146,7 +154,7 @@ const NavList = ({ handleDrawerToggle }) => {
 };
 
 NavList.propTypes = {
-  handleDrawerToggle: PropTypes.func
-}
+  handleDrawerToggle: PropTypes.func,
+};
 
 export default NavList;
