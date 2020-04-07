@@ -6,7 +6,8 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  USER_TYPE_SELECT_SUCCESS,
 } from '../actions/types';
 
 // fetch JWT token and user object from localStorage as the initial state
@@ -15,7 +16,9 @@ const initialState = {
   token: localStorage.getItem('token'),
   user: localStorage.getItem('user'),
   isAuthenticated: false,
-  isLoading: false
+  isLoading: false,
+  isUserTypeSelected: false,
+  isSelectedRegularUser: null,
 };
 
 /**
@@ -23,19 +26,19 @@ const initialState = {
  * @param {*} state
  * @param {*} action
  */
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case USER_LOADING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
       };
     case USER_LOADED:
       return {
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        user: action.payload
+        user: action.payload,
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
@@ -47,7 +50,7 @@ export default function(state = initialState, action) {
         ...action.payload,
         token: action.payload.accessToken,
         isAuthenticated: true,
-        isLoading: false
+        isLoading: false,
       };
     case AUTH_ERROR:
     case LOGIN_FAIL:
@@ -61,7 +64,13 @@ export default function(state = initialState, action) {
         token: null,
         user: null,
         isAuthenticated: false,
-        isLoading: false
+        isLoading: false,
+      };
+    case USER_TYPE_SELECT_SUCCESS:
+      return {
+        ...state,
+        isUserTypeSelected: true,
+        isSelectedRegularUser: action.payload.isSelectedRegularUser,
       };
     default:
       return state;

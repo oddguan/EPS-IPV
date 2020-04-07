@@ -15,48 +15,60 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect, useDispatch } from 'react-redux';
 
-import { register } from '../../../actions/authActions';
+import {
+  registerRegularUser,
+  registerHelpProvider,
+} from '../../../actions/authActions';
 import { returnErrors, clearErrors } from '../../../actions/errorActions';
 import Copyright from '../../Copyright/Copyright';
 import isValidEmail from '../../../utils/isValidEmail';
+import { push } from 'connected-react-router';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(11),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonProgress: {
+    position: 'absolute',
+    top: '55%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
+}));
 
 /**
  * root component of the registration page
  * @param {*} props
  */
-function Register(props) {
+function Register({ isUserTypeSelected, isRegularUser, ...props }) {
   // material ui styling
-  const useStyles = makeStyles(theme => ({
-    paper: {
-      marginTop: theme.spacing(18),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center'
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(3)
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2)
-    },
-    wrapper: {
-      margin: theme.spacing(1),
-      position: 'relative'
-    },
-    buttonProgress: {
-      position: 'absolute',
-      top: '55%',
-      left: '50%',
-      marginTop: -12,
-      marginLeft: -12
-    }
-  }));
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!isUserTypeSelected) {
+      dispatch(push('/check'));
+    }
+  }, [dispatch, isUserTypeSelected]);
 
   // initial state of the component
   // everything is set to empty initially until user input something
@@ -65,34 +77,52 @@ function Register(props) {
     lastName: '',
     username: '',
     email: '',
+    organization: '',
+    phonenumber: '',
     password: '',
-    isSubmitting: false
+    confirmPassword: '',
+    isSubmitting: false,
   };
 
   // store state into the "data" variable
   const [data, setData] = useState(initialState);
 
-  const dispatch = useDispatch();
   useEffect(() => {
     if (props.error.msg) {
       toast.error(props.error.msg);
-      setData(data => ({ ...data, isSubmitting: false }));
+      setData((data) => ({ ...data, isSubmitting: false }));
       dispatch(clearErrors());
     }
   }, [props.error, dispatch]);
 
   // record input changes and save them to state
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     setData({
       ...data,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
   // check input validities before actually submit the post registration request to the backend
   const areInputsValid = () => {
-    const { firstName, lastName, username, email, password } = data;
-    if (!firstName || !lastName || !username || !email || !password) {
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      organization,
+      password,
+      confirmPassword,
+    } = data;
+    if (
+      !firstName ||
+      !lastName ||
+      !username ||
+      (!isRegularUser && !email) ||
+      !password ||
+      !confirmPassword ||
+      (!isRegularUser && !organization)
+    ) {
       props.returnErrors(
         'You must fill out all required fields!',
         null,
@@ -116,7 +146,11 @@ function Register(props) {
       );
       return false;
     }
-    if (!isValidEmail(email)) {
+    if (password !== confirmPassword) {
+      props.returnErrors('Confirm password mismatch!', null, 'REGISTER_FAIL');
+      return false;
+    }
+    if (!isRegularUser && !isValidEmail(email)) {
       props.returnErrors('Email format is invalid!', null, 'REGISTER_FAIL');
       return false;
     }
@@ -124,11 +158,13 @@ function Register(props) {
   };
 
   // post submission on-submit method
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setData({ ...data, isSubmitting: true });
     if (areInputsValid()) {
-      props.register(data);
+      isRegularUser
+        ? props.registerRegularUser(data)
+        : props.registerHelpProvider(data);
       props.clearErrors();
     } else {
       setData({ ...data, isSubmitting: false });
@@ -138,14 +174,14 @@ function Register(props) {
   return (
     <Container component='main' maxWidth='xs'>
       {/* Notification wrapper component */}
-      <ToastContainer position='top-center' />
       <CssBaseline />
+      <ToastContainer position='top-center' />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Sign up
+          {isRegularUser ? 'User' : 'Help Provider'} Sign Up
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           {/* Input fields are managed by a grid system */}
@@ -178,14 +214,40 @@ function Register(props) {
             <Grid item xs={12}>
               <TextField
                 variant='outlined'
-                required
+                required={!isRegularUser}
                 fullWidth
                 id='email'
-                label='Email Address'
+                label={`${isRegularUser ? '' : 'Work '}Email Address ${
+                  isRegularUser ? '(optional)' : ''
+                }`}
                 name='email'
                 autoComplete='email'
                 onChange={handleInputChange}
               />
+            </Grid>
+            {!isRegularUser && (
+              <Grid item xs={12}>
+                <TextField
+                  variant='outlined'
+                  required
+                  fullWidth
+                  id='organization'
+                  label='Organization Name'
+                  name='organization'
+                  autoComplete='organization'
+                  onChange={handleInputChange}
+                />
+              </Grid>
+            )}
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                fullWidth
+                id='phonenumber'
+                label='Phone Number (optional)'
+                name='phonenumber'
+                onChange={handleInputChange}
+              ></TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -212,6 +274,28 @@ function Register(props) {
                 onChange={handleInputChange}
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                name='confirmPassword'
+                label='Confirm Password'
+                type='password'
+                id='confirm-password'
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                fullWidth
+                name='hint'
+                label='Password Hint (optional)'
+                id='hint'
+                onChange={handleInputChange}
+              />
+            </Grid>
           </Grid>
           <div className={classes.wrapper}>
             <Button
@@ -235,10 +319,16 @@ function Register(props) {
                   {'Already have an account? Sign in'}
                 </RouteLink>
               </Link>
+              <Link component='button' variant='body2' color='inherit'>
+                <RouteLink style={{ textDecoration: 'none' }} to={'/login'}>
+                  {'Learn more about why we collect these data'}
+                </RouteLink>
+              </Link>
             </Grid>
           </Grid>
         </form>
       </div>
+
       <Box mt={5}>
         <Copyright />
       </Box>
@@ -247,13 +337,16 @@ function Register(props) {
 }
 
 // map redux state to props
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  error: state.error
+  error: state.error,
+  isUserTypeSelected: state.auth.isUserTypeSelected,
+  isRegularUser: state.auth.isSelectedRegularUser,
 });
 
 export default connect(mapStateToProps, {
-  register,
+  registerRegularUser,
+  registerHelpProvider,
   returnErrors,
-  clearErrors
+  clearErrors,
 })(Register);

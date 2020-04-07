@@ -2,12 +2,13 @@ import axios from 'axios';
 import {
   USER_LOADING,
   USER_LOADED,
-  // AUTH_ERROR,
+  AUTH_ERROR,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   // LOGIN_FAIL,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  USER_TYPE_SELECT_SUCCESS,
 } from './types';
 import { returnErrors } from './errorActions';
 import { push } from 'connected-react-router';
@@ -19,40 +20,21 @@ export const loadUser = () => (dispatch, getState) => {
   // User loading
   dispatch({ type: USER_LOADING });
 
-  // ********* For dev purpose only
-  setTimeout(() => {
-    if (localStorage.token) {
+  // get request to '/api/auth/user'
+  axios
+    .get('/api/auth/user', authTokenConfig(getState))
+    .then((res) =>
       dispatch({
         type: USER_LOADED,
-        payload: {
-          user: {
-            id: 12345678,
-            username: 'oddguan',
-            role: 'ADMIN',
-            firstName: 'Chenxiao',
-            lastName: 'Guan',
-            email: '1011zaozao@gmail.com'
-          }
-        }
+        payload: res.data,
+      })
+    )
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: AUTH_ERROR,
       });
-    }
-  }, 200);
-
-  // get request to '/api/auth/user'
-  // axios
-  //   .get('/api/auth/user', authTokenConfig(getState))
-  //   .then(res =>
-  //     dispatch({
-  //       type: USER_LOADED,
-  //       payload: res.data
-  //     })
-  //   )
-  //   .catch(err => {
-  //     dispatch(returnErrors(err.response.data, err.response.status));
-  //     dispatch({
-  //       type: AUTH_ERROR
-  //     });
-  //   });
+    });
 };
 
 /**
@@ -60,41 +42,50 @@ export const loadUser = () => (dispatch, getState) => {
  * new login session and user detail registered in the database
  * @param { firstName, lastName, username, email, password } param0
  */
-export const register = ({
+export const registerRegularUser = ({
   firstName,
   lastName,
   username,
+  password,
   email,
-  password
-}) => dispatch => {
+  phonenumber,
+  hint,
+}) => (dispatch) => {
   // everything will be posted using json format
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   };
 
   // Request body
-  const body = JSON.stringify({
+  let body = {
     firstName,
     lastName,
     username,
     email,
-    password
-  });
+    password,
+    hint,
+  };
+  if (phonenumber) {
+    body.phonenumber = phonenumber;
+  }
+  if (email) {
+    body.email = email;
+  }
 
   // post the registration details to the backend
   axios
-    .post('/api/auth/register', body, config)
-    .then(res => {
+    .post('/api/auth/register/victim', body, config)
+    .then((res) => {
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: res.data
+        payload: res.data,
       });
       // redirect user to the home page after successful registration
       dispatch(push('/'));
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch(
         returnErrors(
           err.response.data.message,
@@ -103,7 +94,63 @@ export const register = ({
         )
       );
       dispatch({
-        type: REGISTER_FAIL
+        type: REGISTER_FAIL,
+      });
+    });
+};
+
+export const registerHelpProvider = ({
+  firstName,
+  lastName,
+  username,
+  password,
+  email,
+  organization,
+  phonenumber,
+  hint,
+}) => (dispatch) => {
+  // everything will be posted using json format
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Request body
+  let body = {
+    firstName,
+    lastName,
+    username,
+    organization,
+    email,
+    password,
+    hint,
+  };
+  if (phonenumber) {
+    body.phonenumber = phonenumber;
+  }
+
+  // post the registration details to the backend
+  axios
+    .post('/api/auth/register/provider', body, config)
+    .then((res) => {
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: res.data,
+      });
+      // redirect user to the home page after successful registration
+      dispatch(push('/'));
+    })
+    .catch((err) => {
+      dispatch(
+        returnErrors(
+          err.response.data.message,
+          err.response.status,
+          'REGISTER_FAIL'
+        )
+      );
+      dispatch({
+        type: REGISTER_FAIL,
       });
     });
 };
@@ -112,7 +159,7 @@ export const register = ({
  * the login action, which logs user in, stores returned JWT token and user detail into localStorage
  * @param { email, password } param0
  */
-export const login = ({ email, password }) => dispatch => {
+export const login = ({ email, password }) => (dispatch) => {
   // Common Headers, submitting everything as json
   // const config = {
   //   headers: {
@@ -137,12 +184,12 @@ export const login = ({ email, password }) => dispatch => {
         role: 'ADMIN',
         firstName: 'Chenxiao',
         lastName: 'Guan',
-        email: '1011zaozao@gmail.com'
-      }
+        email: '1011zaozao@gmail.com',
+      },
     };
     dispatch({
       type: LOGIN_SUCCESS,
-      payload
+      payload,
     });
     dispatch(push('/'));
   }, 1500);
@@ -177,11 +224,18 @@ export const login = ({ email, password }) => dispatch => {
  * the logout action, which essentially deletes everything in the localStorage and set
  * the "isAuthenticated" status to false
  */
-export const logout = () => dispatch => {
+export const logout = () => (dispatch) => {
   dispatch({
-    type: LOGOUT_SUCCESS
+    type: LOGOUT_SUCCESS,
   });
 };
+
+export const setRegularUserStatus = (isSelectedRegularUser) => ({
+  type: USER_TYPE_SELECT_SUCCESS,
+  payload: {
+    isSelectedRegularUser,
+  },
+});
 
 /**
  * A common utility function for setting the authentication header
@@ -190,14 +244,14 @@ export const logout = () => dispatch => {
  * the auth state
  * @param {*} getState
  */
-export const authTokenConfig = getState => {
+export const authTokenConfig = (getState) => {
   // Get token from localstorage
   const token = getState().auth.token;
   // Headers
   const config = {
     headers: {
-      'Content-type': 'application/json'
-    }
+      'Content-type': 'application/json',
+    },
   };
 
   // If jwt token presented, add to headers

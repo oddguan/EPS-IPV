@@ -8,6 +8,7 @@ import Appbar from '../Appbar/Appbar';
 import NavDrawer from '../NavDrawer/NavDrawer';
 import Login from '../Auth/Login/Login';
 import Register from '../Auth/Register/Register';
+import CheckUserType from '../Auth/CheckUserType/CheckUserType';
 import Education from '../Education/Education';
 import Post from '../Education/Post/Post';
 import Logs from '../Logs/Logs';
@@ -35,6 +36,7 @@ const Routes = ({ isAuthenticated }) => {
       <Switch>
         <PublicRoute exact path='/login' component={Login} />
         <PublicRoute exact path='/register' component={Register} />
+        <PublicRoute exact path='/check' component={CheckUserType} />
         <RedirectRoute exact path='/' component={() => <></>} />
         <PrivateRoute exact path='/education' component={Education} />
         <PrivateRoute path='/education/:postId' component={Post} />
@@ -48,8 +50,8 @@ const Routes = ({ isAuthenticated }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps)(Routes);

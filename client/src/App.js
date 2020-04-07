@@ -8,6 +8,7 @@ import Routes from './components/Routes/Routes';
 
 import './App.css';
 import 'typeface-roboto';
+import 'react-toastify/dist/ReactToastify.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 /**
