@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -44,12 +45,13 @@ const DangerButton = withStyles(theme => ({
   }
 }))(Button);
 
-const NavList = () => {
+const NavList = ({ handleDrawerToggle }) => {
   const classes = useStyles();
   const [selectedRoute, setSelectedRoute] = React.useState('education');
   const dispatch = useDispatch();
   const handleListItemClick = (event, route) => {
     setSelectedRoute(route);
+    handleDrawerToggle && handleDrawerToggle();
     return dispatch(push(`/${route}`));
   };
 
@@ -142,5 +144,9 @@ const NavList = () => {
     </div>
   );
 };
+
+NavList.propTypes = {
+  handleDrawerToggle: PropTypes.func
+}
 
 export default NavList;
