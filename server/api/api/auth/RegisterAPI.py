@@ -27,7 +27,7 @@ class VictimRegisterAPI(generics.GenericAPIView):
         victim.save()
 
         return Response({
-            'victim': VictimRegisterResponseSerializer(
+            'user': VictimRegisterResponseSerializer(
                 account,
                 context=self.get_serializer_context()
             ).data,

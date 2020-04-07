@@ -32,6 +32,10 @@ class LogSerializer(serializers.ModelSerializer):
 
 class VictimRegisterRequestSerializer(serializers.Serializer):
     username = serializers.CharField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    phonenumber = serializers.CharField()
+    email = serializers.CharField()
     password = serializers.CharField()
     hint = serializers.CharField()
 
