@@ -114,18 +114,11 @@ class ProviderRegisterAPI(generics.GenericAPIView):
             return Response(ErrorResponseSerializer({
                 'message': 'Unknown database error! Please try again.'
             }, context=self.get_serializer_context()).data, status=500)
-        finally:
-            print(sys.exc_info()[0])
-            return Response(ErrorResponseSerializer({
-                'message': 'Unknown database error! Please try again.1'
-            }, context=self.get_serializer_context()).data, status=500)
 
         return Response({
-            'user': {
-                "username": account.username,
-                "email": provider.email,
-                "id": account.id,
-                "organization": provider.organization
-            },
+            'user': VictimRegisterResponseSerializer(
+                account,
+                context=self.get_serializer_context()
+            ).data,
             'accessToken': str(RefreshToken.for_user(account).access_token)
         }, status=200)

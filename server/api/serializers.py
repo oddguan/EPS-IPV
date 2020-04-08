@@ -46,6 +46,8 @@ class VictimRegisterRequestSerializer(serializers.Serializer):
 class VictimRegisterResponseSerializer(serializers.Serializer):
     username = serializers.CharField()
     id = serializers.IntegerField()
+    is_victim = serializers.BooleanField()
+    is_provider = serializers.BooleanField()
 
 
 class ProviderRegisterRequestSerializer(serializers.Serializer):
@@ -60,10 +62,14 @@ class ProviderRegisterRequestSerializer(serializers.Serializer):
 
 
 class ProviderRegisterResponseSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    email = serializers.EmailField()
-    id = serializers.IntegerField()
-    organization = serializers.CharField()
+    # user = serializers.DictField(
+    #     username=serializers.CharField(),
+    #     email=serializers.EmailField(),
+    #     id=serializers.IntegerField(),
+    #     organization=serializers.CharField()
+    # )
+    # accessToken = serializers.CharField()
+    pass
 
 
 class LoginRequestSerializer(serializers.Serializer):
@@ -75,6 +81,7 @@ class LoginResponseSerializer(serializers.Serializer):
     username = serializers.CharField()
     id = serializers.IntegerField()
     is_victim = serializers.BooleanField()
+    is_provider = serializers.BooleanField()
 
 
 class ErrorResponseSerializer(serializers.Serializer):
