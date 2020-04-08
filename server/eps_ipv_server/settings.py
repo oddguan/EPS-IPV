@@ -62,9 +62,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'rest_framework',
     'drf_yasg',
     'api',
+
 ]
 
 REST_FRAMEWORK = {
@@ -75,6 +77,18 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": ['redis://localhost:6379']
+        }
+    },
+}
+
+ASGI_APPLICATION = "eps_ipv_server.routing.application"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

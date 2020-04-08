@@ -8,9 +8,13 @@ https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
 
 import os
+from channels.asgi import get_channel_layer
 
-from django.core.asgi import get_asgi_application
+#import channels.asgi
+#from django.core.asgi import get_asgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'eps_ipv_server.settings')
 
-application = get_asgi_application()
+#application = get_asgi_application()
+channel_layer = get_channel_layer()
+

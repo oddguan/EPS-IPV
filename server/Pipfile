@@ -8,12 +8,13 @@ pylint = "*"
 autopep8 = "*"
 
 [packages]
-djangorestframework = "==3.11"
+djangorestframework = "*"
 pymysql = "*"
 djangorestframework-simplejwt = "*"
 drf-yasg = "*"
 boto3 = "*"
 django-environ = "*"
+django = "*"
 
 [requires]
 python_version = "3.7"
