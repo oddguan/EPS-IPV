@@ -48,6 +48,24 @@ class VictimRegisterResponseSerializer(serializers.Serializer):
     id = serializers.IntegerField()
 
 
+class ProviderRegisterRequestSerializer(serializers.Serializer):
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    email = serializers.CharField(required=False)
+    organization = serializers.CharField()
+    phonenumber = serializers.CharField(required=False)
+    username = serializers.CharField()
+    hint = serializers.CharField(required=False)
+    password = serializers.CharField()
+
+
+class ProviderRegisterResponseSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    email = serializers.EmailField()
+    id = serializers.IntegerField()
+    organization = serializers.CharField()
+
+
 class LoginRequestSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
