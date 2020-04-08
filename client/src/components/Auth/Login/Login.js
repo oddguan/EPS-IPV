@@ -170,7 +170,7 @@ function Login(props) {
           <Grid container justify='flex-end'>
             <Grid item>
               <Link component='button' variant='body2' color='inherit'>
-                <RouteLink style={{ textDecoration: 'none' }} to={'/register'}>
+                <RouteLink style={{ textDecoration: 'none' }} to={'/check'}>
                   {"Don't have an account? Sign up"}
                 </RouteLink>
               </Link>
@@ -191,6 +191,8 @@ const mapStateToProps = (state) => ({
   error: state.error,
 });
 
-export default connect(mapStateToProps, { login, returnErrors, clearErrors })(
-  Login
-);
+export default connect(mapStateToProps, {
+  login,
+  returnErrors,
+  clearErrors,
+})(Login);

@@ -38,11 +38,6 @@ export const loadUser = () => (dispatch, getState) => {
     });
 };
 
-/**
- * the registration action, which posts everything user entered to the backend and returns a
- * new login session and user detail registered in the database
- * @param { firstName, lastName, username, email, password } param0
- */
 export const registerRegularUser = ({
   firstName,
   lastName,
@@ -135,10 +130,12 @@ export const registerHelpProvider = ({
     organization,
     email,
     password,
-    hint,
   };
   if (phonenumber) {
     body.phonenumber = phonenumber;
+  }
+  if (hint) {
+    body.hint = hint;
   }
 
   body = JSON.stringify(snakeCaseKeys(body));
