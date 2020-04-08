@@ -81,6 +81,7 @@ function Register({ isUserTypeSelected, isRegularUser, ...props }) {
     phonenumber: '',
     password: '',
     confirmPassword: '',
+    hint: '',
     isSubmitting: false,
   };
 

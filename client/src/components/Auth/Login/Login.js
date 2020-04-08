@@ -15,7 +15,6 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-import isValidEmail from '../../../utils/isValidEmail';
 import Copyright from '../../Copyright/Copyright';
 import { login } from '../../../actions/authActions';
 import { returnErrors, clearErrors } from '../../../actions/errorActions';
@@ -57,7 +56,7 @@ function Login(props) {
     },
   }));
   const initialState = {
-    email: '',
+    username: '',
     password: '',
     isSubmitting: false,
   };
@@ -84,17 +83,13 @@ function Login(props) {
   // valid inputs and push error messages to user
   // returns a boolean indicating whether input validation was successful
   const areInputsValid = () => {
-    const { email, password } = data;
-    if (!email || !password) {
+    const { username, password } = data;
+    if (!username || !password) {
       props.returnErrors(
         'You must fill out all required fields!',
         401,
         'LOGIN_FAIL'
       );
-      return false;
-    }
-    if (!isValidEmail(email)) {
-      props.returnErrors('Email format is invalid!', 401, 'LOGIN_FAIL');
       return false;
     }
     return true;
@@ -138,10 +133,10 @@ function Login(props) {
             margin='normal'
             required
             fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
+            id='username'
+            label='Username'
+            name='username'
+            autoComplete='username'
             autoFocus
             onChange={handleInputChange}
           />
@@ -175,7 +170,7 @@ function Login(props) {
           <Grid container justify='flex-end'>
             <Grid item>
               <Link component='button' variant='body2' color='inherit'>
-                <RouteLink style={{ textDecoration: 'none' }} to={'/register'}>
+                <RouteLink style={{ textDecoration: 'none' }} to={'/check'}>
                   {"Don't have an account? Sign up"}
                 </RouteLink>
               </Link>
@@ -196,6 +191,8 @@ const mapStateToProps = (state) => ({
   error: state.error,
 });
 
-export default connect(mapStateToProps, { login, returnErrors, clearErrors })(
-  Login
-);
+export default connect(mapStateToProps, {
+  login,
+  returnErrors,
+  clearErrors,
+})(Login);

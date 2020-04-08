@@ -1,4 +1,5 @@
 import axios from 'axios';
+import snakeCaseKeys from 'snakecase-keys';
 import {
   USER_LOADING,
   USER_LOADED,
@@ -6,7 +7,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGIN_SUCCESS,
-  // LOGIN_FAIL,
+  LOGIN_FAIL,
   LOGOUT_SUCCESS,
   USER_TYPE_SELECT_SUCCESS,
 } from './types';
@@ -37,11 +38,6 @@ export const loadUser = () => (dispatch, getState) => {
     });
 };
 
-/**
- * the registration action, which posts everything user entered to the backend and returns a
- * new login session and user detail registered in the database
- * @param { firstName, lastName, username, email, password } param0
- */
 export const registerRegularUser = ({
   firstName,
   lastName,
@@ -63,21 +59,28 @@ export const registerRegularUser = ({
     firstName,
     lastName,
     username,
-    email,
     password,
-    hint,
   };
-  if (phonenumber) {
-    body.phonenumber = phonenumber;
-  }
+
   if (email) {
     body.email = email;
   }
+  if (phonenumber) {
+    body.phonenumber = phonenumber;
+  }
+  if (hint) {
+    body.hint = hint;
+  }
+
+  body = JSON.stringify(snakeCaseKeys(body));
 
   // post the registration details to the backend
   axios
     .post('/api/auth/register/victim', body, config)
     .then((res) => {
+      if (res.status !== 200) {
+        throw new Error('Unknown Database Error');
+      }
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
@@ -86,6 +89,9 @@ export const registerRegularUser = ({
       dispatch(push('/'));
     })
     .catch((err) => {
+      if (err instanceof Error) {
+        returnErrors(err.message, 500, 'REGISTER_FAIL');
+      }
       dispatch(
         returnErrors(
           err.response.data.message,
@@ -124,11 +130,15 @@ export const registerHelpProvider = ({
     organization,
     email,
     password,
-    hint,
   };
   if (phonenumber) {
     body.phonenumber = phonenumber;
   }
+  if (hint) {
+    body.hint = hint;
+  }
+
+  body = JSON.stringify(snakeCaseKeys(body));
 
   // post the registration details to the backend
   axios
@@ -159,65 +169,44 @@ export const registerHelpProvider = ({
  * the login action, which logs user in, stores returned JWT token and user detail into localStorage
  * @param { email, password } param0
  */
-export const login = ({ email, password }) => (dispatch) => {
+export const login = ({ username, password }) => (dispatch) => {
   // Common Headers, submitting everything as json
-  // const config = {
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  // };
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
 
   // The login body, "loginRequest" in the backend
-  // const body = JSON.stringify({
-  //   email,
-  //   password
-  // });
-
-  // ******** For development purpose mock only
-  // Mock the login process as the backend is not devloped yet
-  setTimeout(() => {
-    const payload = {
-      accessToken: 'testtoken123',
-      user: {
-        id: 12345678,
-        username: 'oddguan',
-        role: 'ADMIN',
-        firstName: 'Chenxiao',
-        lastName: 'Guan',
-        email: '1011zaozao@gmail.com',
-      },
-    };
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload,
-    });
-    dispatch(push('/'));
-  }, 1500);
+  const body = JSON.stringify({
+    username,
+    password,
+  });
 
   // submit a post request to '/api/auth/login'
-  // axios
-  //   .post('/api/auth/login', body, config)
-  //   .then(res => {
-  //     dispatch({
-  //       type: LOGIN_SUCCESS,
-  //       payload: res.data
-  //     });
-  //     // return the res promise in case any other place needs it
-  //     dispatch(push('/'));
-  //     return res;
-  //   })
-  //   .catch(err => {
-  //     dispatch(
-  //       returnErrors(
-  //         err.response.data.message,
-  //         err.response.status,
-  //         'LOGIN_FAIL'
-  //       )
-  //     );
-  //     dispatch({
-  //       type: LOGIN_FAIL
-  //     });
-  //   });
+  axios
+    .post('/api/auth/login', body, config)
+    .then((res) => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+      // return the res promise in case any other place needs it
+      dispatch(push('/'));
+      return res;
+    })
+    .catch((err) => {
+      dispatch(
+        returnErrors(
+          err.response.data.message,
+          err.response.status,
+          'LOGIN_FAIL'
+        )
+      );
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+    });
 };
 
 /**
