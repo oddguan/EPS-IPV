@@ -1,6 +1,8 @@
 import sys
 
 from django.contrib.auth import get_user_model
+from django.db import transaction
+from django.db.utils import InternalError
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -23,26 +25,30 @@ class VictimRegisterAPI(generics.GenericAPIView):
         phonenumber = serializer.data.get(
             'phonenumber') if serializer.data.get('phonenumber') else '111'
 
-        account = get_user_model().objects.create_account(
-            serializer.data['username'],
-            serializer.data['password'],
-            hint,
-            'a random pk'
-        )
-        account.is_victim = True
-        account.save()
+        try:
+            account = get_user_model().objects.create_account(
+                serializer.data['username'],
+                serializer.data['password'],
+                hint,
+                'a random pk'
+            )
+            account.is_victim = True
+            account.save()
+        except InternalError as e:
+            print(e)
+            return Response(status=500)
 
-        victim = Victim(
-            account=account,
-            first_name=serializer.data['first_name'],
-            last_name=serializer.data['last_name'],
-            phonenumber='12345',
-            email='test@example.com'
-        )
+        victim = Victim()
+        victim.account = account
+        victim.first_name = serializer.data.get('first_name')
+        victim.last_name = serializer.data.get('last_name')
+        victim.phonenumber = phonenumber
+        victim.email = email
+
         try:
             victim.save()
-        except:
-            print(sys.exc_info()[0].__cause__)
+        except InternalError as e:
+            print(e)
             return Response(status=500)
 
         return Response({
@@ -51,4 +57,4 @@ class VictimRegisterAPI(generics.GenericAPIView):
                 context=self.get_serializer_context()
             ).data,
             'accessToken': str(RefreshToken.for_user(account).access_token)
-        })
+        }, status=200)

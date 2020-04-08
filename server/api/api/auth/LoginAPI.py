@@ -25,10 +25,13 @@ class LoginAPI(generics.GenericAPIView):
 
         if check_password(serializer.data['password'], account.password):
             return Response({
-                'account': LoginResponseSerializer(account, context=self.get_serializer_context()).data,
+                'user': LoginResponseSerializer(account, context=self.get_serializer_context()).data,
                 'accessToken': str(RefreshToken.for_user(account).access_token)
             })
 
+        error_message = 'Wrong password. Please try again.'
+        if account.is_victim:
+            error_message = 'Error! Username not found'
         return Response(ErrorResponseSerializer({
-            'message': 'Password mismatch'
+            'message': error_message
         }, context=self.get_serializer_context()).data, status=401)
