@@ -34,10 +34,10 @@ class VictimRegisterRequestSerializer(serializers.Serializer):
     username = serializers.CharField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
-    phonenumber = serializers.CharField()
-    email = serializers.CharField()
+    phonenumber = serializers.CharField(required=False)
+    email = serializers.CharField(required=False)
+    hint = serializers.CharField(required=False)
     password = serializers.CharField()
-    hint = serializers.CharField()
 
     def __str__(self):
         return "{} {} {}".format(self.username, self.password, self.hint)
