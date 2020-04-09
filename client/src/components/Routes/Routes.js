@@ -17,7 +17,13 @@ import Resources from '../Resources/Resources';
 import Messages from '../Messages/Messages';
 import Account from '../Account/Account';
 
+/**
+ * Defines all routing information.
+ * Routes higher-order components such as PrivateRoute, RedirectRoute and PublicRoute
+ * are defined in the HOC components directory.
+ */
 const Routes = ({ isAuthenticated }) => {
+  // A boolean to track whether the mobile navbar is opened or not
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {

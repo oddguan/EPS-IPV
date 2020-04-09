@@ -11,7 +11,7 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core';
 
 /**
- *  The navbar component
+ * A topbar for the whole app
  * @param { isAuthenticated, gotoHome } props
  */
 function Appbar({ isAuthenticated, gotoHome, handleDrawerToggle }) {
@@ -63,7 +63,6 @@ function Appbar({ isAuthenticated, gotoHome, handleDrawerToggle }) {
             EPS - IPV
           </Link>
         </Typography>
-        {/* {isAuthenticated && <ProfileButton />} */}
       </Toolbar>
     </AppBar>
   );

@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * Customized WYSIWYG component for editting logs,
+ * and possibly posting education blogs in the future
+ */
 const MyEditor = () => {
   const classes = useStyles();
 

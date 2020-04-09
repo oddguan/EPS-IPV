@@ -20,13 +20,11 @@ Outside React itself, the `actions` and `reducers` directories define Redux rela
 
 ### [`components`](./src/components)
 
-Three components defined the three pages for the application, which are `Auth/Login/Login.js`, `Auth/Register/Register.js` and `Todos/Todos.js`. Each component then uses other sub-components or utility conponents to form their own structure. The `Login` component is the major view of the `/login` route, and `Register` component is the `/register` route, and `Todos` component is the '/' route. Note that each route displays the `Navbar` component as well, and it is included in the `App` component outside the routing definitions.
+This is the directory where all reusable components of the application lives. You can go `components/Routes/Routes.js` for routing information and see what does the app contains in a routing perspective. 
 
 ### ['actions' and 'reducers'](./src)
 
 These two directories contain Redux related logic. Almost all Ajax requests send to the backend are defined in the `actions` directory.
-
-For example, the `todoActions.js` defines all the interaction relating to todos, such as fetching, adding, editting and deleting todo items.
 
 Redux also requires reducers to dispatch actions, and that is what the reducers directory is for. It defines reducer logic and each reducer file is associated with one action file.
 

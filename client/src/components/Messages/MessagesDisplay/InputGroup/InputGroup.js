@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * The bottom input box for MessageDisplay
+ * Has a textfield and a send button
+ */
 const InputGroup = () => {
   const classes = useStyles();
 

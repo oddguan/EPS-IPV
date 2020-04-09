@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * Display two buttons as whether the user is a victim or help provider.
+ * This will set a global flag in redux indicating the user status 
+ */
 const CheckUserType = ({ isUserTypeSelected }) => {
   const classes = useStyles();
 

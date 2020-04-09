@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * The message box on the messages tab
+ */
 const MessagesDisplay = ({ selectedIndex, contacts }) => {
   const classes = useStyles();
 

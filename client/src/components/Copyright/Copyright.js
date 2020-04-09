@@ -11,7 +11,7 @@ function Copyright() {
       {'Copyright © '}
       <Link
         color='inherit'
-        href='http://epsipv-env.hq2w62cyzp.us-west-2.elasticbeanstalk.com/'
+        href='https://protect-ipv-victims.xyz'
       >
         EPS-IPV
       </Link>{' '}

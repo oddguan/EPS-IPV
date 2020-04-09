@@ -31,9 +31,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/**
+ * Main page component of the logs page
+ */
 const Logs = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  // direct user to the log editor as they click the FAB
   const handleFABClick = () => {
     dispatch(push('/logs/new'));
   };
@@ -46,6 +51,7 @@ const Logs = () => {
         <Typography variant='h5'>Logs</Typography>
         <Divider />
         <div className={classes.flex}>
+          {/* Some hard-coded true false value indicating whether the log is image or note */}
           {[true, false, true, true, false, true, false, false].map(
             (isImage, i) => (
               <LogItem key={i} isImage={isImage} />

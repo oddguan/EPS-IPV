@@ -17,6 +17,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/**
+ * A single post item displayed on the education tab 
+ */
 const PostItem = ({ postId, title }) => {
   const classes = useStyles();
 

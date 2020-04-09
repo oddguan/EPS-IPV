@@ -1,3 +1,4 @@
+// A bunch of fake names for fake contacts
 export default [
   'John Doe',
   'Harry Potter',

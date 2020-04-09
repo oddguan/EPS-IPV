@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/**
+ * A single log item display as a card
+ */
 const LogItem = ({ isImage }) => {
   const classes = useStyles();
 

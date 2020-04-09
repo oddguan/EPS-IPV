@@ -34,6 +34,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/**
+ * Display a drawer style navigation bar on the left
+ * for mobile users
+ */
 const NavDrawer = ({ handleDrawerToggle, mobileOpen }) => {
   const classes = useStyles();
   const theme = useTheme();

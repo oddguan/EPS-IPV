@@ -33,7 +33,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Logs = () => {
+/**
+ * The new log page component. 
+ * This is used by user to input their logs
+ * by using a wysiwyg react component
+ */
+const NewLog = () => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -71,4 +76,4 @@ const Logs = () => {
   );
 };
 
-export default Logs;
+export default NewLog;
