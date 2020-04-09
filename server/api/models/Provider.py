@@ -1,3 +1,7 @@
+'''
+This file creates the model of Provider, which maps to the provider table in the mysql database. 
+The model Provider contains six attributes: account, firstname, lastname, email, organization name, and phonenumber. 
+'''
 from django.db import models
 from django.contrib.auth import get_user_model
 

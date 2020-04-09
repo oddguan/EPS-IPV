@@ -1,5 +1,9 @@
-from django.db import models
 
+'''
+This file creates the model of Post, which maps to the post table in the mysql database. 
+The model Provider contains four attributes: author, title, content, and created time. 
+'''
+from django.db import models
 
 class Post(models.Model):
     '''

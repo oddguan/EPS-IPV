@@ -1,3 +1,4 @@
+#This file creates the API for registration. 
 import sys
 
 from django.contrib.auth import get_user_model

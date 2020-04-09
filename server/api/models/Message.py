@@ -1,3 +1,8 @@
+'''
+This file creates the model of Message, which maps to the message table in the mysql database. 
+The model Provider contains five attributes: user, provider, content, sent time, and whether sent.
+Also, there are two functions related to the model, one allows users to view recent 20 messages and the other checks whether the message is empty.  
+'''
 from django.db import models
 from django.core.exceptions import ValidationError
 

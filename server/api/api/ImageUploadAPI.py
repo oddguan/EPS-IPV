@@ -1,3 +1,8 @@
+'''
+This file creates an image upload API which defines a secure way to upload images. 
+The image upload API class defines the upload process by PUT action. 
+Also, the upload_image function uploads the image to the AWS S3 service through an access key id and a secret access key. 
+'''
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import FileUploadParser

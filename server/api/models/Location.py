@@ -1,5 +1,8 @@
+'''
+This file creates the model of Location, which maps to the location table in the mysql database. 
+The model Location contains five attributes: administrator, location name, location logitude, location latitude, and location physical address. 
+'''
 from django.db import models
-
 
 class Location(models.Model):
     """

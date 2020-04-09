@@ -1,3 +1,6 @@
+"""This file is a part of Django Channels, which is to create communications between a victim and a help provider. 
+In Django Channels, this rouing.py file links consumer functions to WebSockets by mapping the url with the consumer function. 
+"""
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from django.conf.urls import url

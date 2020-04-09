@@ -1,3 +1,7 @@
+"""
+This is the consumer file for Django Channels, which defines required functions of communication including connect, disconnect, receive the message, send the message, and view messages in the Json format. 
+This file will work with routers.py as well as front end to establish communications between the victimn and the help provider. 
+"""
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 import json

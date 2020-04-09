@@ -12,7 +12,7 @@ Xiaoyong (Sheryl) Liu (xioayonl@andrew.cmu.edu)
 
 ## Project URL
 
-You can visit [here](http://epsipv-env.hq2w62cyzp.us-west-2.elasticbeanstalk.com/) for the content.
+You can visit [here](https://protect-ipv-victims.xyz) for the content.
 
 ## Technology Stack
 
@@ -20,7 +20,7 @@ You can visit [here](http://epsipv-env.hq2w62cyzp.us-west-2.elasticbeanstalk.com
 The client app uses [React](https://reactjs.org/) as the primary framework. It uses the [Material-UI](https://material-ui.com/) component library for some basic functionalities and stylings. It also uses [Redux](https://redux.js.org/) for state management. A more detailed explanation of the structure can be found in the `client` directory's README [here](./clientapp/README.md).
 
 ### Back-end
-The backend was built by using [Spring Boot](https://spring.io/projects/spring-boot), which is a Java framework. It uses [Apache Maven](https://maven.apache.org) for building process automation and dependencies management. Detailed structure explanation can be found below in the Backend structure section.
+The backend was built by using [Django](https://www.djangoproject.com), which is a Python framework. Detailed structure explanation can be found below in the Backend structure section.
 
 ## Build
 
@@ -35,40 +35,36 @@ To spin-up the development server, you have to do it separately for the front-en
 Since the front-end was scaffolded by using `create-react-app`, you can start the development server by navigating into the `clientapp` folder (which is the root directory of the front-end), run `npm install` if this is the first time running the application, and once finished just run `npm start` and it will start a development server at `localhost:3000`.
 
 ### Back-end development server
-You can either use Maven CLI or your Java IDE to start the devlopment server for the backend. Make sure you have good internet connection in order to get connected to the database, since the database was deployed using AWS RDS and needs internet to be connected.
+You can any IDE that supports Python to start the devlopment server for the backend. Make sure you have good internet connection in order to get connected to the database, since the database was deployed using AWS RDS and needs internet to be connected.
 
 -----
 
 ### Backend Structure
 
-This is a Spring Boot project which uses Maven as the package and dependency manager. All dependencies can be found in the `pom.xml` in the root directory.
+This is a Spring Boot project which uses Maven as the package and dependency manager. All dependencies can be found in the `Pipfile` in the root directory.
 
-The starting point of the application is `EpsIpvApplication.java`.
+The starting point of the peoject is `eps_ipv_server`.
 
-Since it is a Spring Application, it generally follows the Aspect-Oriented Programming (AOP) paradigm, which separates the backend into several layers. All layers are separated into different directories under `src/main/java/com/epsspring2020/EPSIPV`. 
+Since it is a Django Project, it generally follows the Django structure, which allows several applications to exist and interact. All files are separated into different applications under `server/eps_ipv_server`. 
 
-#### [Service Layer](./src/main/java/com/epsspring2020/EPSIPV/services)
+#### [eps_ipv_server](./server/eps_ipv_server)
 
-This is the layer for handling most of the business logic. It talks to the DAO layer for interacting with the database, and returns the desired output back to the Controller layer on-call. Generally, one service file is responsible for one controller file.
+This is the root directory, which works to connect the project with Django. It contants root files such as sttings.py, wsgi.py, and asgi.py, which defines the basic settings and functions of the project. Also, it contains urls.py to perform redirections based on defined url patterns. 
 
-#### [Controller Layer](./src/main/java/com/epsspring2020/EPSIPV/controllers)
+#### [api](./server/api)
 
-This layer defines the API of the backend. It defines the routing information of the API, and handles what status code should be returned and the object structure of the returned data. It directly interacts with the Service layer for all the business logics.
+This is the core application of the project, which defines models and most operations of the project. Also, the directory contains serialiers.py for model instances and urls.py for viewsets redirections. Besides basic .py files, the directory contains three sub directories api, migrations, and models for more information and operations. 
 
-#### [DAO (Data Access Object) Layer](./src/main/java/com/epsspring2020/EPSIPV/daos)
+#### [api/api](./server/api/api)
 
-This defines the interface with talking to the database. The project uses MyBatis as the higher level JDBC interface. In the `dao` directory, it only specifies the java interface that every other file calls when interacting with this layer, but the actual SQL queries are under `src/main/resources/mappers` as XML files. Each dao java file is related to one mapper in the mappers directory.
-
-#### [Entities](./src/main/java/com/epsspring2020/EPSIPV/entities)
-
-These are some POJO interfaces for defining and retrieving data in a certain format. 
-
-#### [Configs](./src/main/java/com/epsspring2020/EPSIPV/configs)
-
-This is where application related configuration files live in. Currently it only has security related configurations. For example, the `SecurityConfig` is an implementation of the `WebSecurityConfigurerAdapter` interface provided by Spring Security, which is required by Spring Security to configure the overall security of the API. 
-
-#### [utils](./src/main/java/com/epsspring2020/EPSIPV/utils)
-
-These are some general utilities used across the backend application. 
+This directory defines viewsets contains required data for the registration and authentication process. It also contains the image upload API to securely upload files and images to the AWS cloud storage service. The subfolder auth contains two APIs to perform registration and authentication operations. 
 
 JWT authentication related logic lives here as well. This backend application uses JWT as the primary tool for securing endpoints, and all JWT related files are in the utils directory.
+
+#### [api/models](./server/api/models)
+
+This is where all models created and defined. The models will determine the table structures stored in the Mysql database.
+
+#### [api/migrations](./server/api/migrations)
+
+This directory is generated automatically when models are created and linked to the database. All .py files under the directory is to trace any changes of the models and record them in the database.

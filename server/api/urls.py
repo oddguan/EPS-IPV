@@ -1,3 +1,8 @@
+'''
+This file organizes all urls for the api application.  
+The core part is the urlpattern tuple, which defines the mapping between URLs and views defined in the view.py.
+This file registers viewsets of victim, posts, and logs through routers. 
+'''
 from django.urls import path
 from rest_framework import routers
 from .api import VictimViewSet, PostViewSet, LogViewSet

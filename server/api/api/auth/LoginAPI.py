@@ -1,3 +1,9 @@
+#This file creates the API for login action. Three serializer files imported from serializer.py are used. 
+#The class will firstly filter the username from the input data and look for any registration record. 
+#If not found, an error message will be returned.
+#If there is one, the input password will be checked and an accessToken will be generated for login process.
+#If the password is not correct and the account belongs to a victim, an error message will be returned indicating that the account does not exist. 
+#If the password is not correct and the account does not belong to a victim, an error message will be returned to let the user try again. 
 from django.contrib.auth.hashers import check_password
 from rest_framework import generics, permissions
 from rest_framework.request import Request

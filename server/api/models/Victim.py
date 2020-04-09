@@ -1,3 +1,7 @@
+'''
+This file creates the model of Victim, which maps to the victim table in the mysql database. 
+The model Victim contains five attributes: account, firstname, lastname, phonenumber, and email. 
+'''
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth import get_user_model

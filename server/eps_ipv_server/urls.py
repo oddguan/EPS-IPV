@@ -1,3 +1,9 @@
+'''
+This file organizes all urls within the Django framework. 
+The core part is the urlpattern tuple, which defines the mapping between URLs and views defined in the view.py.
+The other large part is the schema_view function of REST framework, which links the Django backend with the React frontend.
+The schema_view comes from the get_schema_view function, which makes it easier to adding schema views to the API.
+'''
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url

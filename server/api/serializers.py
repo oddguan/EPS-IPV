@@ -1,3 +1,8 @@
+'''
+This file defines serializers of the REST framework for this project.
+These serializers allow complex data such as querysets and model instances to be converted to native Python datatypes that can then be easily rendered into JSON format.
+Similarly, the ModelSerializer classes provide a useful shortcut for creating serializers that deal with model instances and queryset.
+'''
 from abc import ABC
 
 from rest_framework import serializers

@@ -1,5 +1,8 @@
+'''
+This file creates the model of Log, which maps to the log table in the mysql database. 
+The model Log contains four attributes: author, title, content, and created time.  
+'''
 from django.db import models
-
 
 class Log(models.Model):
     """

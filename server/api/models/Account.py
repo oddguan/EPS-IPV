@@ -1,3 +1,7 @@
+'''
+This file creates the model of Account, which maps to the user table in the mysql database. 
+The model Account contains five attributes: username, hint, encryption public key, whether victim, and whether provider. 
+'''
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
