@@ -1,3 +1,4 @@
+// Fake messages for test purpose
 export default [
   {
     message:

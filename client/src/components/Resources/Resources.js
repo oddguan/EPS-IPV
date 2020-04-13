@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
+/**
+ * Main page component of the resource tab
+ */
 const Resources = () => {
   const classes = useStyles();
 

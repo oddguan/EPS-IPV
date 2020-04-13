@@ -30,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * A single item for a message display.
+ * This supports either message from the user itself 
+ * or from the other side by specifying a `isOwnMessage` prop
+ */
 const MessageItem = ({ message, isOwnMessage, initials }) => {
   const classes = useStyles();
 

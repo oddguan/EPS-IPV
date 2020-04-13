@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
 }));
 
+/**
+ * Parent container of the message page
+ */
 const Messages = () => {
   const classes = useStyles();
 

@@ -18,6 +18,9 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
+/**
+ * Education page main component
+ */
 const Education = () => {
   const classes = useStyles();
 

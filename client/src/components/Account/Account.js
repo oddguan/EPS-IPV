@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
+/**
+ * Root component for the account page
+ */
 const Account = () => {
   const classes = useStyles();
 

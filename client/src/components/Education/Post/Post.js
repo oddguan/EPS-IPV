@@ -44,7 +44,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/**
+ * The main page of the readmore post detail.
+ * Routed using query parameters.
+ * Should put the postId as a query parameter to make this functional.
+ */
 const Post = () => {
+  // Get the postId by accessing query parameters
   const { postId } = useParams();
   const classes = useStyles();
   const title = `Title ${postId}`;

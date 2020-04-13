@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * A red button mainly used for SOS
+ */
 const DangerButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText(red[500]),
@@ -48,13 +51,18 @@ const DangerButton = withStyles((theme) => ({
   },
 }))(Button);
 
+/**
+ * List of navigation buttons 
+ */
 const NavList = ({ handleDrawerToggle }) => {
   const classes = useStyles();
+  // Default select education tab
   const [selectedRoute, setSelectedRoute] = React.useState('education');
   const dispatch = useDispatch();
   const handleListItemClick = (event, route) => {
     setSelectedRoute(route);
     handleDrawerToggle && handleDrawerToggle();
+    // Redirect user to the specific tab
     return dispatch(push(`/${route}`));
   };
 

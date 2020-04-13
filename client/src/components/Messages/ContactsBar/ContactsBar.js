@@ -42,6 +42,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * List of contacts displayed on the right of messages page.
+ * Scrollable as the list grows, and responsive on both
+ * mobile and desktop platform
+ */
 const ContactsBar = ({ selectedIndex, setSelectedIndex, contacts }) => {
   const classes = useStyles();
 

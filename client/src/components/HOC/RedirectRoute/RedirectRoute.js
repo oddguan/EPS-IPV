@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
 /**
- * A HOC for securing private routes, using react-router under the hood
+ * A HOC for redirecting to the education tab, using react-router under the hood
  * @param { component, isAuthenticated, ...rest } props
  */
 function RedirectRoute({ component: Component, isAuthenticated, ...rest }) {

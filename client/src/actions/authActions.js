@@ -38,6 +38,9 @@ export const loadUser = () => (dispatch, getState) => {
     });
 };
 
+/**
+ * A general action for registering regular users (victims) 
+ */
 export const registerRegularUser = ({
   firstName,
   lastName,
@@ -105,6 +108,9 @@ export const registerRegularUser = ({
     });
 };
 
+/**
+ * an action for registering help providers 
+ */
 export const registerHelpProvider = ({
   firstName,
   lastName,
