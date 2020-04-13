@@ -15,6 +15,7 @@ drf-yasg = "*"
 boto3 = "*"
 django-environ = "*"
 django = "*"
+environ = "*"
 
 [requires]
 python_version = "3.7"
