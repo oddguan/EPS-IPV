@@ -16,6 +16,7 @@ import NewLog from '../Logs/NewLog/NewLog';
 import Resources from '../Resources/Resources';
 import Messages from '../Messages/Messages';
 import Account from '../Account/Account';
+import RetrieveLogs from '../RetrieveLogs/RetrieveLogs';
 
 /**
  * Defines all routing information.
@@ -51,6 +52,7 @@ const Routes = ({ isAuthenticated }) => {
         <PrivateRoute exact path='/messages' component={Messages} />
         <PrivateRoute exact path='/resources' component={Resources} />
         <PrivateRoute exact path='/account' component={Account} />
+        <PrivateRoute exact path='/retrieve-logs' component={RetrieveLogs} />
       </Switch>
     </div>
   );

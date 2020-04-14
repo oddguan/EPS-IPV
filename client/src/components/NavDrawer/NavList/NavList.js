@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
@@ -52,9 +53,9 @@ const DangerButton = withStyles((theme) => ({
 }))(Button);
 
 /**
- * List of navigation buttons 
+ * List of navigation buttons
  */
-const NavList = ({ handleDrawerToggle }) => {
+const NavList = ({ handleDrawerToggle, isVictim, isProvider }) => {
   const classes = useStyles();
   // Default select education tab
   const [selectedRoute, setSelectedRoute] = React.useState('education');
@@ -94,17 +95,19 @@ const NavList = ({ handleDrawerToggle }) => {
           </ListItemIcon>
           <ListItemText primary='Education' />
         </ListItem>
-        <ListItem
-          button
-          key='Logs'
-          selected={selectedRoute === 'logs'}
-          onClick={(event) => handleListItemClick(event, 'logs')}
-        >
-          <ListItemIcon>
-            <CreateIcon />
-          </ListItemIcon>
-          <ListItemText primary='Logs' />
-        </ListItem>
+        {isVictim && (
+          <ListItem
+            button
+            key='Logs'
+            selected={selectedRoute === 'logs'}
+            onClick={(event) => handleListItemClick(event, 'logs')}
+          >
+            <ListItemIcon>
+              <CreateIcon />
+            </ListItemIcon>
+            <ListItemText primary='Logs' />
+          </ListItem>
+        )}
         <ListItem
           button
           key='Messages'
@@ -129,6 +132,24 @@ const NavList = ({ handleDrawerToggle }) => {
         </ListItem>
       </List>
       <div className={classes.bottom}>
+        {isProvider && (
+          <>
+            <Divider />
+            <List>
+              <ListItem
+                button
+                key='Retrieve Logs'
+                selected={selectedRoute === 'retrieve-logs'}
+                onClick={(event) => handleListItemClick(event, 'retrieve-logs')}
+              >
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary='Retrieve Logs' />
+              </ListItem>
+            </List>
+          </>
+        )}
         <Divider />
         <List>
           <ListItem
@@ -163,6 +184,13 @@ const NavList = ({ handleDrawerToggle }) => {
 
 NavList.propTypes = {
   handleDrawerToggle: PropTypes.func,
+  isVictim: PropTypes.bool,
+  isProvider: PropTypes.bool,
 };
 
-export default NavList;
+const mapStateToProps = (state) => ({
+  isVictim: state.auth.user.is_victim,
+  isProvider: state.auth.user.is_provider,
+});
+
+export default connect(mapStateToProps)(NavList);
