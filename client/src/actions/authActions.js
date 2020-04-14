@@ -1,5 +1,6 @@
 import axios from 'axios';
 import snakeCaseKeys from 'snakecase-keys';
+import camelCaseKeys from 'camelcase-keys';
 import {
   USER_LOADING,
   USER_LOADED,
@@ -27,7 +28,7 @@ export const loadUser = () => (dispatch, getState) => {
     .then((res) =>
       dispatch({
         type: USER_LOADED,
-        payload: res.data,
+        payload: camelCaseKeys(res.data),
       })
     )
     .catch((err) => {
@@ -39,7 +40,7 @@ export const loadUser = () => (dispatch, getState) => {
 };
 
 /**
- * A general action for registering regular users (victims) 
+ * A general action for registering regular users (victims)
  */
 export const registerRegularUser = ({
   firstName,
@@ -84,9 +85,11 @@ export const registerRegularUser = ({
       if (res.status !== 200) {
         throw new Error('Unknown Database Error');
       }
+      const payload = res.data;
+      payload.user = camelCaseKeys(payload.user);
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: res.data,
+        payload,
       });
       // redirect user to the home page after successful registration
       dispatch(push('/'));
@@ -109,7 +112,7 @@ export const registerRegularUser = ({
 };
 
 /**
- * an action for registering help providers 
+ * an action for registering help providers
  */
 export const registerHelpProvider = ({
   firstName,
@@ -150,9 +153,11 @@ export const registerHelpProvider = ({
   axios
     .post('/api/auth/register/provider', body, config)
     .then((res) => {
+      const payload = res.data;
+      payload.user = camelCaseKeys(payload.user);
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: res.data,
+        payload,
       });
       // redirect user to the home page after successful registration
       dispatch(push('/'));
@@ -193,9 +198,11 @@ export const login = ({ username, password }) => (dispatch) => {
   axios
     .post('/api/auth/login', body, config)
     .then((res) => {
+      const payload = res.data;
+      payload.user = camelCaseKeys(payload.user);
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: res.data,
+        payload,
       });
       // return the res promise in case any other place needs it
       dispatch(push('/'));
