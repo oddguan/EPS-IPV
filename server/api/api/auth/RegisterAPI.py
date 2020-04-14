@@ -1,4 +1,4 @@
-#This file creates the API for registration. 
+# This file creates the API for registration.
 import sys
 
 from django.contrib.auth import get_user_model
@@ -9,12 +9,12 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from api.serializers import (
     VictimRegisterRequestSerializer,
-    VictimRegisterResponseSerializer,
     ProviderRegisterRequestSerializer,
-    ProviderRegisterResponseSerializer,
+    UserDetailResponseSerializer,
     ErrorResponseSerializer
 )
 from api.models import Victim, Provider
+from api.utils import get_user_detail_dict
 
 
 class VictimRegisterAPI(generics.GenericAPIView):
@@ -59,9 +59,10 @@ class VictimRegisterAPI(generics.GenericAPIView):
                 'message': 'Unknown database error! Please try again.'
             }, context=self.get_serializer_context()).data, status=500)
 
+        response_dict = get_user_detail_dict(account)
         return Response({
-            'user': VictimRegisterResponseSerializer(
-                account,
+            'user': UserDetailResponseSerializer(
+                response_dict,
                 context=self.get_serializer_context()
             ).data,
             'accessToken': str(RefreshToken.for_user(account).access_token)
@@ -116,9 +117,10 @@ class ProviderRegisterAPI(generics.GenericAPIView):
                 'message': 'Unknown database error! Please try again.'
             }, context=self.get_serializer_context()).data, status=500)
 
+        response_dict = get_user_detail_dict(account)
         return Response({
-            'user': VictimRegisterResponseSerializer(
-                account,
+            'user': UserDetailResponseSerializer(
+                response_dict,
                 context=self.get_serializer_context()
             ).data,
             'accessToken': str(RefreshToken.for_user(account).access_token)

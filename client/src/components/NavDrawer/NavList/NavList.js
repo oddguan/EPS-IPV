@@ -189,8 +189,8 @@ NavList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isVictim: state.auth.user.is_victim,
-  isProvider: state.auth.user.is_provider,
+  isVictim: state.auth.user.isVictim,
+  isProvider: state.auth.user.isProvider,
 });
 
 export default connect(mapStateToProps)(NavList);

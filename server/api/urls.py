@@ -6,7 +6,7 @@ This file registers viewsets of victim, posts, and logs through routers.
 from django.urls import path
 from rest_framework import routers
 from .api import VictimViewSet, PostViewSet, LogViewSet
-from api.api.auth import VictimRegisterAPI, ProviderRegisterAPI, LoginAPI
+from api.api.auth import VictimRegisterAPI, ProviderRegisterAPI, LoginAPI, UserDetailAPI
 from api.api import ImageUploadAPI
 
 
@@ -22,7 +22,7 @@ urlpatterns = [
     path(r'auth/register/provider', ProviderRegisterAPI.as_view(),
          name='register provider account'),
     path(r'auth/login', LoginAPI.as_view(), name='login'),
-
+    path(r'auth/user', UserDetailAPI.as_view(), name='user-detail'),
     path(r'image', ImageUploadAPI.as_view(), name='image-upload')
 ]
 

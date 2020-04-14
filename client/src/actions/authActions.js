@@ -28,7 +28,7 @@ export const loadUser = () => (dispatch, getState) => {
     .then((res) =>
       dispatch({
         type: USER_LOADED,
-        payload: camelCaseKeys(res.data),
+        payload: camelCaseKeys(res.data, { deep: true }),
       })
     )
     .catch((err) => {
@@ -85,11 +85,9 @@ export const registerRegularUser = ({
       if (res.status !== 200) {
         throw new Error('Unknown Database Error');
       }
-      const payload = res.data;
-      payload.user = camelCaseKeys(payload.user);
       dispatch({
         type: REGISTER_SUCCESS,
-        payload,
+        payload: camelCaseKeys(res.data, { deep: true }),
       });
       // redirect user to the home page after successful registration
       dispatch(push('/'));
@@ -153,11 +151,9 @@ export const registerHelpProvider = ({
   axios
     .post('/api/auth/register/provider', body, config)
     .then((res) => {
-      const payload = res.data;
-      payload.user = camelCaseKeys(payload.user);
       dispatch({
         type: REGISTER_SUCCESS,
-        payload,
+        payload: camelCaseKeys(res.data, { deep: true }),
       });
       // redirect user to the home page after successful registration
       dispatch(push('/'));
@@ -198,11 +194,9 @@ export const login = ({ username, password }) => (dispatch) => {
   axios
     .post('/api/auth/login', body, config)
     .then((res) => {
-      const payload = res.data;
-      payload.user = camelCaseKeys(payload.user);
       dispatch({
         type: LOGIN_SUCCESS,
-        payload,
+        payload: camelCaseKeys(res.data, { deep: true }),
       });
       // return the res promise in case any other place needs it
       dispatch(push('/'));

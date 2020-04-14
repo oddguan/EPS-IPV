@@ -91,3 +91,15 @@ class LoginResponseSerializer(serializers.Serializer):
 
 class ErrorResponseSerializer(serializers.Serializer):
     message = serializers.CharField()
+
+
+class UserDetailResponseSerializer(serializers.Serializer):
+    is_victim = serializers.BooleanField()
+    is_provider = serializers.BooleanField()
+    username = serializers.CharField()
+    id = serializers.IntegerField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    email = serializers.EmailField(required=False)
+    phonenumber = serializers.CharField(required=False)
+    organization = serializers.CharField(required=False)

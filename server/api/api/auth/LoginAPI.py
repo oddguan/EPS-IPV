@@ -1,16 +1,17 @@
-#This file creates the API for login action. Three serializer files imported from serializer.py are used. 
-#The class will firstly filter the username from the input data and look for any registration record. 
-#If not found, an error message will be returned.
-#If there is one, the input password will be checked and an accessToken will be generated for login process.
-#If the password is not correct and the account belongs to a victim, an error message will be returned indicating that the account does not exist. 
-#If the password is not correct and the account does not belong to a victim, an error message will be returned to let the user try again. 
+# This file creates the API for login action. Three serializer files imported from serializer.py are used.
+# The class will firstly filter the username from the input data and look for any registration record.
+# If not found, an error message will be returned.
+# If there is one, the input password will be checked and an accessToken will be generated for login process.
+# If the password is not correct and the account belongs to a victim, an error message will be returned indicating that the account does not exist.
+# If the password is not correct and the account does not belong to a victim, an error message will be returned to let the user try again.
 from django.contrib.auth.hashers import check_password
 from rest_framework import generics, permissions
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from api.serializers import LoginRequestSerializer, LoginResponseSerializer, ErrorResponseSerializer
+from api.serializers import LoginRequestSerializer, UserDetailResponseSerializer, ErrorResponseSerializer
 from api.models import Account
+from api.utils import get_user_detail_dict
 
 
 class LoginAPI(generics.GenericAPIView):
@@ -29,9 +30,11 @@ class LoginAPI(generics.GenericAPIView):
                 'message': 'Error! Username not found.'
             }, context=self.get_serializer_context()).data, status=401)
 
+        response_dict = get_user_detail_dict(account)
+
         if check_password(serializer.data['password'], account.password):
             return Response({
-                'user': LoginResponseSerializer(account, context=self.get_serializer_context()).data,
+                'user': UserDetailResponseSerializer(response_dict, context=self.get_serializer_context()).data,
                 'accessToken': str(RefreshToken.for_user(account).access_token)
             })
 
