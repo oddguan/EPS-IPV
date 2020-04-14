@@ -18,7 +18,10 @@ const initialState = {};
 const middlewares = [thunk, routerMiddleware(history)];
 
 // This is for enabling google redux extension
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers =
+  (process.env.NODE_ENV === 'production'
+    ? null
+    : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 const store = createStore(
   createRootReducer(history),
   initialState,

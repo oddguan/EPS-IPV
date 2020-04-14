@@ -10,25 +10,25 @@ import LogItem from './LogItem/LogItem';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
     [theme.breakpoints.up('sm')]: {
       width: 'calc(100% - 240px)',
-      marginLeft: 240
-    }
+      marginLeft: 240,
+    },
   },
   toolbar: theme.mixins.toolbar,
   flex: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   fab: {
     position: 'fixed',
     bottom: theme.spacing(2),
-    right: theme.spacing(2)
-  }
+    right: theme.spacing(2),
+  },
 }));
 
 /**

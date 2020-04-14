@@ -10,6 +10,7 @@ import Login from '../Auth/Login/Login';
 import Register from '../Auth/Register/Register';
 import CheckUserType from '../Auth/CheckUserType/CheckUserType';
 import Education from '../Education/Education';
+import NewPost from '../Education/NewPost/NewPost';
 import Post from '../Education/Post/Post';
 import Logs from '../Logs/Logs';
 import NewLog from '../Logs/NewLog/NewLog';
@@ -46,7 +47,8 @@ const Routes = ({ isAuthenticated }) => {
         <PublicRoute exact path='/check' component={CheckUserType} />
         <RedirectRoute exact path='/' component={() => <></>} />
         <PrivateRoute exact path='/education' component={Education} />
-        <PrivateRoute path='/education/:postId' component={Post} />
+        <PrivateRoute path='/education/post/:postId' component={Post} />
+        <PrivateRoute exact path='/education/new' component={NewPost} />
         <PrivateRoute exact path='/logs' component={Logs} />
         <PrivateRoute exact path='/logs/new' component={NewLog} />
         <PrivateRoute exact path='/messages' component={Messages} />

@@ -10,23 +10,23 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   article: {
     padding: theme.spacing(2),
-    margin: theme.spacing(1)
-  }
+    margin: theme.spacing(1),
+  },
 }));
 
 /**
- * A single post item displayed on the education tab 
+ * A single post item displayed on the education tab
  */
 const PostItem = ({ postId, title }) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  const handleReadMoreClick = (event) => {
-    dispatch(push(`/education/${postId}`));
-  }
+  const handleReadMoreClick = () => {
+    dispatch(push(`/education/post/${postId}`));
+  };
 
   return (
     <Card variant='outlined' className={classes.article}>
@@ -48,7 +48,11 @@ const PostItem = ({ postId, title }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant='contained' color='primary' onClick={handleReadMoreClick}>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={handleReadMoreClick}
+        >
           Read More
         </Button>
       </CardActions>
@@ -58,7 +62,7 @@ const PostItem = ({ postId, title }) => {
 
 PostItem.propTypes = {
   postId: PropTypes.string,
-  title: PropTypes.string
-}
+  title: PropTypes.string,
+};
 
 export default PostItem;

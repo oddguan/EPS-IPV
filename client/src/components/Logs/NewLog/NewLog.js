@@ -7,7 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
-import MyEditor from './MyEditor/MyEditor';
+import MyEditor from '../../MyEditor/MyEditor';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * The new log page component. 
+ * The new log page component.
  * This is used by user to input their logs
  * by using a wysiwyg react component
  */

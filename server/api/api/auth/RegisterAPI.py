@@ -43,6 +43,11 @@ class VictimRegisterAPI(generics.GenericAPIView):
             return Response(ErrorResponseSerializer({
                 'message': 'Username already exists! Please try another one. '
             }, context=self.get_serializer_context()).data, status=401)
+        except IntegrityError as e:
+            print(e)
+            return Response(ErrorResponseSerializer({
+                'message': 'Username already exists! Please try another one. '
+            }, context=self.get_serializer_context()).data, status=401)
 
         victim = Victim()
         victim.account = account

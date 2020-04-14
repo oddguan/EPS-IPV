@@ -13,13 +13,12 @@ import CreateIcon from '@material-ui/icons/Create';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import LockIcon from '@material-ui/icons/Lock';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
-
-import { logout } from '../../../actions/authActions';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
@@ -65,10 +64,6 @@ const NavList = ({ handleDrawerToggle, isVictim, isProvider }) => {
     handleDrawerToggle && handleDrawerToggle();
     // Redirect user to the specific tab
     return dispatch(push(`/${route}`));
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
   };
 
   return (
@@ -143,7 +138,7 @@ const NavList = ({ handleDrawerToggle, isVictim, isProvider }) => {
                 onClick={(event) => handleListItemClick(event, 'retrieve-logs')}
               >
                 <ListItemIcon>
-                  <AccountCircleIcon />
+                  <LockIcon />
                 </ListItemIcon>
                 <ListItemText primary='Retrieve Logs' />
               </ListItem>
@@ -156,8 +151,7 @@ const NavList = ({ handleDrawerToggle, isVictim, isProvider }) => {
             button
             key='Account'
             selected={selectedRoute === 'account'}
-            // onClick={(event) => handleListItemClick(event, 'account')}
-            onClick={handleLogout}
+            onClick={(event) => handleListItemClick(event, 'account')}
           >
             <ListItemIcon>
               <AccountCircleIcon />
