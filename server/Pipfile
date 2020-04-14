@@ -16,6 +16,7 @@ boto3 = "*"
 django-environ = "*"
 django = "*"
 environ = "*"
+channels = "*"
 
 [requires]
 python_version = "3.7"
