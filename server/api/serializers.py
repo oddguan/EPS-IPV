@@ -29,8 +29,16 @@ class PostSerializer(serializers.ModelSerializer):
         exclude = ['author']
 
 
-class PostResponseSerializer(serializers.Serializer):
+class PostIdResponseSerializer(serializers.Serializer):
     id = serializers.IntegerField()
+
+
+class PostDetailSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    title = serializers.CharField()
+    content = serializers.CharField()
+    created_at = serializers.DateTimeField()
+    author = serializers.CharField()
 
 
 class LogSerializer(serializers.ModelSerializer):

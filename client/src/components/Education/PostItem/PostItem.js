@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
@@ -20,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
 /**
  * A single post item displayed on the education tab
  */
-const PostItem = ({ postId, title }) => {
+const PostItem = ({ post }) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
   const handleReadMoreClick = () => {
-    dispatch(push(`/education/post/${postId}`));
+    dispatch(push(`/education/post/${post.id}`));
   };
 
   return (
@@ -38,13 +39,11 @@ const PostItem = ({ postId, title }) => {
         title='Contemplative Reptile'
       />
       <CardContent>
-        <Typography variant='h6'>Title {title}</Typography>
-        <Typography variant='caption'>Author: John Doe</Typography>
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa
-          officiis est, tenetur modi illum nesciunt porro expedita in iure dolor
-          cupiditate ab voluptatum? Laborum labore inventore exercitationem
-          nostrum corrupti tenetur.
+        <Typography variant='h6'>{post.title}</Typography>
+        <Typography variant='caption'>Author: {post.author}</Typography>
+        <br />
+        <Typography variant='caption'>
+          Posted {moment(post.createdAt).fromNow()}
         </Typography>
       </CardContent>
       <CardActions>
@@ -61,8 +60,7 @@ const PostItem = ({ postId, title }) => {
 };
 
 PostItem.propTypes = {
-  postId: PropTypes.string,
-  title: PropTypes.string,
+  post: PropTypes.object,
 };
 
 export default PostItem;
