@@ -100,11 +100,6 @@ const Post = ({ post, isFetchingSinglePost, fetchSinglePost }) => {
               </div>
             </div>
             <Divider />
-            <img
-              src='/static/placeholder-img.jpg'
-              alt={post.title + ' image'}
-              className={classes.postImage}
-            />
             <Typography
               paragraph
               dangerouslySetInnerHTML={{
