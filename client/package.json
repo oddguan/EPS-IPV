@@ -1,5 +1,5 @@
 {
-  "name": "clientapp",
+  "name": "eps-ipv-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
