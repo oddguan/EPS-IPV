@@ -5,7 +5,7 @@ This file will work with routers.py as well as front end to establish communicat
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 import json
-from api.models import Message, Victim, Provider
+from api.models import Message, Victim, Provider, Log
 
 class ChatController(WebsocketConsumer):
 
@@ -38,7 +38,7 @@ class ChatController(WebsocketConsumer):
             'command': 'new_message',
             'message': self.message_to_json(message)
         }
-        self.send_chat_message(content)
+        self.send_message(content)
 
     def messages_to_json(self, messages):
         result = []
