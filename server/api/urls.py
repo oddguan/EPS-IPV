@@ -7,7 +7,7 @@ from django.urls import path
 from rest_framework import routers
 from .api import VictimViewSet, PostViewSet, LogViewSet
 from api.api.auth import VictimRegisterAPI, ProviderRegisterAPI, LoginAPI, UserDetailAPI
-from api.api import ImageUploadAPI
+from api.api import ImageUploadAPI, ImageViewAPI
 
 
 router = routers.DefaultRouter()
@@ -23,7 +23,9 @@ urlpatterns = [
          name='register provider account'),
     path(r'auth/login', LoginAPI.as_view(), name='login'),
     path(r'auth/user', UserDetailAPI.as_view(), name='user-detail'),
-    path(r'image', ImageUploadAPI.as_view(), name='image-upload')
+    path(r'image/<str:image_name>/', ImageUploadAPI.as_view(), name='image-upload'),
+    path(r'image/view/<str:image_key>/',
+         ImageViewAPI.as_view(), name='image-view')
 ]
 
 urlpatterns += router.urls

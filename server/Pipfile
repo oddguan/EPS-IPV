@@ -17,6 +17,7 @@ django-environ = "*"
 django = "*"
 environ = "*"
 channels = "*"
+image = "*"
 
 [requires]
 python_version = "3.7"

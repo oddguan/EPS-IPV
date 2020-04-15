@@ -37,7 +37,12 @@ export const fetchPosts = () => (dispatch, getState) => {
   axios
     .get('api/post/', authTokenConfig(getState))
     .then((res) => {
-      dispatch({ type: FETCH_POSTS_SUCCESS, payload: camelcaseKeys(res.data) });
+      const postContents = camelcaseKeys(res.data, { deep: true });
+      postContents.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+      console.log(postContents);
+      dispatch({ type: FETCH_POSTS_SUCCESS, payload: postContents });
     })
     .catch((err) => {
       console.error(err);

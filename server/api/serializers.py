@@ -115,3 +115,15 @@ class UserDetailResponseSerializer(serializers.Serializer):
     email = serializers.EmailField(required=False)
     phonenumber = serializers.CharField(required=False)
     organization = serializers.CharField(required=False)
+
+
+class ImageSerializer(serializers.Serializer):
+    file = serializers.ImageField()
+
+
+class ImageLinkSerializer(serializers.Serializer):
+    link = serializers.CharField()
+
+
+class ImageResponseSerializer(serializers.Serializer):
+    image = serializers.ImageField()

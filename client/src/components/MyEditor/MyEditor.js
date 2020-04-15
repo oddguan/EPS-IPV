@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Editor } from 'react-draft-wysiwyg';
 import TextField from '@material-ui/core/TextField';
@@ -37,6 +38,25 @@ const MyEditor = ({ editorState, setEditorState, title, setTitle }) => {
     setEditorState(newEditorState);
   };
 
+  const [uploadedImages, setUploadedImages] = useState([]);
+  const uploadCallback = (file) => {
+    const form = new FormData();
+    form.append('file', file);
+    return axios
+      .put(`/api/image/${file.name}/`, form, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then((res) => {
+        const newUploadedImages = [...uploadedImages, res.data.link];
+        setUploadedImages(newUploadedImages);
+        return {
+          data: {
+            link: res.data.link,
+          },
+        };
+      });
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.titleField}>
@@ -56,6 +76,14 @@ const MyEditor = ({ editorState, setEditorState, title, setTitle }) => {
           wrapperClassName='demo-wrapper'
           editorClassName='demo-editor'
           onEditorStateChange={onEditorStateChange}
+          toolbar={{
+            image: {
+              uploadCallback,
+              previewImage: true,
+              alt: { present: true, mandatory: false },
+              inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
+            },
+          }}
         />
       </div>
     </div>

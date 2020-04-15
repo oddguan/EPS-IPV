@@ -100,8 +100,7 @@ const Post = ({ post, isFetchingSinglePost, fetchSinglePost }) => {
               </div>
             </div>
             <Divider />
-            <Typography
-              paragraph
+            <div
               dangerouslySetInnerHTML={{
                 __html: convertFromJSONToHTML(post.content),
               }}
