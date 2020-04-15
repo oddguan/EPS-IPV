@@ -9,6 +9,11 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const USER_TYPE_SELECT_SUCCESS = 'USER_TYPE_SELECT_SUCCESS';
 
+// Educational post related actions
+export const ADD_NEW_POST_LOADING = 'ADD_NEW_POST_LOADING';
+export const ADD_NEW_POST_SUCCESS = 'ADD_NEW_POST_SUCCESS';
+export const ADD_NEW_POST_FAIL = 'ADD_NEW_POST_FAIL';
+
 // Error related actions
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';

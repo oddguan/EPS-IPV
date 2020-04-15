@@ -26,7 +26,11 @@ class VictimSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = '__all__'
+        exclude = ['author']
+
+
+class PostResponseSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
 
 
 class LogSerializer(serializers.ModelSerializer):

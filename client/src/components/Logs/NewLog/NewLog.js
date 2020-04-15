@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { EditorState } from 'draft-js';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -46,6 +47,9 @@ const NewLog = () => {
     dispatch(push('/logs'));
   };
 
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [title, setTitle] = useState('');
+
   return (
     <React.Fragment>
       <div className={classes.toolbar} />
@@ -53,7 +57,12 @@ const NewLog = () => {
         <CssBaseline />
         <Typography variant='h5'>Add New Log</Typography>
         <Divider />
-        <MyEditor />
+        <MyEditor
+          editorState={editorState}
+          setEditorState={setEditorState}
+          title={title}
+          setTitle={setTitle}
+        />
         <div className={classes.buttonsWrapper}>
           <Button
             className={classes.button}
