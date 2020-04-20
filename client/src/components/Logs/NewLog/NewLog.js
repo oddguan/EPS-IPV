@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { EditorState } from 'draft-js';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import TextField from '@material-ui/core/TextField';
+import Fab from '@material-ui/core/Fab';
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import { makeStyles } from '@material-ui/core/styles';
-
-import MyEditor from '../../MyEditor/MyEditor';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -27,10 +28,20 @@ const useStyles = makeStyles((theme) => ({
   buttonsWrapper: {
     display: 'flex',
     justifyContent: 'space-around',
-    width: '85%',
+    width: '65%',
   },
   button: {
     width: 150,
+  },
+  logTypes: {
+    margin: theme.spacing(2),
+  },
+  main: {
+    width: '70%',
+    marginBottom: theme.spacing(2),
+  },
+  input: {
+    display: 'none',
   },
 }));
 
@@ -47,8 +58,25 @@ const NewLog = () => {
     dispatch(push('/logs'));
   };
 
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [isSelectText, setIsSelectText] = useState(true);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
+
+  const handleUploadClick = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    const url = reader.readAsDataURL(file);
+
+    reader.onloadend = function () {
+      setSelectedFile([reader.result]);
+    };
+    console.log(url);
+
+    setIsImageUploaded(true);
+    setSelectedFile(event.target.files[0]);
+  };
 
   return (
     <React.Fragment>
@@ -57,12 +85,70 @@ const NewLog = () => {
         <CssBaseline />
         <Typography variant='h5'>Add New Log</Typography>
         <Divider />
-        <MyEditor
-          editorState={editorState}
-          setEditorState={setEditorState}
-          title={title}
-          setTitle={setTitle}
+        <TextField
+          label='Log Title'
+          style={{ width: '70%' }}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
+        <div />
+        <div className={classes.logTypes}>
+          <Typography variant='h6'>Log Type:</Typography>
+          <ButtonGroup
+            color='primary'
+            aria-label='outlined primary button group'
+          >
+            <Button
+              disabled={isSelectText}
+              onClick={() => setIsSelectText(true)}
+            >
+              Text
+            </Button>
+            <Button
+              disabled={!isSelectText}
+              onClick={() => setIsSelectText(false)}
+            >
+              Image
+            </Button>
+          </ButtonGroup>
+        </div>
+        <div className={classes.main}>
+          {isSelectText ? (
+            <TextField
+              variant='outlined'
+              style={{ width: '100%' }}
+              multiline
+              rows={10}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+          ) : (
+            <div style={{ marginLeft: '10px' }}>
+              <input
+                accept='image/*'
+                className={classes.input}
+                id='log-image-file'
+                type='file'
+                onChange={handleUploadClick}
+              />
+              <Typography variant='h6'>Select the image to upload:</Typography>
+              <label htmlFor='log-image-file'>
+                <Fab component='span'>
+                  <AddPhotoAlternateIcon />
+                </Fab>
+              </label>
+              {isImageUploaded && (
+                <div style={{ margin: '20px' }}>
+                  <img
+                    style={{ maxWidth: '400px' }}
+                    src={selectedFile}
+                    alt='selected-file'
+                  />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
         <div className={classes.buttonsWrapper}>
           <Button
             className={classes.button}

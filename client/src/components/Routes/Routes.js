@@ -14,6 +14,7 @@ import NewPost from '../Education/NewPost/NewPost';
 import Post from '../Education/Post/Post';
 import Logs from '../Logs/Logs';
 import NewLog from '../Logs/NewLog/NewLog';
+import LogInstructions from '../Logs/LogInstructions/LogInstructions';
 import Resources from '../Resources/Resources';
 import Messages from '../Messages/Messages';
 import Account from '../Account/Account';
@@ -51,6 +52,7 @@ const Routes = ({ isAuthenticated }) => {
         <PrivateRoute exact path='/education/new' component={NewPost} />
         <PrivateRoute exact path='/logs' component={Logs} />
         <PrivateRoute exact path='/logs/new' component={NewLog} />
+        <PrivateRoute exact path='/logs/more' component={LogInstructions} />
         <PrivateRoute exact path='/messages' component={Messages} />
         <PrivateRoute exact path='/resources' component={Resources} />
         <PrivateRoute exact path='/account' component={Account} />
