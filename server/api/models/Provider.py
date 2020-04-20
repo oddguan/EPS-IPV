@@ -20,5 +20,6 @@ class Provider(models.Model):
     email = models.EmailField(max_length=254, null=False)
     org_name = models.CharField(max_length=30, null=False)
     phonenumber = models.CharField(max_length=30, null=True, blank=True)
+    #pub_key = models.CharField(max_length=30, null=True, blank=True)
 
     objects = ProviderManager()

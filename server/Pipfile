@@ -18,6 +18,7 @@ django = "*"
 environ = "*"
 channels = "*"
 image = "*"
+pycryptodome = "*"
 
 [requires]
 python_version = "3.7"
