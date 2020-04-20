@@ -18,6 +18,6 @@ class Victim(AbstractBaseUser):
     first_name = models.CharField(max_length=30, null=False)
     last_name = models.CharField(max_length=30, null=False)
     phonenumber = models.CharField(max_length=30, null=True, blank=True)
-    email = models.EmailField(max_length=50, null=True, blank=True)pub_key = models.CharField(max_length=255, null=True)
+    email = models.EmailField(max_length=50, null=True, blank=True)
 
     objects = VictimManager()

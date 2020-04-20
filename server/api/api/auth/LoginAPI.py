@@ -44,5 +44,3 @@ class LoginAPI(generics.GenericAPIView):
         return Response(ErrorResponseSerializer({
             'message': error_message
         }, context=self.get_serializer_context()).data, status=401)
-
-    def 

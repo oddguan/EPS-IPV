@@ -4,6 +4,7 @@ The model Log contains four attributes: author, title, content, and created time
 '''
 from django.db import models
 
+
 class Log(models.Model):
     """
     Secure logs from victims database model
