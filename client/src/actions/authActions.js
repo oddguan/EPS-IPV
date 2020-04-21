@@ -11,6 +11,7 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   USER_TYPE_SELECT_SUCCESS,
+  USER_TYPE_RESET_SUCCESS,
 } from './types';
 import { returnErrors } from './errorActions';
 import { push } from 'connected-react-router';
@@ -231,6 +232,10 @@ export const setRegularUserStatus = (isSelectedRegularUser) => ({
   payload: {
     isSelectedRegularUser,
   },
+});
+
+export const resetUserType = () => ({
+  type: USER_TYPE_RESET_SUCCESS,
 });
 
 /**

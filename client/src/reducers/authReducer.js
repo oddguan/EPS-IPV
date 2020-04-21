@@ -8,6 +8,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_TYPE_SELECT_SUCCESS,
+  USER_TYPE_RESET_SUCCESS,
 } from '../actions/types';
 
 // fetch JWT token and user object from localStorage as the initial state
@@ -71,6 +72,11 @@ export default function (state = initialState, action) {
         ...state,
         isUserTypeSelected: true,
         isSelectedRegularUser: action.payload.isSelectedRegularUser,
+      };
+    case USER_TYPE_RESET_SUCCESS:
+      return {
+        ...state,
+        isUserTypeSelected: false,
       };
     default:
       return state;

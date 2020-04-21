@@ -18,6 +18,7 @@ import { connect, useDispatch } from 'react-redux';
 import {
   registerRegularUser,
   registerHelpProvider,
+  resetUserType,
 } from '../../../actions/authActions';
 import { returnErrors, clearErrors } from '../../../actions/errorActions';
 import Copyright from '../../Copyright/Copyright';
@@ -59,7 +60,12 @@ const useStyles = makeStyles((theme) => ({
  * root component of the registration page
  * @param {*} props
  */
-function Register({ isUserTypeSelected, isRegularUser, ...props }) {
+function Register({
+  isUserTypeSelected,
+  isRegularUser,
+  resetUserType,
+  ...props
+}) {
   // material ui styling
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -182,8 +188,16 @@ function Register({ isUserTypeSelected, isRegularUser, ...props }) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          {isRegularUser ? 'User' : 'Help Provider'} Sign Up
+          {isRegularUser ? 'Regular User' : 'Help Provider'} Sign Up
         </Typography>
+        <Button
+          style={{ marginTop: '10px' }}
+          variant='outlined'
+          color='primary'
+          onClick={resetUserType}
+        >
+          Not a {isRegularUser ? 'regular user' : 'help provider'}?
+        </Button>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           {/* Input fields are managed by a grid system */}
           <Grid container spacing={2}>
@@ -350,4 +364,5 @@ export default connect(mapStateToProps, {
   registerHelpProvider,
   returnErrors,
   clearErrors,
+  resetUserType,
 })(Register);
