@@ -20,3 +20,14 @@ class UserDetailAPI(generics.GenericAPIView):
         return Response(UserDetailResponseSerializer(
             response_dict, context=self.get_serializer_context()
         ).data, status=200)
+        
+    def whether_have_pk(self, request: Request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        try:
+            account = Account.objects.filter(
+                username=serializer.data['username'])[0]
+            encrypt_pk = account[2].title
+            return True
+        except TypeError as e:
+            return False
