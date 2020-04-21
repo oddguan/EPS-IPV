@@ -2,6 +2,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { createHashHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
 import createRootReducer from './reducers';
 
@@ -22,10 +24,20 @@ const composeEnhancers =
   (process.env.NODE_ENV === 'production'
     ? null
     : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
+const rootReducer = createRootReducer(history);
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const store = createStore(
-  createRootReducer(history),
+  persistedReducer,
   initialState,
   composeEnhancers(applyMiddleware(...middlewares))
 );
+
+export const persistor = persistStore(store);
 
 export default store;

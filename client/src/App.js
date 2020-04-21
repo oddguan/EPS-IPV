@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import store, { history } from './store';
+import store, { history, persistor } from './store';
 import { loadUser } from './actions/authActions';
 import Routes from './components/Routes/Routes';
 
@@ -28,9 +29,11 @@ function App() {
   return (
     <Provider store={store}>
       {/* Wrap everything into a redux store */}
-      <ConnectedRouter history={history}>
-        <Routes />
-      </ConnectedRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <ConnectedRouter history={history}>
+          <Routes />
+        </ConnectedRouter>
+      </PersistGate>
     </Provider>
   );
 }
