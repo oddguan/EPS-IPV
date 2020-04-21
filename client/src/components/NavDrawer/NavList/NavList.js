@@ -57,7 +57,8 @@ const DangerButton = withStyles((theme) => ({
 const NavList = ({ handleDrawerToggle, isVictim, isProvider }) => {
   const classes = useStyles();
   // Default select education tab
-  const [selectedRoute, setSelectedRoute] = React.useState('education');
+  const arr = window.location.href.split('/');
+  const [selectedRoute, setSelectedRoute] = React.useState(arr[arr.length - 1]);
   const dispatch = useDispatch();
   const handleListItemClick = (event, route) => {
     setSelectedRoute(route);
