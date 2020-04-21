@@ -13,9 +13,32 @@ from api.serializers import (
     UserDetailResponseSerializer,
     ErrorResponseSerializer
 )
-from api.models import Victim, Provider
-from api.utils import get_user_detail_dict
+from api.models import Victim, Provider, Account
 from api.encryption import generate_key_pair
+
+
+def get_user_detail_dict(account: Account) -> dict:
+    """
+    A util method for retrieving user detail response dict
+    """
+    response_dict = {
+        "is_victim": account.is_victim,
+        "is_provider": account.is_provider,
+        "username": account.username,
+        "id": account.id
+    }
+    if account.is_victim:
+        user = Victim.objects.filter(account=account)[0]
+    else:  # account.is_provider
+        user = Provider.objects.filter(account=account)[0]
+        response_dict['organization'] = user.org_name
+
+    response_dict['first_name'] = user.first_name
+    response_dict['last_name'] = user.last_name
+    response_dict['phonenumber'] = user.phonenumber
+    response_dict['email'] = user.email
+
+    return response_dict
 
 
 class VictimRegisterAPI(generics.GenericAPIView):
@@ -31,12 +54,13 @@ class VictimRegisterAPI(generics.GenericAPIView):
             hint = 'default hint'
 
         try:
+            private_key, public_key = generate_key_pair()
             account = get_user_model().objects.create_account(
                 serializer.data.get('username'),
                 serializer.data.get('password'),
                 hint,
+                public_key
             )
-            generate_key_pair(serializer.data.get('username'))
             account.is_victim = True
             account.save()
         except InternalError as e:
@@ -66,12 +90,14 @@ class VictimRegisterAPI(generics.GenericAPIView):
             }, context=self.get_serializer_context()).data, status=500)
 
         response_dict = get_user_detail_dict(account)
+
         return Response({
             'user': UserDetailResponseSerializer(
                 response_dict,
                 context=self.get_serializer_context()
             ).data,
-            'accessToken': str(RefreshToken.for_user(account).access_token)
+            'accessToken': str(RefreshToken.for_user(account).access_token),
+            'privateKey': str(private_key)
         }, status=200)
 
 
@@ -92,6 +118,7 @@ class ProviderRegisterAPI(generics.GenericAPIView):
                 serializer.data.get('username'),
                 serializer.data.get('password'),
                 hint,
+                'no_pk_for_providers'
             )
             account.is_provider = True
             account.save()

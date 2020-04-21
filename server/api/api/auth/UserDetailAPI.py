@@ -2,8 +2,8 @@ from rest_framework import generics, permissions
 from rest_framework.request import Request
 from rest_framework.response import Response
 from api.serializers import UserDetailResponseSerializer, ErrorResponseSerializer
-from api.models import Victim, Provider
-from api.utils import get_user_detail_dict
+from api.models import Victim, Provider, Account
+from .RegisterAPI import get_user_detail_dict
 
 
 class UserDetailAPI(generics.GenericAPIView):
@@ -20,7 +20,7 @@ class UserDetailAPI(generics.GenericAPIView):
         return Response(UserDetailResponseSerializer(
             response_dict, context=self.get_serializer_context()
         ).data, status=200)
-        
+
     def whether_have_pk(self, request: Request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)

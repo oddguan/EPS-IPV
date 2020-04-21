@@ -9,7 +9,8 @@ class AccountManager(BaseUserManager):
         if not password:
             raise ValueError(_('Account password cannot be empty'))
 
-        account = self.model(username=username, hint=hint, encrypt_pk=encrypt_pk, **extra_fields)
+        account = self.model(username=username, hint=hint,
+                             encrypt_pk=encrypt_pk, **extra_fields)
         account.set_password(password)
         account.save()
         return account

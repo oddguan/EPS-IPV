@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from api.serializers import LoginRequestSerializer, UserDetailResponseSerializer, ErrorResponseSerializer
 from api.models import Account
-from api.utils import get_user_detail_dict
+from .RegisterAPI import get_user_detail_dict
 
 
 class LoginAPI(generics.GenericAPIView):
@@ -55,5 +55,4 @@ class LoginAPI(generics.GenericAPIView):
             return True
         except TypeError as e:
             return False
-
 

@@ -1,5 +1,6 @@
 import base64
 from django.db import models
+from api.models import Victim, Provider, Account
 
 
 class Base64Field(models.TextField):

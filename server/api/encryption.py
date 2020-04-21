@@ -6,12 +6,9 @@ import base64
 from .models import Account
 
 
-def generate_key_pair(username):
+def generate_key_pair():
     random_generator = Random.new().read
     rsa = RSA.generate(1024, random_generator)
-    rsa_private_key = rsa.exportKey()
-    rsa_public_key = rsa.key().exportKey()
-    new_pk = get_user_model().objects.objects.get(username = username)
-    new_pk.value = rsa_public_key
-    new_pk.save(['encrypt_pk'])
-    return rsa_private_key
+    private_key = rsa.export_key('PEM')
+    public_key = rsa.publickey().export_key('PEM')
+    return private_key, public_key
