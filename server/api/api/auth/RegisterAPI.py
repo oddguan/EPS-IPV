@@ -15,6 +15,7 @@ from api.serializers import (
 )
 from api.models import Victim, Provider
 from api.utils import get_user_detail_dict
+from api.encryption import generate_key_pair
 
 
 class VictimRegisterAPI(generics.GenericAPIView):
@@ -35,6 +36,7 @@ class VictimRegisterAPI(generics.GenericAPIView):
                 serializer.data.get('password'),
                 hint,
             )
+            generate_key_pair(serializer.data.get('username'))
             account.is_victim = True
             account.save()
         except InternalError as e:
