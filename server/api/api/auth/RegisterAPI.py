@@ -33,7 +33,6 @@ class VictimRegisterAPI(generics.GenericAPIView):
             account = get_user_model().objects.create_account(
                 serializer.data.get('username'),
                 serializer.data.get('password'),
-                serializer.data.get('encrypt_pk'),
                 hint,
             )
             account.is_victim = True
@@ -90,7 +89,6 @@ class ProviderRegisterAPI(generics.GenericAPIView):
             account = get_user_model().objects.create_account(
                 serializer.data.get('username'),
                 serializer.data.get('password'),
-                serializer.data.get('encrypt_pk'),
                 hint,
             )
             account.is_provider = True
