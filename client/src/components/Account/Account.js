@@ -18,6 +18,7 @@ import {
   clearSuccessMessage,
   reuturnSuccessMessage,
 } from '../../actions/successActions';
+import { makeRetrieveLogRequest } from '../../actions/logActions';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -85,7 +86,7 @@ const Account = ({
   useEffect(() => {
     if (success.msg) {
       console.log(success.msg);
-      toast.success(success.msg.msg);
+      toast.success(success.msg);
       dispatch(clearSuccessMessage());
     }
   }, [success, dispatch]);
@@ -117,11 +118,11 @@ const Account = ({
       'Do you want to submit a request for physically printing your logs at one of the shelter locations?'
     );
     const handleYesClick = () => {
+      dispatch(makeRetrieveLogRequest());
       dispatch(
-        reuturnSuccessMessage({
-          msg:
-            'Your action was successful! Shelter workers should see a request from you now. ',
-        })
+        reuturnSuccessMessage(
+          'Your action was successful! Shelter workers should see a request from you now. '
+        )
       );
       setIsDialogOpen(false);
     };

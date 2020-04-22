@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { ADD_NEW_LOG_SUCCESS, ADD_NEW_LOG_FAIL } from './types';
+import {
+  ADD_NEW_LOG_SUCCESS,
+  ADD_NEW_LOG_FAIL,
+  REQUEST_RETRIEVE_LOG_SUCCESS,
+  REQUEST_RETRIEVE_LOG_FAIL,
+} from './types';
 import { authTokenConfig } from './authActions';
 
 export const uploadNewLog = (isSelectText, content) => (dispatch, getState) => {
@@ -27,5 +32,17 @@ export const uploadNewLog = (isSelectText, content) => (dispatch, getState) => {
     .catch((err) => {
       console.error(err);
       dispatch({ type: ADD_NEW_LOG_FAIL });
+    });
+};
+
+export const makeRetrieveLogRequest = () => (dispatch, getState) => {
+  axios
+    .get('/api/log/request/', authTokenConfig(getState))
+    .then((res) => {
+      dispatch({ type: REQUEST_RETRIEVE_LOG_SUCCESS });
+    })
+    .catch((err) => {
+      console.error(err);
+      dispatch({ type: REQUEST_RETRIEVE_LOG_FAIL });
     });
 };

@@ -7,7 +7,7 @@ from django.urls import path
 from rest_framework import routers
 from .api import VictimViewSet, PostViewSet
 from api.api.auth import VictimRegisterAPI, ProviderRegisterAPI, LoginAPI, UserDetailAPI
-from api.api import ImageUploadAPI, ImageViewAPI, KeyGenerateAPI, AddTextLogAPI, AddImageLogAPI
+from api.api import ImageUploadAPI, ImageViewAPI, KeyGenerateAPI, AddTextLogAPI, AddImageLogAPI, LogRequestAPI
 
 
 router = routers.DefaultRouter()
@@ -24,7 +24,8 @@ urlpatterns = [
     path(r'auth/user', UserDetailAPI.as_view(), name='user-detail'),
     path(r'generate-key/', KeyGenerateAPI.as_view(), name='generate-key'),
     path(r'log/text/', AddTextLogAPI.as_view(), name='new-text-log'),
-    path(r'log/image/', AddImageLogAPI.as_view(), name='new-image-log')
+    path(r'log/image/', AddImageLogAPI.as_view(), name='new-image-log'),
+    path(r'log/request/', LogRequestAPI.as_view(), name='request-physical-logs')
 ]
 
 urlpatterns += router.urls
