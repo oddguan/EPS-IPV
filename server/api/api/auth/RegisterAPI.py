@@ -37,6 +37,7 @@ def get_user_detail_dict(account: Account) -> dict:
     response_dict['last_name'] = user.last_name
     response_dict['phonenumber'] = user.phonenumber
     response_dict['email'] = user.email
+    response_dict['has_encryption_keys'] = account.encrypt_pk != None
 
     return response_dict
 
@@ -54,12 +55,10 @@ class VictimRegisterAPI(generics.GenericAPIView):
             hint = 'default hint'
 
         try:
-            private_key, public_key = generate_key_pair()
             account = get_user_model().objects.create_account(
                 serializer.data.get('username'),
                 serializer.data.get('password'),
                 hint,
-                public_key
             )
             account.is_victim = True
             account.save()
@@ -97,7 +96,6 @@ class VictimRegisterAPI(generics.GenericAPIView):
                 context=self.get_serializer_context()
             ).data,
             'accessToken': str(RefreshToken.for_user(account).access_token),
-            'privateKey': str(private_key)
         }, status=200)
 
 

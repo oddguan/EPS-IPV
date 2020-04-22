@@ -112,6 +112,7 @@ class UserDetailResponseSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
+    has_encryption_keys = serializers.BooleanField()
     email = serializers.EmailField(required=False)
     phonenumber = serializers.CharField(required=False)
     organization = serializers.CharField(required=False)

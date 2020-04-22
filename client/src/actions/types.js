@@ -11,6 +11,7 @@ export const USER_TYPE_SELECT_SUCCESS = 'USER_TYPE_SELECT_SUCCESS';
 export const USER_TYPE_RESET_SUCCESS = 'USER_TYPE_RESET_SUCCESS';
 export const FIRST_LOGIN = 'FIRST_LOGIN';
 export const PRIVATE_KEY_DOWNLOADED = 'PRIVATE_KEY_DOWNLOADED';
+export const OPT_OUT_LOG = 'OPT_OUT_LOG';
 
 // Educational post related actions
 export const ADD_NEW_POST_LOADING = 'ADD_NEW_POST_LOADING';

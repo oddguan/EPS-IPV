@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fileDownload from 'js-file-download';
 import snakeCaseKeys from 'snakecase-keys';
 import camelCaseKeys from 'camelcase-keys';
 import {
@@ -14,6 +15,7 @@ import {
   USER_TYPE_RESET_SUCCESS,
   FIRST_LOGIN,
   PRIVATE_KEY_DOWNLOADED,
+  OPT_OUT_LOG,
 } from './types';
 import { returnErrors } from './errorActions';
 import { push } from 'connected-react-router';
@@ -243,8 +245,15 @@ export const resetUserType = () => ({
   type: USER_TYPE_RESET_SUCCESS,
 });
 
-export const privateKeyDownloaded = () => ({
-  type: PRIVATE_KEY_DOWNLOADED,
+export const privateKeyDownloaded = () => (dispatch, getState) => {
+  axios.get('/api/generate-key/', authTokenConfig(getState)).then((res) => {
+    fileDownload(res.data, `${getState().auth.user.username}_private_key.pem`);
+    dispatch(loadUser());
+  });
+};
+
+export const doNotDownloadPrivateKey = () => ({
+  type: OPT_OUT_LOG,
 });
 
 /**

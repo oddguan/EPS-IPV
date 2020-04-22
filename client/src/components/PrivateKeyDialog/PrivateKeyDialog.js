@@ -7,13 +7,20 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
-import { privateKeyDownloaded } from '../../actions/authActions';
+import {
+  privateKeyDownloaded,
+  doNotDownloadPrivateKey,
+} from '../../actions/authActions';
 
-const PrivateKeyDialog = ({ isFirstLogin, privateKeyDownloaded }) => {
+const PrivateKeyDialog = ({
+  hasEncryptionKeys,
+  privateKeyDownloaded,
+  doNotDownloadPrivateKey,
+}) => {
   return (
     <div>
       <Dialog
-        open={isFirstLogin}
+        open={!hasEncryptionKeys}
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
       >
@@ -29,7 +36,7 @@ const PrivateKeyDialog = ({ isFirstLogin, privateKeyDownloaded }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button color='primary'>
+          <Button color='primary' onClick={doNotDownloadPrivateKey}>
             I don't want to use the Logs functionality
           </Button>
           <br />
@@ -43,9 +50,10 @@ const PrivateKeyDialog = ({ isFirstLogin, privateKeyDownloaded }) => {
 };
 
 const mapStateToProps = (state) => ({
-  isFirstLogin: state.auth.isFirstLogin,
+  hasEncryptionKeys: state.auth.user.hasEncryptionKeys,
 });
 
-export default connect(mapStateToProps, { privateKeyDownloaded })(
-  PrivateKeyDialog
-);
+export default connect(mapStateToProps, {
+  privateKeyDownloaded,
+  doNotDownloadPrivateKey,
+})(PrivateKeyDialog);
