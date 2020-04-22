@@ -138,3 +138,8 @@ class AddTextLogSerializer(serializers.Serializer):
 class AddImageLogSerializer(serializers.Serializer):
     title = serializers.CharField()
     image = serializers.ImageField()
+
+
+class LogRequestResponseSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    created_at = serializers.DateTimeField()

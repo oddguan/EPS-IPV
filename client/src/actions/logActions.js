@@ -4,6 +4,8 @@ import {
   ADD_NEW_LOG_FAIL,
   REQUEST_RETRIEVE_LOG_SUCCESS,
   REQUEST_RETRIEVE_LOG_FAIL,
+  RETRIEVE_ALL_PROCCESSING_REQUESTS_FAIL,
+  RETRIEVE_ALL_PROCCESSING_REQUESTS_SUCCESS,
 } from './types';
 import { authTokenConfig } from './authActions';
 
@@ -44,5 +46,19 @@ export const makeRetrieveLogRequest = () => (dispatch, getState) => {
     .catch((err) => {
       console.error(err);
       dispatch({ type: REQUEST_RETRIEVE_LOG_FAIL });
+    });
+};
+
+export const retrieveAllProcessingRequests = () => (dispatch, getState) => {
+  axios
+    .get('/api/log/request/all/', authTokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: RETRIEVE_ALL_PROCCESSING_REQUESTS_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((res) => {
+      dispatch({ type: RETRIEVE_ALL_PROCCESSING_REQUESTS_FAIL });
     });
 };

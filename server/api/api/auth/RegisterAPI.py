@@ -116,7 +116,6 @@ class ProviderRegisterAPI(generics.GenericAPIView):
                 serializer.data.get('username'),
                 serializer.data.get('password'),
                 hint,
-                'no_pk_for_providers'
             )
             account.is_provider = True
             account.save()

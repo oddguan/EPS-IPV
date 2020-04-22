@@ -13,14 +13,14 @@ import {
 } from '../../actions/authActions';
 
 const PrivateKeyDialog = ({
-  hasEncryptionKeys,
+  isDialogOpen,
   privateKeyDownloaded,
   doNotDownloadPrivateKey,
 }) => {
   return (
     <div>
       <Dialog
-        open={!hasEncryptionKeys}
+        open={isDialogOpen}
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
       >
@@ -50,8 +50,10 @@ const PrivateKeyDialog = ({
 };
 
 const mapStateToProps = (state) => ({
-  hasEncryptionKeys:
-    !state.auth.isAuthenticated || state.auth.user.hasEncryptionKeys,
+  isDialogOpen:
+    state.auth.isAuthenticated &&
+    state.auth.user.isVictim &&
+    !state.auth.user.hasEncryptionKeys,
 });
 
 export default connect(mapStateToProps, {

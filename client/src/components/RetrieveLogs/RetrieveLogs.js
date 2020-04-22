@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
+import Request from './Request/Request';
+
+import { retrieveAllProcessingRequests } from '../../actions/logActions';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -16,8 +20,15 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-const RetrieveLogs = () => {
+const RetrieveLogs = ({
+  allProcessingRequests,
+  retrieveAllProcessingRequests,
+}) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    retrieveAllProcessingRequests();
+  }, [retrieveAllProcessingRequests]);
 
   return (
     <React.Fragment>
@@ -26,9 +37,23 @@ const RetrieveLogs = () => {
         <CssBaseline />
         <Typography variant='h5'>Retrieve Logs</Typography>
         <Divider />
+
+        {allProcessingRequests.map((request, i) => (
+          <Request
+            key={i}
+            username={request.username}
+            time={request.createdAt}
+          />
+        ))}
       </div>
     </React.Fragment>
   );
 };
 
-export default RetrieveLogs;
+const mapState = (state) => ({
+  allProcessingRequests: state.log.allProcessingRequests,
+});
+
+export default connect(mapState, { retrieveAllProcessingRequests })(
+  RetrieveLogs
+);
