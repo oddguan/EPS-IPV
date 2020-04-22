@@ -19,6 +19,7 @@ import Resources from '../Resources/Resources';
 import Messages from '../Messages/Messages';
 import Account from '../Account/Account';
 import RetrieveLogs from '../RetrieveLogs/RetrieveLogs';
+import PrivateKeyDialog from '../PrivateKeyDialog/PrivateKeyDialog';
 
 /**
  * Defines all routing information.
@@ -35,6 +36,7 @@ const Routes = ({ isAuthenticated }) => {
 
   return (
     <div>
+      <PrivateKeyDialog />
       <Appbar handleDrawerToggle={handleDrawerToggle} />
       {isAuthenticated && (
         <NavDrawer

@@ -67,6 +67,7 @@ const Account = ({
 
   const [contactInformationShow, setContactInformationShow] = useState(true);
   const [accountInformationShow, setAccountInformationShow] = useState(true);
+  const [actionsShow, setActionsShow] = useState(true);
 
   return (
     <React.Fragment>
@@ -157,6 +158,36 @@ const Account = ({
                     <Typography variant='body2'>
                       {isVictim ? 'User' : 'Help Provider'}
                     </Typography>
+                  </Grid>
+                </Grid>
+                <div>
+                  <Button color='primary'>Edit</Button>
+                </div>
+              </div>
+            </Collapse>
+          </div>
+          {/* Actions Area */}
+          <div>
+            <div
+              className={`${classes.flexBetween} ${classes.hover} ${classes.marginOne}`}
+              onClick={() => setActionsShow(!actionsShow)}
+            >
+              <Typography variant='h6'>Actions</Typography>
+              {actionsShow ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            </div>
+            <Divider />
+            <Collapse in={actionsShow}>
+              <div className={classes.flex}>
+                <Grid container spacing={2}>
+                  <Grid style={{ marginTop: '20px' }} item xs={12} md={6}>
+                    <Button variant='contained' color='primary'>
+                      SAR Request
+                    </Button>
+                  </Grid>
+                  <Grid style={{ marginTop: '20px' }} item xs={12} md={6}>
+                    <Button variant='contained' color='primary'>
+                      Reset Encryption Keys
+                    </Button>
                   </Grid>
                 </Grid>
                 <div>

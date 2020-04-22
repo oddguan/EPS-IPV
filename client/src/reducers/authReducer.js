@@ -9,6 +9,8 @@ import {
   REGISTER_FAIL,
   USER_TYPE_SELECT_SUCCESS,
   USER_TYPE_RESET_SUCCESS,
+  FIRST_LOGIN,
+  PRIVATE_KEY_DOWNLOADED,
 } from '../actions/types';
 
 // fetch JWT token and user object from localStorage as the initial state
@@ -20,6 +22,7 @@ const initialState = {
   isLoading: false,
   isUserTypeSelected: false,
   isSelectedRegularUser: null,
+  isFirstLogin: false,
 };
 
 /**
@@ -77,6 +80,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isUserTypeSelected: false,
+      };
+    case FIRST_LOGIN:
+      return {
+        ...state,
+        isFirstLogin: true,
+      };
+    case PRIVATE_KEY_DOWNLOADED:
+      return {
+        ...state,
+        isFirstLogin: false,
       };
     default:
       return state;

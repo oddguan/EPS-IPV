@@ -12,6 +12,8 @@ import {
   LOGOUT_SUCCESS,
   USER_TYPE_SELECT_SUCCESS,
   USER_TYPE_RESET_SUCCESS,
+  FIRST_LOGIN,
+  PRIVATE_KEY_DOWNLOADED,
 } from './types';
 import { returnErrors } from './errorActions';
 import { push } from 'connected-react-router';
@@ -92,6 +94,9 @@ export const registerRegularUser = ({
       });
       // redirect user to the home page after successful registration
       dispatch(push('/'));
+      dispatch({
+        type: FIRST_LOGIN,
+      });
     })
     .catch((err) => {
       if (err instanceof Error) {
@@ -236,6 +241,10 @@ export const setRegularUserStatus = (isSelectedRegularUser) => ({
 
 export const resetUserType = () => ({
   type: USER_TYPE_RESET_SUCCESS,
+});
+
+export const privateKeyDownloaded = () => ({
+  type: PRIVATE_KEY_DOWNLOADED,
 });
 
 /**
