@@ -26,6 +26,7 @@ urlpatterns = [
     path(r'log/text/', AddTextLogAPI.as_view(), name='new-text-log'),
     path(r'log/image/', AddImageLogAPI.as_view(), name='new-image-log'),
     path(r'log/request/', LogRequestAPI.as_view(), name='request-physical-logs'),
+    path(r'image/<str:image_name>/', ImageUploadAPI.as_view(), name='image-upload'),
     path(r'image/view/<str:image_key>/',
          ImageViewAPI.as_view(), name='image-view'),
     path(r'log/request/all/', RetrieveAllLogsAPI.as_view(), name='retrieve-all-logs')
