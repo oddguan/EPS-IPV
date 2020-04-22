@@ -14,7 +14,6 @@ import {
   USER_TYPE_SELECT_SUCCESS,
   USER_TYPE_RESET_SUCCESS,
   FIRST_LOGIN,
-  PRIVATE_KEY_DOWNLOADED,
   OPT_OUT_LOG,
 } from './types';
 import { returnErrors } from './errorActions';

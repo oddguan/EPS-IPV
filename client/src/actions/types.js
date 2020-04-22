@@ -24,6 +24,10 @@ export const FETCH_SINGLE_POST_LOADING = 'FETCH_SINGLE_POST_LOADING';
 export const FETCH_SINGLE_POST_SUCCESS = 'FETCH_SINGLE_POST_SUCCESS';
 export const FETCH_SINGLE_POST_FAIL = 'FETCH_SINGLE_POST_FAIL';
 
+// Log actions
+export const ADD_NEW_LOG_SUCCESS = 'ADD_NEW_LOG_SUCCESS';
+export const ADD_NEW_LOG_FAIL = 'ADD_NEW_LOG_FAIL';
+
 // Error related actions
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';

@@ -128,3 +128,13 @@ class ImageLinkSerializer(serializers.Serializer):
 
 class ImageResponseSerializer(serializers.Serializer):
     image = serializers.ImageField()
+
+
+class AddTextLogSerializer(serializers.Serializer):
+    title = serializers.CharField()
+    content = serializers.CharField()
+
+
+class AddImageLogSerializer(serializers.Serializer):
+    title = serializers.CharField()
+    image = serializers.ImageField()

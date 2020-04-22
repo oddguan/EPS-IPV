@@ -4,6 +4,7 @@ import { connectRouter } from 'connected-react-router';
 import errorReducer from './errorReducer';
 import authReducer from './authReducer';
 import postReducer from './postReducer';
+import logReducer from './logReducer';
 
 /**
  * The root reducer creation function.
@@ -16,6 +17,7 @@ const createRootReducer = (history) =>
     auth: authReducer,
     error: errorReducer,
     post: postReducer,
+    log: logReducer,
   });
 
 export default createRootReducer;

@@ -50,7 +50,8 @@ const PrivateKeyDialog = ({
 };
 
 const mapStateToProps = (state) => ({
-  hasEncryptionKeys: state.auth.user.hasEncryptionKeys,
+  hasEncryptionKeys:
+    !state.auth.isAuthenticated || state.auth.user.hasEncryptionKeys,
 });
 
 export default connect(mapStateToProps, {

@@ -5,16 +5,15 @@ This file registers viewsets of victim, posts, and logs through routers.
 '''
 from django.urls import path
 from rest_framework import routers
-from .api import VictimViewSet, PostViewSet, LogViewSet
+from .api import VictimViewSet, PostViewSet
 from api.api.auth import VictimRegisterAPI, ProviderRegisterAPI, LoginAPI, UserDetailAPI
-from api.api import ImageUploadAPI, ImageViewAPI, KeyGenerateAPI
+from api.api import ImageUploadAPI, ImageViewAPI, KeyGenerateAPI, AddTextLogAPI, AddImageLogAPI
 
 
 router = routers.DefaultRouter()
 
 router.register(r'user', VictimViewSet, basename='user')
 router.register(r'post', PostViewSet, basename='post')
-router.register(r'log', LogViewSet, basename='log')
 
 urlpatterns = [
     path(r'auth/register/victim', VictimRegisterAPI.as_view(),
@@ -23,10 +22,9 @@ urlpatterns = [
          name='register provider account'),
     path(r'auth/login', LoginAPI.as_view(), name='login'),
     path(r'auth/user', UserDetailAPI.as_view(), name='user-detail'),
-    path(r'image/<str:image_name>/', ImageUploadAPI.as_view(), name='image-upload'),
-    path(r'image/view/<str:image_key>/',
-         ImageViewAPI.as_view(), name='image-view'),
-    path(r'generate-key/', KeyGenerateAPI.as_view(), name='generate-key')
+    path(r'generate-key/', KeyGenerateAPI.as_view(), name='generate-key'),
+    path(r'log/text/', AddTextLogAPI.as_view(), name='new-text-log'),
+    path(r'log/image/', AddImageLogAPI.as_view(), name='new-image-log')
 ]
 
 urlpatterns += router.urls

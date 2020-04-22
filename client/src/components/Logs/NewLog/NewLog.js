@@ -11,6 +11,8 @@ import Fab from '@material-ui/core/Fab';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { uploadNewLog } from '../../../actions/logActions';
+
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -62,20 +64,24 @@ const NewLog = () => {
   const [content, setContent] = useState('');
   const [isSelectText, setIsSelectText] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   const handleUploadClick = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-    const url = reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
 
     reader.onloadend = function () {
-      setSelectedFile([reader.result]);
+      setImagePreview([reader.result]);
     };
-    console.log(url);
 
     setIsImageUploaded(true);
-    setSelectedFile(event.target.files[0]);
+    setSelectedFile(file);
+  };
+
+  const handleLogSubmit = () => {
+    dispatch(uploadNewLog(isSelectText, { title, content, selectedFile }));
   };
 
   return (
@@ -141,9 +147,10 @@ const NewLog = () => {
                 <div style={{ margin: '20px' }}>
                   <img
                     style={{ maxWidth: '400px' }}
-                    src={selectedFile}
+                    src={imagePreview}
                     alt='selected-file'
                   />
+                  {selectedFile.name}
                 </div>
               )}
             </div>
@@ -162,6 +169,7 @@ const NewLog = () => {
             className={classes.button}
             variant='contained'
             color='primary'
+            onClick={handleLogSubmit}
           >
             Save New Log
           </Button>
