@@ -5,6 +5,7 @@ import errorReducer from './errorReducer';
 import authReducer from './authReducer';
 import postReducer from './postReducer';
 import logReducer from './logReducer';
+import successReducer from './successReducer';
 
 /**
  * The root reducer creation function.
@@ -18,6 +19,7 @@ const createRootReducer = (history) =>
     error: errorReducer,
     post: postReducer,
     log: logReducer,
+    success: successReducer,
   });
 
 export default createRootReducer;

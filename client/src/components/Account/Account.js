@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -10,7 +11,13 @@ import Button from '@material-ui/core/Button';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { makeStyles } from '@material-ui/core/styles';
+
+import DialogBox from './DialogBox/DialogBox';
 import { logout } from '../../actions/authActions';
+import {
+  clearSuccessMessage,
+  reuturnSuccessMessage,
+} from '../../actions/successActions';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -62,15 +69,84 @@ const Account = ({
   isVictim,
   organization,
   logout,
+  success,
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [contactInformationShow, setContactInformationShow] = useState(true);
   const [accountInformationShow, setAccountInformationShow] = useState(true);
   const [actionsShow, setActionsShow] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [dialogTitle, setDialogTitle] = useState('');
+  const [dialogContent, setDialogContent] = useState('');
+  const [buttons, setButtons] = useState([]);
+
+  useEffect(() => {
+    if (success.msg) {
+      console.log(success.msg);
+      toast.success(success.msg.msg);
+      dispatch(clearSuccessMessage());
+    }
+  }, [success, dispatch]);
+
+  const handleSARClick = () => {
+    setIsDialogOpen(true);
+    setDialogTitle('SAR Request');
+    setDialogContent(
+      'Do you want to submit a SAR Request? We will generate a complete document of your information stored in our database for you to download. This might take a while to process.'
+    );
+    setButtons([
+      {
+        onClick: () => setIsDialogOpen(false),
+        content: 'What is SAR Request?',
+      },
+      {
+        onClick: () => setIsDialogOpen(false),
+        content: 'Yes',
+      },
+    ]);
+  };
+
+  const handleResetKeyClick = () => {};
+
+  const handleRequestCopyClick = () => {
+    setIsDialogOpen(true);
+    setDialogTitle('Request a copy of your logs');
+    setDialogContent(
+      'Do you want to submit a request for physically printing your logs at one of the shelter locations?'
+    );
+    const handleYesClick = () => {
+      dispatch(
+        reuturnSuccessMessage({
+          msg:
+            'Your action was successful! Shelter workers should see a request from you now. ',
+        })
+      );
+      setIsDialogOpen(false);
+    };
+    setButtons([
+      {
+        onClick: () => setIsDialogOpen(false),
+        content: 'Learn More',
+      },
+      {
+        onClick: handleYesClick,
+        content: 'Yes',
+      },
+    ]);
+  };
 
   return (
     <React.Fragment>
+      <ToastContainer position='top-center' />
+      <DialogBox
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+        title={dialogTitle}
+        content={dialogContent}
+        buttons={buttons}
+      />
       <div className={classes.toolbar} />
       <div className={classes.content}>
         <CssBaseline />
@@ -175,24 +251,38 @@ const Account = ({
               <Typography variant='h6'>Actions</Typography>
               {actionsShow ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </div>
-            <Divider />
+            <Divider style={{ marginBottom: '20px' }} />
             <Collapse in={actionsShow}>
               <div className={classes.flex}>
                 <Grid container spacing={2}>
-                  <Grid style={{ marginTop: '20px' }} item xs={12} md={6}>
-                    <Button variant='contained' color='primary'>
-                      SAR Request
+                  <Grid item xs={12} md={6}>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={handleSARClick}
+                    >
+                      Subject Access Request
                     </Button>
                   </Grid>
-                  <Grid style={{ marginTop: '20px' }} item xs={12} md={6}>
-                    <Button variant='contained' color='primary'>
+                  <Grid item xs={12} md={6}>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={handleResetKeyClick}
+                    >
                       Reset Encryption Keys
                     </Button>
                   </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={handleRequestCopyClick}
+                    >
+                      Request Physical Copy of Logs
+                    </Button>
+                  </Grid>
                 </Grid>
-                <div>
-                  <Button color='primary'>Edit</Button>
-                </div>
               </div>
             </Collapse>
           </div>
@@ -220,6 +310,7 @@ const mapStateToProps = (state) => ({
   username: state.auth.user.username,
   isVictim: state.auth.user.isVictim,
   organization: state.auth.user.organization,
+  success: state.success,
 });
 
 export default connect(mapStateToProps, { logout })(Account);

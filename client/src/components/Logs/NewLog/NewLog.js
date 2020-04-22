@@ -82,6 +82,7 @@ const NewLog = () => {
 
   const handleLogSubmit = () => {
     dispatch(uploadNewLog(isSelectText, { title, content, selectedFile }));
+    dispatch(push('/logs'));
   };
 
   return (

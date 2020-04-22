@@ -31,3 +31,7 @@ export const ADD_NEW_LOG_FAIL = 'ADD_NEW_LOG_FAIL';
 // Error related actions
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+
+// Success actions
+export const GET_SUCCESS = 'GET_SUCCESS';
+export const CLEAR_SUCCESS = 'CLEAR_SUCCESS';
