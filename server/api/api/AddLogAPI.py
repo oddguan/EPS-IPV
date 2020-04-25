@@ -27,15 +27,13 @@ class AddTextLogAPI(generics.GenericAPIView):
         author = Victim.objects.filter(account=request.user)[0]
         log = Log(
             author=author,
-            title=encrypted_title,
-            content=encrypted_content,
+            title=encrypted_title.decode('ascii'),
+            content=encrypted_content.decode('ascii'),
             encrypted_sym_key=encrypted_sym_key,
         )
         log.save()
 
         return Response(status=201)
-        # except:
-        #     return Response(status=500)
 
 
 class AddImageLogAPI(generics.GenericAPIView):

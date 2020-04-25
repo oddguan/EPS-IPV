@@ -10,8 +10,8 @@ class Log(models.Model):
     Secure logs from victims database model
     """
     author = models.ForeignKey('Victim', on_delete=models.CASCADE)
-    title = models.BinaryField()
-    content = models.BinaryField()
+    title = models.TextField()
+    content = models.TextField()
     encrypted_sym_key = models.BinaryField()
     created_at = models.DateTimeField(auto_now_add=True)
 

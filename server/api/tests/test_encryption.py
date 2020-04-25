@@ -1,12 +1,16 @@
+from Crypto import Random
+from Crypto.Cipher import AES
 from django.test import TestCase
+
 from api.encryption import decrypt_content, encrypt_content, generate_key_pair, encrypt_using_aes, derypt_using_aes
 
 
 class EncryptionTestCase(TestCase):
 
     def test_aes(self):
+        key = Random.new().read(AES.block_size)
         content = 'this is a test content \n'
-        enc_content, key = encrypt_using_aes(content)
+        enc_content = encrypt_using_aes(key, content)
         dec_content = derypt_using_aes(key, enc_content)
 
         self.assertEqual(content, dec_content)

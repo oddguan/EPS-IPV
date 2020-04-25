@@ -19,6 +19,7 @@ environ = "*"
 channels = "*"
 image = "*"
 pycryptodome = "*"
+pkcs7 = "*"
 
 [requires]
 python_version = "3.7"

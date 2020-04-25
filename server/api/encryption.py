@@ -3,16 +3,9 @@ import base64
 from Crypto import Random
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import AES, PKCS1_OAEP
+from Crypto.Util.Padding import pad, unpad
 from django.conf import settings
 from .models import Account
-
-BS = 16
-
-
-def pad(s): return s + (BS - len(s) % BS) * chr(BS - len(s) % BS)
-
-
-def unpad(s): return s[:-ord(s[len(s)-1:])]
 
 
 def generate_key_pair():
@@ -27,18 +20,22 @@ def generate_key_pair():
 
 
 def encrypt_using_aes(key, content):
-    content = pad(content)
-    key = Random.new().read(AES.block_size)
+    content_encode = content.encode('utf-8')
     iv = Random.new().read(AES.block_size)
     cipher = AES.new(key, AES.MODE_EAX, iv)
-    return base64.b64encode(iv + cipher.encrypt(content))
+    pad_text = pad(content_encode, AES.block_size)
+    msg = iv + cipher.encrypt(pad_text)
+    return base64.b64encode(msg)
 
 
 def derypt_using_aes(key, enc_content):
-    enc = base64.b64decode(enc_content)
-    iv = enc[:16]
+    decodbase64 = base64.b64decode(enc_content)
+    iv = decodbase64[:AES.block_size]
     cipher = AES.new(key, AES.MODE_EAX, iv)
-    return unpad(cipher.decrypt(enc[16:])).decode()
+    msg = cipher.decrypt(decodbase64[AES.block_size:])
+    pad_text = unpad(msg, AES.block_size)
+    decryptedString = pad_text.decode('utf-8')
+    return decryptedString
 
 
 def encrypt_content(title, content, public_key):
@@ -50,9 +47,7 @@ def encrypt_content(title, content, public_key):
     # aes key generation
     key = Random.new().read(AES.block_size)
 
-    encrypted_title = encrypt_using_aes(key, bytes(title, encoding='utf-8'))
-    if type(content) is str:
-        content = bytes(content, encoding='utf-8')
+    encrypted_title = encrypt_using_aes(key, title)
     encrypted_content = encrypt_using_aes(key, content)
 
     rsa_encryptor = PKCS1_OAEP.new(RSA.importKey(public_key))
