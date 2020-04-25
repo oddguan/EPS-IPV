@@ -37,14 +37,17 @@ const RetrieveLogs = ({
         <CssBaseline />
         <Typography variant='h5'>Retrieve Logs</Typography>
         <Divider />
-
-        {allProcessingRequests.map((request, i) => (
-          <Request
-            key={i}
-            username={request.username}
-            time={request.createdAt}
-          />
-        ))}
+        {allProcessingRequests.length === 0 && (
+          <Typography variant='h6'>No requests from users.</Typography>
+        )}
+        {allProcessingRequests.length !== 0 &&
+          allProcessingRequests.map((request, i) => (
+            <Request
+              key={i}
+              username={request.username}
+              time={request.createdAt}
+            />
+          ))}
       </div>
     </React.Fragment>
   );

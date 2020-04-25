@@ -7,3 +7,4 @@ from .AddLogAPI import AddTextLogAPI, AddImageLogAPI
 from .LogRequestAPI import LogRequestAPI, RetrieveAllLogsAPI
 from .DownloadLogAPI import DownloadLogAPI
 from .DeleteAllLogsAPI import DeleteAllLogsAPI
+from .FetchLogsAPI import FetchLogsAPI

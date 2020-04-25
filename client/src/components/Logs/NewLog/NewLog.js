@@ -11,7 +11,10 @@ import Fab from '@material-ui/core/Fab';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { uploadNewLog } from '../../../actions/logActions';
+import {
+  uploadNewLog,
+  fetchListOfSubmittedLogs,
+} from '../../../actions/logActions';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -83,6 +86,7 @@ const NewLog = () => {
   const handleLogSubmit = () => {
     dispatch(uploadNewLog(isSelectText, { title, content, selectedFile }));
     dispatch(push('/logs'));
+    dispatch(fetchListOfSubmittedLogs());
   };
 
   return (

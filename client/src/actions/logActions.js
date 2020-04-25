@@ -7,8 +7,11 @@ import {
   REQUEST_RETRIEVE_LOG_FAIL,
   RETRIEVE_ALL_PROCCESSING_REQUESTS_FAIL,
   RETRIEVE_ALL_PROCCESSING_REQUESTS_SUCCESS,
+  FETCH_SUBMITTED_LOGS_SUCCESS,
+  FETCH_SUBMITTED_LOGS_FAIL,
 } from './types';
 import { authTokenConfig } from './authActions';
+import camelcaseKeys from 'camelcase-keys';
 
 export const uploadNewLog = (isSelectText, content) => (dispatch, getState) => {
   const form = new FormData();
@@ -81,5 +84,20 @@ export const downloadEncryptedLogsForVictim = (victim_username) => (
     })
     .catch((err) => {
       console.error(err);
+    });
+};
+
+export const fetchListOfSubmittedLogs = () => (dispatch, getState) => {
+  axios
+    .get('/api/log/', authTokenConfig(getState))
+    .then((res) => {
+      return camelcaseKeys(res.data, { deep: true });
+    })
+    .then((data) => {
+      dispatch({ type: FETCH_SUBMITTED_LOGS_SUCCESS, payload: data });
+    })
+    .catch((err) => {
+      console.error(err);
+      dispatch({ type: FETCH_SUBMITTED_LOGS_FAIL });
     });
 };

@@ -143,3 +143,8 @@ class AddImageLogSerializer(serializers.Serializer):
 class LogRequestResponseSerializer(serializers.Serializer):
     username = serializers.CharField()
     created_at = serializers.DateTimeField()
+
+
+class FetchLogResponseSerializer(serializers.Serializer):
+    is_image = serializers.BooleanField()
+    created_at = serializers.DateTimeField()

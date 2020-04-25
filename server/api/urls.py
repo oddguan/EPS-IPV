@@ -16,7 +16,8 @@ from api.api import (
     LogRequestAPI,
     RetrieveAllLogsAPI,
     DownloadLogAPI,
-    DeleteAllLogsAPI
+    DeleteAllLogsAPI,
+    FetchLogsAPI
 )
 
 
@@ -43,7 +44,8 @@ urlpatterns = [
          name='retrieve-all-logs'),
     path(r'log/request/download/<str:victim_username>/',
          DownloadLogAPI.as_view(), name='download-log-files'),
-    path(r'log/delete/all/', DeleteAllLogsAPI.as_view(), name='delete-all-logs')
+    path(r'log/delete/all/', DeleteAllLogsAPI.as_view(), name='delete-all-logs'),
+    path(r'log/', FetchLogsAPI.as_view(), name='fetch-all-logs')
 ]
 
 urlpatterns += router.urls

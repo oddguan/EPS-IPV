@@ -1,5 +1,6 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import moment from 'moment';
+import { useDispatch, connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
+import { fetchListOfSubmittedLogs } from '../../actions/logActions';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -51,9 +53,13 @@ const useStyles = makeStyles((theme) => ({
 /**
  * Main page component of the logs page
  */
-const Logs = () => {
+const Logs = ({ submittedLogs }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchListOfSubmittedLogs());
+  }, [dispatch]);
 
   // direct user to the log editor as they click the FAB
   const handleFABClick = () => {
@@ -140,6 +146,25 @@ const Logs = () => {
         >
           Read More On How Logs Work
         </Button>
+        <Paper style={{ padding: '20px ' }}>
+          <Typography variant='h5'>Submitted Logs</Typography>
+          {submittedLogs.map((log, i) => (
+            <div
+              style={{
+                border: '1px solid #aaa',
+                padding: '5px',
+                margin: '5px',
+              }}
+              key={i}
+            >
+              <div>
+                Submitted At:{' '}
+                {moment(log.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+              </div>
+              <div>Log Type: {log.isImage ? 'Image' : 'Text'}</div>
+            </div>
+          ))}
+        </Paper>
       </div>
       <Fab
         color='primary'
@@ -153,4 +178,9 @@ const Logs = () => {
   );
 };
 
-export default Logs;
+const mapState = (state) => ({
+  submittedLogs: state.log.submittedLogs,
+  hasEncryptionKeys: state.auth.user && state.auth.user.hasEncryptionKeys,
+});
+
+export default connect(mapState)(Logs);
