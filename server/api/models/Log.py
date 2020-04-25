@@ -14,6 +14,7 @@ class Log(models.Model):
     content = models.TextField()
     encrypted_sym_key = models.BinaryField()
     created_at = models.DateTimeField(auto_now_add=True)
+    is_image = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

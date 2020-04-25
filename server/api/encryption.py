@@ -64,5 +64,4 @@ def decrypt_content(encrypted_content, encrypted_sym_key, private_key):
     """
     rsa_decryptor = PKCS1_OAEP.new(RSA.importKey(private_key))
     decrypted_sym_key = rsa_decryptor.decrypt(encrypted_sym_key)
-
-    return decrypt_using_aes(decrypted_sym_key, encrypted_content)
+    return derypt_using_aes(decrypted_sym_key, encrypted_content)

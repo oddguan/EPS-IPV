@@ -1,3 +1,4 @@
+import base64
 from Crypto import Random
 from Crypto.Cipher import AES
 from django.test import TestCase
@@ -14,6 +15,19 @@ class EncryptionTestCase(TestCase):
         dec_content = derypt_using_aes(key, enc_content)
 
         self.assertEqual(content, dec_content)
+
+    def test_image_encryption(self):
+        private_key, public_key = generate_key_pair()
+        test_title = 'random test title'
+        image_stream = b'assume this is an image read from a jpeg file'
+        image_encoded = base64.b64encode(image_stream).decode('ascii')
+        assert type(image_encoded) is str
+        enc_title, enc_image, enc_sym_key = encrypt_content(
+            test_title, image_encoded, public_key)
+
+        # decryption process
+        dec_image = decrypt_content(enc_image, enc_sym_key, private_key)
+        self.assertEqual(image_stream, base64.b64decode(dec_image))
 
     # def test_decrypt_content(self):
     #     private_key, public_key = generate_key_pair()
