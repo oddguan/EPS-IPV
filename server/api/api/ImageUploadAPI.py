@@ -26,11 +26,9 @@ class ImageUploadAPI(APIView):
     parser_class = (FileUploadParser,)
 
     def put(self, request, image_name, format=None):
-        print(image_name)
         serializer = ImageSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         image_obj = request.FILES['file']
-        print('hi')
         result = upload_image(image_obj, image_name)
         if not result:
             return Response(status=500)

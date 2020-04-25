@@ -25,5 +25,4 @@ class RetrieveAllLogsAPI(generics.GenericAPIView):
                 'username': str(log.victim.account.username),
                 'created_at': log.created_at
             })
-        print(logs_response)
         return Response(LogRequestResponseSerializer(logs_response, many=True).data)

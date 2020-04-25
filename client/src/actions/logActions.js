@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fileDownload from 'js-file-download';
 import {
   ADD_NEW_LOG_SUCCESS,
   ADD_NEW_LOG_FAIL,
@@ -58,7 +59,27 @@ export const retrieveAllProcessingRequests = () => (dispatch, getState) => {
         payload: res.data,
       });
     })
-    .catch((res) => {
+    .catch((err) => {
+      console.error(err);
       dispatch({ type: RETRIEVE_ALL_PROCCESSING_REQUESTS_FAIL });
+    });
+};
+
+export const downloadEncryptedLogsForVictim = (victim_username) => (
+  dispatch,
+  getState
+) => {
+  const config = authTokenConfig(getState);
+  config.responseType = 'blob';
+  axios
+    .get(`/api/log/request/download/${victim_username}/`, config)
+    .then((res) => {
+      fileDownload(res.data, `${victim_username}-logs.zip`, 'application/zip');
+    })
+    .then(() => {
+      dispatch(retrieveAllProcessingRequests());
+    })
+    .catch((err) => {
+      console.error(err);
     });
 };

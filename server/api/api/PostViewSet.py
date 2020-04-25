@@ -64,5 +64,4 @@ class PostViewSet(viewsets.ModelViewSet):
         for post in all_posts:
             post_ids.append({'id': post.id})
 
-        print(type(post_ids[0]))
         return Response(PostIdResponseSerializer(post_ids, context=self.get_serializer_context(), many=True).data, status=200)
