@@ -13,7 +13,10 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { makeStyles } from '@material-ui/core/styles';
 
 import DialogBox from './DialogBox/DialogBox';
-import { logout } from '../../actions/authActions';
+import {
+  logout,
+  resetPrivateKeyAndDeleteAllLogs,
+} from '../../actions/authActions';
 import {
   clearSuccessMessage,
   reuturnSuccessMessage,
@@ -109,7 +112,26 @@ const Account = ({
     ]);
   };
 
-  const handleResetKeyClick = () => {};
+  const handleResetKeyClick = () => {
+    setIsDialogOpen(true);
+    setDialogTitle('Warning!');
+    setDialogContent(
+      'By reseting your encryption key, you will lose every log that you have submitted before. Are you sure you want to reset your encryption keys?'
+    );
+    setButtons([
+      {
+        onClick: () => setIsDialogOpen(false),
+        content: 'Cancel',
+      },
+      {
+        onClick: () => {
+          dispatch(resetPrivateKeyAndDeleteAllLogs());
+          setIsDialogOpen(false);
+        },
+        content: 'I understand and download my private key',
+      },
+    ]);
+  };
 
   const handleRequestCopyClick = () => {
     setIsDialogOpen(true);

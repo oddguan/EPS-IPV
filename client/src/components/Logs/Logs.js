@@ -126,6 +126,11 @@ const Logs = () => {
               />
             </div>
           </div>
+          <Typography style={{ padding: '20px' }} variant='caption'>
+            Note: To request a physical copy of your logs, go to the "Account"
+            page and press "REQUEST PHYSICAL COPY OF LOGS" under the "Actions"
+            section.
+          </Typography>
         </Paper>
         <Button
           className={classes.button}

@@ -7,7 +7,17 @@ from django.urls import path
 from rest_framework import routers
 from .api import VictimViewSet, PostViewSet
 from api.api.auth import VictimRegisterAPI, ProviderRegisterAPI, LoginAPI, UserDetailAPI
-from api.api import ImageUploadAPI, ImageViewAPI, KeyGenerateAPI, AddTextLogAPI, AddImageLogAPI, LogRequestAPI, RetrieveAllLogsAPI, DownloadLogAPI
+from api.api import (
+    ImageUploadAPI,
+    ImageViewAPI,
+    KeyGenerateAPI,
+    AddTextLogAPI,
+    AddImageLogAPI,
+    LogRequestAPI,
+    RetrieveAllLogsAPI,
+    DownloadLogAPI,
+    DeleteAllLogsAPI
+)
 
 
 router = routers.DefaultRouter()
@@ -32,7 +42,8 @@ urlpatterns = [
     path(r'log/request/all/', RetrieveAllLogsAPI.as_view(),
          name='retrieve-all-logs'),
     path(r'log/request/download/<str:victim_username>/',
-         DownloadLogAPI.as_view(), name='download-log-files')
+         DownloadLogAPI.as_view(), name='download-log-files'),
+    path(r'log/delete/all/', DeleteAllLogsAPI.as_view(), name='delete-all-logs')
 ]
 
 urlpatterns += router.urls

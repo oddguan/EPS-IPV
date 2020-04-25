@@ -255,6 +255,14 @@ export const doNotDownloadPrivateKey = () => ({
   type: OPT_OUT_LOG,
 });
 
+export const resetPrivateKeyAndDeleteAllLogs = () => async (
+  dispatch,
+  getState
+) => {
+  await axios.get('/api/log/delete/all/', authTokenConfig(getState));
+  await dispatch(privateKeyDownloaded());
+};
+
 /**
  * A common utility function for setting the authentication header
  * Since each requests other than login and register needs authentication,
