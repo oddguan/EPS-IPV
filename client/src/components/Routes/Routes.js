@@ -18,6 +18,7 @@ import LogInstructions from '../Logs/LogInstructions/LogInstructions';
 import Resources from '../Resources/Resources';
 import Messages from '../Messages/Messages';
 import Account from '../Account/Account';
+import PrivacyPolicy from '../PrivacyPolicy/PrivacyPolicy';
 import RetrieveLogs from '../RetrieveLogs/RetrieveLogs';
 import PrivateKeyDialog from '../PrivateKeyDialog/PrivateKeyDialog';
 
@@ -59,6 +60,7 @@ const Routes = ({ isAuthenticated }) => {
         <PrivateRoute exact path='/resources' component={Resources} />
         <PrivateRoute exact path='/account' component={Account} />
         <PrivateRoute exact path='/retrieve-logs' component={RetrieveLogs} />
+        <PrivateRoute exact path='/privacy' component={PrivacyPolicy} />
       </Switch>
     </div>
   );

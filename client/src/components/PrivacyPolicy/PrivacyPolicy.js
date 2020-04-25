@@ -1,6 +1,7 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +25,7 @@ const PrivacyPolicy = () => {
       <div className={classes.content}>
         <CssBaseline />
         <Typography variant='h5'>Privacy Policy</Typography>
+        <Divider />
         <Typography paragraph>
           The EPS – IPV group operates EPS-IPV Application website, which
           provides the services from help providers for potential victims of any
@@ -41,7 +43,6 @@ const PrivacyPolicy = () => {
           disclosure of Personal Information if anyone decided to use the
           EPS-IPV Application.
         </Typography>
-        <Divider />
       </div>
     </React.Fragment>
   );

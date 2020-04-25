@@ -67,6 +67,11 @@ const NavList = ({ handleDrawerToggle, isVictim, isProvider }) => {
     return dispatch(push(`/${route}`));
   };
 
+  const toPrivacyPolicyPage = () => {
+    setSelectedRoute('');
+    dispatch(push('/privacy'));
+  };
+
   return (
     <div>
       <div className={classes.toolbar}>
@@ -162,7 +167,10 @@ const NavList = ({ handleDrawerToggle, isVictim, isProvider }) => {
         </List>
         <Divider />
         <div style={{ display: 'flex' }}>
-          <Button className={classes.bottomButton}>
+          <Button
+            className={classes.bottomButton}
+            onClick={toPrivacyPolicyPage}
+          >
             <Typography variant='button'>Privacy Policy</Typography>
           </Button>
           <Button className={classes.bottomButton}>
