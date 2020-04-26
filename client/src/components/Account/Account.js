@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { connect, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { ToastContainer, toast } from 'react-toastify';
@@ -23,6 +24,8 @@ import {
   reuturnSuccessMessage,
 } from '../../actions/successActions';
 import { makeRetrieveLogRequest } from '../../actions/logActions';
+import { authTokenConfig } from '../../actions/authActions';
+import fileDownload from 'js-file-download';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -108,7 +111,26 @@ const Account = ({
         content: 'What is SAR Request?',
       },
       {
-        onClick: () => setIsDialogOpen(false),
+        onClick: () => {
+          dispatch(
+            (() => (dispatch, getState) => {
+              const config = authTokenConfig(getState);
+              config.responseType = 'blob';
+              axios
+                .get('/api/sar/', config)
+                .then((res) => {
+                  fileDownload(
+                    res.data,
+                    getState().auth.user.username + '-sar.zip'
+                  );
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+            })()
+          );
+          setIsDialogOpen(false);
+        },
         content: 'Yes',
       },
     ]);

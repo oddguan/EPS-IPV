@@ -8,3 +8,4 @@ from .LogRequestAPI import LogRequestAPI, RetrieveAllLogsAPI
 from .DownloadLogAPI import DownloadLogAPI
 from .DeleteAllLogsAPI import DeleteAllLogsAPI
 from .FetchLogsAPI import FetchLogsAPI
+from .SARAPI import SARAPI
