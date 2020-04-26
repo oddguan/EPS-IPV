@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -78,6 +79,7 @@ const Account = ({
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [isEdittingContact, setIsEdittingContact] = useState(false);
   const [contactInformationShow, setContactInformationShow] = useState(true);
   const [accountInformationShow, setAccountInformationShow] = useState(true);
   const [actionsShow, setActionsShow] = useState(true);
@@ -102,7 +104,7 @@ const Account = ({
     );
     setButtons([
       {
-        onClick: () => setIsDialogOpen(false),
+        onClick: () => dispatch(push('/sar')),
         content: 'What is SAR Request?',
       },
       {
@@ -192,7 +194,13 @@ const Account = ({
                     <label htmlFor='personal-firstname'>
                       <Typography variant='caption'>First Name</Typography>
                     </label>
-                    <Typography variant='body2'>{firstName}</Typography>
+                    {!isEdittingContact ? (
+                      <Typography variant='body2'>{firstName}</Typography>
+                    ) : (
+                      <div>
+                        <input value={firstName} />
+                      </div>
+                    )}
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <label htmlFor='personal-lastname'>
@@ -226,7 +234,12 @@ const Account = ({
                   )}
                 </Grid>
                 <div>
-                  <Button color='primary'>Edit</Button>
+                  <Button
+                    color='primary'
+                    onClick={() => setIsEdittingContact(!isEdittingContact)}
+                  >
+                    {isEdittingContact ? 'Save' : 'Edit'}
+                  </Button>
                 </div>
               </div>
             </Collapse>

@@ -20,6 +20,7 @@ import Messages from '../Messages/Messages';
 import Account from '../Account/Account';
 import PrivacyPolicy from '../PrivacyPolicy/PrivacyPolicy';
 import RetrieveLogs from '../RetrieveLogs/RetrieveLogs';
+import SAR from '../SAR/SAR';
 import PrivateKeyDialog from '../PrivateKeyDialog/PrivateKeyDialog';
 
 /**
@@ -61,6 +62,7 @@ const Routes = ({ isAuthenticated }) => {
         <PrivateRoute exact path='/account' component={Account} />
         <PrivateRoute exact path='/retrieve-logs' component={RetrieveLogs} />
         <PrivateRoute exact path='/privacy' component={PrivacyPolicy} />
+        <PrivateRoute exact path='/sar' component={SAR} />
       </Switch>
     </div>
   );
