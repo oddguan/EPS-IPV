@@ -110,49 +110,6 @@ const LogInstructions = () => {
               </li>
             </ol>
           </Typography>
-          <Typography variant='h6'>Notes</Typography>
-          <Typography paragraph>
-            <ol>
-              <li>
-                Drop box style logs
-                <ul>
-                  <li>
-                    User will not be able to edit or view logs once they are
-                    saved
-                  </li>
-                  <li>
-                    In order to view logs user can “send to shelter” to print
-                    them out
-                  </li>
-                  <li>
-                    This is done to protect user safety
-                    <ul>
-                      <li>
-                        If account is compromised, abuser cannot view/edit logs
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                Legal
-                <ul>
-                  <li>
-                    Logs remain privileged between our site/shelter workers and
-                    user
-                    <ul>
-                      <li>Unless user gives up these rights</li>
-                      <li>Unless user is killed :( </li>
-                    </ul>
-                  </li>
-                  <li>
-                    Logs can serve as evidence in legal proceedings so it’s
-                    important that they are truthful and accurate
-                  </li>
-                </ul>
-              </li>
-            </ol>
-          </Typography>
         </Paper>
         <Button
           style={{ margin: '20px' }}
