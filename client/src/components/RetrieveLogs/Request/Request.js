@@ -30,6 +30,7 @@ const Request = ({ username, time }) => {
           Requested From: <br />
           <b>{username}</b>
         </Typography>
+        {console.log(time)}
         <Typography variant='body1'>Time: {moment(time).fromNow()}</Typography>
       </Paper>
       <Button variant='contained' color='primary' onClick={handleDownloadClick}>

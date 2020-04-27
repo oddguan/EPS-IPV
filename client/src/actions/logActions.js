@@ -59,7 +59,7 @@ export const retrieveAllProcessingRequests = () => (dispatch, getState) => {
     .then((res) => {
       dispatch({
         type: RETRIEVE_ALL_PROCCESSING_REQUESTS_SUCCESS,
-        payload: res.data,
+        payload: camelcaseKeys(res.data, { deep: true }),
       });
     })
     .catch((err) => {
