@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'api',
-
+    'django_extensions',
 ]
 
 REST_FRAMEWORK = {
@@ -170,4 +170,9 @@ AUTH_USER_MODEL = 'api.Account'
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
 }

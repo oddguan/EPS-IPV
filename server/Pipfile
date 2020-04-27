@@ -20,6 +20,7 @@ channels = "*"
 image = "*"
 pycryptodome = "*"
 pkcs7 = "*"
+django-extensions = "*"
 
 [requires]
 python_version = "3.7"

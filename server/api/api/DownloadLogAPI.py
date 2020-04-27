@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.core.files import File
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from api.models import Provider, Log, ImageLog, Victim, Account, LogRequest
+from api.models import Provider, Log, Victim, Account, LogRequest
 
 
 class DownloadLogAPI(generics.GenericAPIView):

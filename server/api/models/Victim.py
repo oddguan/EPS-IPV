@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from .managers import VictimManager
 
 
-class Victim(AbstractBaseUser):
+class Victim(models.Model):
     """
     The user(victim) database model:
     """

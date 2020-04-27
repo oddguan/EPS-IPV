@@ -13,7 +13,6 @@ from .models import (
     Post,
     Log,
     Message,
-    Location
 )
 
 
