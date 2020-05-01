@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
 }));
 
+/**
+ * The privacy policy page of the website
+ */
 const PrivacyPolicy = () => {
   const classes = useStyles();
 

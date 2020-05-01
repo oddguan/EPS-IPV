@@ -6,6 +6,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
+/**
+ * A generic Dialog component that takes the text and actions of the buttons
+ * and display the corresponding information when a specific button is clicked.
+ */
 const DialogBox = ({
   isDialogOpen,
   setIsDialogOpen,

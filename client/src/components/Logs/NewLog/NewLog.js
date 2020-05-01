@@ -84,8 +84,11 @@ const NewLog = () => {
   };
 
   const handleLogSubmit = () => {
+    // submit request to the backend with the log inputted
     dispatch(uploadNewLog(isSelectText, { title, content, selectedFile }));
+    // redirect to the logs page
     dispatch(push('/logs'));
+    // fetch again all logs submitted
     dispatch(fetchListOfSubmittedLogs());
   };
 

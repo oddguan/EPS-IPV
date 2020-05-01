@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * The Log instruction page. Shows how log works
+ */
 const LogInstructions = () => {
   const classes = useStyles();
 

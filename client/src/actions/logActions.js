@@ -13,6 +13,12 @@ import {
 import { authTokenConfig } from './authActions';
 import camelcaseKeys from 'camelcase-keys';
 
+/**
+ * action for uploading a new log to the backend
+ * will differentiate between text or image logs by a boolean value
+ * @param {*} isSelectText
+ * @param {*} content
+ */
 export const uploadNewLog = (isSelectText, content) => (dispatch, getState) => {
   const form = new FormData();
   form.append('title', content.title);
@@ -41,6 +47,9 @@ export const uploadNewLog = (isSelectText, content) => (dispatch, getState) => {
     });
 };
 
+/**
+ * retrieve a list of logs
+ */
 export const makeRetrieveLogRequest = () => (dispatch, getState) => {
   axios
     .get('/api/log/request/', authTokenConfig(getState))
@@ -53,6 +62,10 @@ export const makeRetrieveLogRequest = () => (dispatch, getState) => {
     });
 };
 
+/**
+ * for the retrieve log page to use, to retrieve a list of requests
+ * for retrieving logs from victims
+ */
 export const retrieveAllProcessingRequests = () => (dispatch, getState) => {
   axios
     .get('/api/log/request/all/', authTokenConfig(getState))
@@ -68,6 +81,10 @@ export const retrieveAllProcessingRequests = () => (dispatch, getState) => {
     });
 };
 
+/**
+ * Fetch the zip with all encrypted logs and trigger a download
+ * @param {*} victim_username
+ */
 export const downloadEncryptedLogsForVictim = (victim_username) => (
   dispatch,
   getState
@@ -87,6 +104,9 @@ export const downloadEncryptedLogsForVictim = (victim_username) => (
     });
 };
 
+/**
+ * Fetch a list of submitted logs on the logs page
+ */
 export const fetchListOfSubmittedLogs = () => (dispatch, getState) => {
   axios
     .get('/api/log/', authTokenConfig(getState))

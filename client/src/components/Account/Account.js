@@ -99,6 +99,7 @@ const Account = ({
     }
   }, [success, dispatch]);
 
+  // when the SAR request button clicked
   const handleSARClick = () => {
     setIsDialogOpen(true);
     setDialogTitle('SAR Request');
@@ -136,6 +137,7 @@ const Account = ({
     ]);
   };
 
+  // when the reset private key pairs button clicked
   const handleResetKeyClick = () => {
     setIsDialogOpen(true);
     setDialogTitle('Warning!');
@@ -157,6 +159,7 @@ const Account = ({
     ]);
   };
 
+  // when log request button clicked
   const handleRequestCopyClick = () => {
     setIsDialogOpen(true);
     setDialogTitle('Request a copy of your logs');

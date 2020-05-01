@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: 'calc(50% - 20px)',
     height: 200,
@@ -16,23 +16,24 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     [theme.breakpoints.up('sm')]: {
       width: 300,
-      height: 250
+      height: 250,
     },
-    overflow: 'auto'
+    overflow: 'auto',
   },
   noPadding: {
-    padding: 0
+    padding: 0,
   },
   media: {
     height: 100,
     [theme.breakpoints.up('sm')]: {
-      height: 140
-    }
-  }
+      height: 140,
+    },
+  },
 }));
 
 /**
  * A single log item display as a card
+ * Deprecated as we are not displaying log details anymore
  */
 const LogItem = ({ isImage }) => {
   const classes = useStyles();
@@ -63,7 +64,7 @@ const LogItem = ({ isImage }) => {
 };
 
 LogItem.propTypes = {
-  isImage: PropTypes.bool
+  isImage: PropTypes.bool,
 };
 
 export default LogItem;

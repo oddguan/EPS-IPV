@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * Displays an editor for inputing new logs
+ */
 const NewPost = ({
   isAddingPost,
   addNewPost,

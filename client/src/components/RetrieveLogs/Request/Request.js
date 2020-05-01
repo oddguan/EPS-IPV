@@ -15,11 +15,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * A single request card component from user
+ */
 const Request = ({ username, time }) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
   const handleDownloadClick = () => {
+    // trigger download when the download button clicked
     dispatch(downloadEncryptedLogsForVictim(username));
   };
 

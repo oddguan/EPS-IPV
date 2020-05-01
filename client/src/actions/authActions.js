@@ -233,6 +233,11 @@ export const logout = () => (dispatch) => {
   });
 };
 
+/**
+ * Set the user status so that the user doesn't have to select
+ * user type again when registering new account
+ * @param {*} isSelectedRegularUser
+ */
 export const setRegularUserStatus = (isSelectedRegularUser) => ({
   type: USER_TYPE_SELECT_SUCCESS,
   payload: {
@@ -240,10 +245,17 @@ export const setRegularUserStatus = (isSelectedRegularUser) => ({
   },
 });
 
+/**
+ * Reset user type to null
+ */
 export const resetUserType = () => ({
   type: USER_TYPE_RESET_SUCCESS,
 });
 
+/**
+ * Download the private key .pen file when the user first login or
+ * reset the key pair
+ */
 export const privateKeyDownloaded = () => (dispatch, getState) => {
   axios.get('/api/generate-key/', authTokenConfig(getState)).then((res) => {
     fileDownload(res.data, `${getState().auth.user.username}_private_key.pem`);
@@ -251,10 +263,17 @@ export const privateKeyDownloaded = () => (dispatch, getState) => {
   });
 };
 
+/**
+ * the action if the user chooses not to use the log functionality
+ */
 export const doNotDownloadPrivateKey = () => ({
   type: OPT_OUT_LOG,
 });
 
+/**
+ * If the reset button is clicked, delete all logs inputted in the past
+ * and download a new private key
+ */
 export const resetPrivateKeyAndDeleteAllLogs = () => async (
   dispatch,
   getState

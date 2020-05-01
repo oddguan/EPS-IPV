@@ -12,6 +12,10 @@ import {
   doNotDownloadPrivateKey,
 } from '../../actions/authActions';
 
+/**
+ * This dialog is shown when the user login for the first time
+ * triggers download private key if download button is clicked
+ */
 const PrivateKeyDialog = ({
   isDialogOpen,
   privateKeyDownloaded,

@@ -20,12 +20,16 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
 }));
 
+/**
+ * The retrieving log page for help providers
+ */
 const RetrieveLogs = ({
   allProcessingRequests,
   retrieveAllProcessingRequests,
 }) => {
   const classes = useStyles();
 
+  // when the component mounts, fetch all requests
   useEffect(() => {
     retrieveAllProcessingRequests();
   }, [retrieveAllProcessingRequests]);
