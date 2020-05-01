@@ -5,6 +5,10 @@ from api.models import Log, Victim
 
 
 class FetchLogsAPI(generics.GenericAPIView):
+    """
+    Fetch a list of logs that has been inputted in the past.
+    Only shows limited information since all information is encrypted
+    """
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):

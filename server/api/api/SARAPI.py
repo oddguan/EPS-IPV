@@ -7,6 +7,10 @@ from api.models import *
 
 
 class SARAPI(generics.GenericAPIView):
+    """
+    The SAR request endpoint, which downloads a zip file with account.csv and
+    logs.csv
+    """
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):

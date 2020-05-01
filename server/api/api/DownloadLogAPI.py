@@ -8,6 +8,11 @@ from api.models import Provider, Log, Victim, Account, LogRequest
 
 
 class DownloadLogAPI(generics.GenericAPIView):
+    """
+    This endpoint is used to download all encrypted logs for a specific
+    victim when a help provider presses the download button under the
+    retrieve-logs page
+    """
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, victim_username):

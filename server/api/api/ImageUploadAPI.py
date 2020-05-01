@@ -23,6 +23,10 @@ def upload_image(file, file_name) -> bool:
 
 
 class ImageUploadAPI(APIView):
+    """
+    This API is used for the frontend WYSIWYG document editor for help providers
+    in order to upload an image in the educational blog post.
+    """
     parser_class = (FileUploadParser,)
 
     def put(self, request, image_name, format=None):

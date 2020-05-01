@@ -10,6 +10,11 @@ from api.encryption import encrypt_content
 
 
 class AddTextLogAPI(generics.GenericAPIView):
+    """
+    Defines the API for adding a new text log. 
+    The user should be authenticated and use the put method to 
+    input a new log. This endpoint will encrypt the data as well
+    """
     permission_classes = [permissions.IsAuthenticated]
 
     def put(self, request):
@@ -37,6 +42,9 @@ class AddTextLogAPI(generics.GenericAPIView):
 
 
 class AddImageLogAPI(generics.GenericAPIView):
+    """
+    Similar to the text log, but this endpoint accepts an image upload
+    """
     parser_class = (FileUploadParser,)
 
     def put(self, request):

@@ -4,6 +4,10 @@ from api.models import Log, Victim
 
 
 class DeleteAllLogsAPI(generics.GenericAPIView):
+    """
+    When user requests to reset the key pair, all old logs
+    should be deleted
+    """
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):

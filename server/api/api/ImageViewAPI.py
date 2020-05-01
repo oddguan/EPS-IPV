@@ -18,6 +18,9 @@ def upload_image(file, file_name) -> bool:
 
 
 class ImageViewAPI(APIView):
+    """
+    Deprecated
+    """
     permission_classes = [permissions.IsAuthenticated]
 
     def put(self, request, image_name, format=None):
